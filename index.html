@@ -3,1763 +3,451 @@
 <head>
 <meta charset="UTF-8">
 <meta name="viewport" content="width=device-width, initial-scale=1.0">
-<title>Hub2gether — Le sport en entreprise, réinventé</title>
+<title>Hub2gether — Section Parallaxe</title>
 <link rel="preconnect" href="https://fonts.googleapis.com">
-<link href="https://fonts.googleapis.com/css2?family=Bricolage+Grotesque:wght@300;400;500;600;700;800&family=DM+Sans:ital,wght@0,300;0,400;0,500;1,300&display=swap" rel="stylesheet">
+<link href="https://fonts.googleapis.com/css2?family=Bricolage+Grotesque:wght@700;800&family=DM+Sans:wght@300;400;500&display=swap" rel="stylesheet">
+
+<!--
+  ============================================================
+  SECTION PARALLAXE HUB2GETHER
+  
+  → À copier-coller dans index.html entre deux sections.
+  → Les styles .par-* sont préfixés pour éviter les conflits.
+  → Le script écoute window scroll (fonctionne avec la page entière).
+  → Ajoute data-parallax-root à la section si tu veux isoler.
+  ============================================================
+-->
+
 <style>
+/* ── Reset minimal pour la démo standalone ────────────── */
 *, *::before, *::after { box-sizing: border-box; margin: 0; padding: 0; }
+body { background: #0a1f17; }
 
-:root {
-  --ink: #0F2E22;
-  --ink2: #173d2d;
-  --mint: #7FE3BF;
-  --mint-dim: rgba(127,227,191,.13);
-  --yellow: #FFEC6D;
-  --cream: #FAFAF8;
-  --muted: #6d7c72;
-  --line: rgba(15,46,34,.1);
-  --fd: 'Bricolage Grotesque', sans-serif;
-  --fb: 'DM Sans', sans-serif;
-  --r: 14px;
-  --rl: 22px;
-  --rxl: 32px;
-}
-
-html { scroll-behavior: smooth; }
-
-body {
-  font-family: var(--fb);
-  background: #f0f3f1;
-  color: var(--ink);
-  overflow-x: hidden;
-  -webkit-font-smoothing: antialiased;
-}
-
-/* ─── NAV ─────────────────────────────────────── */
-nav {
-  position: fixed; top: 0; left: 0; right: 0; z-index: 200;
-  height: 62px; padding: 0 40px;
-  display: flex; align-items: center; justify-content: space-between;
-  background: rgba(250,250,248,.88); backdrop-filter: blur(18px);
-  border-bottom: 1px solid var(--line);
-  transition: box-shadow .3s;
-}
-nav.scrolled { box-shadow: 0 4px 24px rgba(15,46,34,.08); }
-.nav-logo {
-  font-family: var(--fd); font-size: 19px; font-weight: 800;
-  letter-spacing: -.5px; color: var(--ink);
-  display: flex; align-items: center; gap: 8px;
-}
-.nav-logo .dot { 
-  width: 8px; height: 8px; border-radius: 50%;
-  background: var(--mint); display: inline-block;
-}
-.nav-pill {
-  display: flex; align-items: center; gap: 6px;
-  background: var(--ink); color: #fff;
-  font-size: 13px; font-weight: 600;
-  padding: 9px 20px; border-radius: 999px;
-  border: none; cursor: pointer;
-  transition: transform .15s, box-shadow .15s;
-}
-.nav-pill:hover { transform: translateY(-1px); box-shadow: 0 6px 20px rgba(15,46,34,.22); }
-.nav-ghost {
-  font-size: 13px; color: var(--muted);
-  background: none; border: none; cursor: pointer;
-  padding: 8px 14px; border-radius: var(--r);
-  transition: background .2s;
-}
-.nav-ghost:hover { background: rgba(15,46,34,.06); }
-
-/* ─── HERO ────────────────────────────────────── */
-.hero {
-  min-height: 100vh;
-  display: flex; flex-direction: column;
-  align-items: center; justify-content: center;
-  text-align: center;
-  padding: 130px 40px 60px;
-  position: relative; overflow: hidden;
-  background: #f0f3f1;
-}
-.hero-noise {
-  position: absolute; inset: 0; z-index: 0; pointer-events: none; opacity: .025;
-  background-image: url("data:image/svg+xml,%3Csvg viewBox='0 0 200 200' xmlns='http://www.w3.org/2000/svg'%3E%3Cfilter id='n'%3E%3CfeTurbulence type='fractalNoise' baseFrequency='0.9' numOctaves='4' stitchTiles='stitch'/%3E%3C/filter%3E%3Crect width='100%25' height='100%25' filter='url(%23n)'/%3E%3C/svg%3E");
-  background-size: 200px 200px;
-}
-.hero-glow {
-  position: absolute; inset: 0; z-index: 0; pointer-events: none;
-  background: radial-gradient(ellipse 60% 50% at 50% -5%, rgba(127,227,191,.28) 0%, transparent 65%),
-              radial-gradient(ellipse 40% 35% at 15% 60%, rgba(255,236,109,.12) 0%, transparent 60%),
-              radial-gradient(ellipse 35% 30% at 85% 55%, rgba(29,184,126,.1) 0%, transparent 60%);
-}
-.hero-grid-lines {
-  position: absolute; inset: 0; z-index: 0; pointer-events: none;
-  background-image: linear-gradient(rgba(15,46,34,.06) 1px, transparent 1px),
-                    linear-gradient(90deg, rgba(15,46,34,.06) 1px, transparent 1px);
-  background-size: 64px 64px;
-  mask-image: radial-gradient(ellipse 80% 70% at 50% 35%, black 20%, transparent 75%);
-}
-.hero-badge {
-  display: inline-flex; align-items: center; gap: 8px;
-  background: white; border: 1px solid var(--line);
-  border-radius: 999px; padding: 5px 14px 5px 6px;
-  font-size: 12px; font-weight: 500; color: var(--muted);
-  margin-bottom: 28px; position: relative; z-index: 1;
-  box-shadow: 0 2px 12px rgba(15,46,34,.08);
-  animation: fadeUp .55s ease both;
-}
-.hero-badge .pip {
-  background: #1DB87E; color: white;
-  font-size: 11px; font-weight: 700;
-  padding: 3px 8px; border-radius: 999px;
-}
-.hero-title {
-  font-family: var(--fd);
-  font-size: clamp(48px, 7.5vw, 100px);
-  font-weight: 800; line-height: .97;
-  letter-spacing: -3px;
-  position: relative; z-index: 1;
-  animation: fadeUp .55s .1s ease both;
-  max-width: 860px;
-}
-.hero-title em {
-  font-style: normal;
-  background: linear-gradient(120deg, #1acd8b, #7FE3BF 60%);
-  -webkit-background-clip: text; -webkit-text-fill-color: transparent;
-}
-.hero-sub {
-  font-size: 17px; font-weight: 300; color: var(--muted);
-  max-width: 520px; line-height: 1.65;
-  margin: 22px auto 0;
-  position: relative; z-index: 1;
-  animation: fadeUp .55s .2s ease both;
-}
-.hero-actions {
-  display: flex; align-items: center; gap: 10px;
-  margin-top: 36px; position: relative; z-index: 1;
-  animation: fadeUp .55s .3s ease both;
-}
-.btn-hero {
-  font-family: var(--fb); font-size: 15px; font-weight: 600;
-  color: white; background: var(--ink);
-  border: none; cursor: pointer;
-  padding: 14px 28px; border-radius: var(--r);
-  display: flex; align-items: center; gap: 8px;
-  transition: transform .15s, box-shadow .2s;
-}
-.btn-hero:hover { transform: translateY(-1px); box-shadow: 0 8px 24px rgba(15,46,34,.22); }
-.btn-hero-outline {
-  font-family: var(--fb); font-size: 15px; color: var(--ink);
-  background: white; border: 1px solid var(--line);
-  cursor: pointer; padding: 14px 28px; border-radius: var(--r);
-  transition: box-shadow .2s;
-}
-.btn-hero-outline:hover { box-shadow: 0 4px 16px rgba(15,46,34,.1); }
-
-/* social proof */
-.hero-proof {
-  display: flex; align-items: center; gap: 14px;
-  margin-top: 44px; position: relative; z-index: 1;
-  animation: fadeUp .55s .4s ease both;
-}
-.avatars { display: flex; }
-.avatars span {
-  width: 30px; height: 30px; border-radius: 50%;
-  border: 2px solid white; display: grid; place-content: center;
-  font-size: 10px; font-weight: 800; color: white;
-  margin-left: -8px;
-}
-.avatars span:first-child { margin-left: 0; }
-.proof-text { font-size: 12px; color: var(--muted); }
-.proof-text strong { color: var(--ink); }
-
-/* ─── HERO LIVE DASHBOARD SIM ─────────────────── */
-.hero-sim {
-  position: relative; z-index: 1;
-  margin-top: 72px; width: 100%; max-width: 1060px;
-  animation: fadeUp .6s .5s ease both;
-}
-.sim-chrome {
-  border-radius: 22px; overflow: hidden;
-  border: 1px solid rgba(15,46,34,.15);
-  box-shadow: 0 32px 80px rgba(15,46,34,.2), 0 0 0 1px rgba(255,255,255,.4);
-  background: #1a2e26;
-  -webkit-mask-image: linear-gradient(to bottom, #000 0%, #000 78%, rgba(0,0,0,.8) 88%, transparent 100%);
-  mask-image: linear-gradient(to bottom, #000 0%, #000 78%, rgba(0,0,0,.8) 88%, transparent 100%);
-}
-.sim-titlebar {
-  height: 42px; background: #1a2e26;
-  display: flex; align-items: center; gap: 7px; padding: 0 16px;
-  border-bottom: 1px solid rgba(255,255,255,.08);
-}
-.sim-dot { width: 11px; height: 11px; border-radius: 50%; }
-.sim-url {
-  flex: 1; max-width: 300px; margin: 0 auto;
-  background: rgba(255,255,255,.08); border-radius: 6px;
-  padding: 4px 12px; font-size: 11px; color: rgba(255,255,255,.35);
-  text-align: center;
-}
-.sim-body {
-  display: grid; grid-template-columns: 200px 1fr;
-  min-height: 480px; background: #f3f6f4;
-}
-.sim-sidebar {
-  background: #162820; padding: 16px 12px;
-  display: flex; flex-direction: column; gap: 4px;
-}
-.sim-sidebar-logo {
-  font-family: var(--fd); font-size: 14px; font-weight: 800;
-  color: var(--mint); padding: 8px 8px 16px;
-  border-bottom: 1px solid rgba(255,255,255,.08); margin-bottom: 8px;
-}
-.sim-nav-item {
-  display: flex; align-items: center; gap: 9px;
-  padding: 9px 10px; border-radius: 10px;
-  font-size: 12px; font-weight: 500; color: rgba(255,255,255,.5);
-  cursor: pointer; transition: .2s;
-}
-.sim-nav-item:hover, .sim-nav-item.active {
-  background: rgba(127,227,191,.12); color: var(--mint);
-}
-.sim-nav-item .ico { font-size: 14px; }
-.sim-main { padding: 16px; overflow: hidden; }
-.sim-topbar {
-  display: flex; align-items: center; justify-content: space-between;
-  margin-bottom: 14px;
-}
-.sim-greeting { font-family: var(--fd); font-size: 16px; font-weight: 700; }
-.sim-date { font-size: 11px; color: var(--muted); }
-.sim-live-badge {
-  display: flex; align-items: center; gap: 5px;
-  font-size: 11px; font-weight: 700; color: #1DB87E;
-  background: rgba(29,184,126,.1); border-radius: 999px;
-  padding: 4px 10px;
-}
-.sim-live-dot { width: 7px; height: 7px; border-radius: 50%; background: #1DB87E; animation: pulse 1.5s infinite; }
-
-/* KPI Row */
-.sim-kpis { display: grid; grid-template-columns: repeat(4, 1fr); gap: 10px; margin-bottom: 12px; }
-.sim-kpi {
-  background: white; border: 1px solid rgba(15,46,34,.08);
-  border-radius: 14px; padding: 12px 14px;
-  position: relative; overflow: hidden;
-  transition: transform .2s;
-}
-.sim-kpi:hover { transform: translateY(-2px); }
-.sim-kpi-label { font-size: 10px; text-transform: uppercase; letter-spacing: .08em; color: var(--muted); margin-bottom: 6px; }
-.sim-kpi-val { font-family: var(--fd); font-size: 26px; font-weight: 800; line-height: 1; }
-.sim-kpi-delta { font-size: 11px; margin-top: 4px; }
-.delta-up { color: #1DB87E; }
-.delta-down { color: #FF6B35; }
-.sim-kpi-bar {
-  position: absolute; bottom: 0; left: 0; right: 0; height: 3px;
-  background: rgba(15,46,34,.06);
-}
-.sim-kpi-bar-fill { height: 100%; border-radius: 999px; }
-
-/* bottom grid */
-.sim-grid { display: grid; grid-template-columns: 1.4fr 1fr; gap: 10px; }
-.sim-card {
-  background: white; border: 1px solid rgba(15,46,34,.08);
-  border-radius: 14px; padding: 14px; overflow: hidden;
-}
-.sim-card-title { font-size: 13px; font-weight: 700; margin-bottom: 12px; }
-.sim-match-row {
-  display: flex; align-items: center; gap: 10px;
-  padding: 8px 0; border-bottom: 1px solid rgba(15,46,34,.06);
-}
-.sim-match-row:last-child { border-bottom: none; }
-.sim-av {
-  width: 32px; height: 32px; border-radius: 8px;
-  display: grid; place-content: center;
-  font-size: 11px; font-weight: 800; color: white; flex-shrink: 0;
-}
-.sim-match-info { flex: 1; }
-.sim-match-name { font-size: 12px; font-weight: 600; }
-.sim-match-detail { font-size: 10px; color: var(--muted); }
-.sim-badge {
-  font-size: 10px; font-weight: 700;
-  padding: 3px 8px; border-radius: 999px;
-}
-.bg-mint { background: rgba(127,227,191,.2); color: #0a5e40; }
-.bg-yellow { background: rgba(255,236,109,.25); color: #6b5800; }
-.bg-red { background: rgba(255,107,53,.15); color: #b33a00; }
-
-/* mini sparkline bars */
-.mini-bars { display: flex; align-items: flex-end; gap: 3px; height: 52px; margin-top: 10px; }
-.mini-bars span {
-  flex: 1; border-radius: 4px 4px 0 0;
-  background: rgba(127,227,191,.25);
-  transition: height .3s;
-}
-.mini-bars span.hi { background: var(--mint); }
-
-/* leaderboard */
-.lb-row {
-  display: flex; align-items: center; gap: 10px;
-  padding: 7px 0; border-bottom: 1px solid rgba(15,46,34,.06);
-}
-.lb-row:last-child { border-bottom: none; }
-.lb-rank { font-family: var(--fd); font-size: 16px; font-weight: 800; width: 24px; }
-.lb-av { width: 28px; height: 28px; border-radius: 8px; display: grid; place-content: center; font-size: 10px; font-weight: 800; color: white; }
-.lb-name { flex: 1; font-size: 12px; font-weight: 600; }
-.lb-pts { font-size: 13px; font-weight: 800; color: var(--mint); }
-
-/* ─── STATS BAND ──────────────────────────────── */
-.stats-band {
-  background: var(--ink);
-  padding: 0 40px;
-  display: grid; grid-template-columns: repeat(4, 1fr);
-  border-top: 1px solid rgba(255,255,255,.06);
-}
-.stat-band-item {
-  padding: 52px 32px;
-  border-right: 1px solid rgba(255,255,255,.08);
-  position: relative; overflow: hidden;
-}
-.stat-band-item:last-child { border-right: none; }
-.stat-band-item::before {
-  content: '';
-  position: absolute; top: -60px; left: -60px;
-  width: 200px; height: 200px;
-  border-radius: 50%;
-  background: radial-gradient(circle, rgba(127,227,191,.12), transparent 65%);
-  pointer-events: none;
-}
-.stat-num {
-  font-family: var(--fd);
-  font-size: 62px; font-weight: 800; line-height: 1;
-  color: white; display: flex; align-items: flex-start;
-}
-.stat-num .unit { font-size: 28px; margin-top: 10px; color: var(--mint); font-weight: 700; }
-.stat-label { font-size: 14px; color: rgba(255,255,255,.5); margin-top: 10px; line-height: 1.4; }
-.stat-source { font-size: 11px; color: rgba(255,255,255,.25); margin-top: 8px; }
-
-/* ─── SECTIONS SHARED ─────────────────────────── */
-section { padding: 112px 40px; }
-.inner { max-width: 1100px; margin: 0 auto; }
-.tag {
-  display: inline-flex; align-items: center; gap: 6px;
-  font-size: 11px; font-weight: 700; letter-spacing: .1em;
-  text-transform: uppercase;
-  background: rgba(127,227,191,.18); color: #0a5e40;
-  border-radius: 999px; padding: 4px 12px; margin-bottom: 18px;
-}
-.tag .td { width: 6px; height: 6px; border-radius: 50%; background: #1DB87E; }
-.section-h {
-  font-family: var(--fd); font-size: clamp(34px, 5vw, 58px);
-  font-weight: 800; line-height: 1.04; letter-spacing: -1.5px;
-  max-width: 680px;
-}
-.section-h em { font-style: normal; color: var(--mint); }
-.section-p {
-  font-size: 17px; font-weight: 300; color: var(--muted);
-  max-width: 500px; line-height: 1.65; margin-top: 18px;
-}
-
-/* ─── MATCHMAKING SIM ─────────────────────────── */
-.match-sim-section { background: white; }
-.match-sim-wrap {
-  display: grid; grid-template-columns: 1fr 1.1fr;
-  gap: 80px; align-items: center;
-}
-.match-phone {
-  background: var(--ink); border-radius: 36px;
-  padding: 10px; box-shadow: 0 24px 56px rgba(15,46,34,.22);
-  max-width: 300px; margin: 0 auto;
+/* ── Section container ───────────────────────────────── */
+.par-section {
   position: relative;
-}
-.match-screen {
-  background: #1e3328; border-radius: 28px;
-  overflow: hidden; min-height: 540px;
-}
-.match-screen-top {
-  background: #162820; padding: 12px 14px 10px;
-  display: flex; align-items: center; justify-content: space-between;
-}
-.match-screen-top span { font-size: 12px; color: rgba(255,255,255,.6); }
-.match-screen-top strong { font-family: var(--fd); font-size: 13px; color: white; }
-.match-hero-area {
-  padding: 16px 14px 10px;
-}
-.match-hero-title {
-  font-family: var(--fd); font-size: 22px; font-weight: 800;
-  color: white; line-height: 1.1;
-}
-.match-sport-chips {
-  display: flex; gap: 6px; margin-top: 10px; flex-wrap: wrap;
-}
-.sport-chip {
-  font-size: 11px; font-weight: 600; padding: 5px 11px;
-  border-radius: 999px; border: 1px solid rgba(255,255,255,.15);
-  color: rgba(255,255,255,.7); cursor: pointer; transition: .2s;
-}
-.sport-chip.on { background: var(--mint); color: var(--ink); border-color: var(--mint); }
-.match-cards { padding: 0 14px 14px; display: flex; flex-direction: column; gap: 8px; }
-.match-c {
-  background: rgba(255,255,255,.07); border-radius: 14px;
-  border: 1px solid rgba(255,255,255,.1);
-  padding: 12px; display: flex; gap: 10px; align-items: center;
-  cursor: pointer; transition: .2s;
-}
-.match-c:hover, .match-c.sel { background: rgba(127,227,191,.12); border-color: rgba(127,227,191,.3); }
-.match-c-av {
-  width: 40px; height: 40px; border-radius: 10px;
-  display: grid; place-content: center;
-  font-size: 13px; font-weight: 800; color: white; flex-shrink: 0;
-}
-.match-c-info { flex: 1; }
-.match-c-name { font-size: 13px; font-weight: 700; color: white; }
-.match-c-detail { font-size: 11px; color: rgba(255,255,255,.5); margin-top: 2px; }
-.match-c-right { text-align: right; }
-.match-c-price { font-size: 14px; font-weight: 800; color: var(--mint); }
-.match-c-spots { font-size: 10px; color: rgba(255,255,255,.4); margin-top: 2px; }
-.match-join-btn {
-  margin: 0 14px 14px; width: calc(100% - 28px);
-  background: linear-gradient(90deg, #2ee4af, #6dffbd);
-  color: var(--ink); font-family: var(--fd); font-size: 14px; font-weight: 800;
-  border: none; border-radius: 999px; padding: 13px;
-  cursor: pointer; transition: transform .15s;
-}
-.match-join-btn:hover { transform: scale(1.02); }
-
-/* join animation */
-.join-anim {
-  position: absolute; inset: 0; border-radius: 28px;
-  background: rgba(29,184,126,.95);
-  display: grid; place-content: center; text-align: center;
-  color: white; opacity: 0; pointer-events: none;
-  transition: opacity .3s;
-}
-.join-anim.show { opacity: 1; }
-.join-anim .tick { font-size: 48px; margin-bottom: 10px; }
-.join-anim p { font-family: var(--fd); font-size: 18px; font-weight: 800; }
-.join-anim small { font-size: 12px; opacity: .7; }
-
-/* ─── TOURNOIS SIM ────────────────────────────── */
-.tournoi-section { background: #f0f3f1; }
-.tournoi-wrap {
-  display: grid; grid-template-columns: 1.1fr 1fr;
-  gap: 80px; align-items: center;
-}
-.bracket-ui {
-  background: white; border-radius: var(--rxl);
-  border: 1px solid var(--line);
-  padding: 24px; box-shadow: 0 16px 48px rgba(15,46,34,.1);
-}
-.bracket-header {
-  display: flex; align-items: center; justify-content: space-between;
-  margin-bottom: 20px;
-}
-.bracket-title { font-family: var(--fd); font-size: 17px; font-weight: 700; }
-.bracket-live {
-  display: flex; align-items: center; gap: 5px;
-  font-size: 11px; font-weight: 700; color: #e63946;
-  background: rgba(230,57,70,.1); border-radius: 999px; padding: 4px 10px;
-}
-.bracket-dot { width: 7px; height: 7px; border-radius: 50%; background: #e63946; animation: pulse 1s infinite; }
-.bracket-grid {
-  display: grid; grid-template-columns: 1fr 40px 1fr 40px 1fr;
-  gap: 0; align-items: center; min-height: 300px;
-}
-.bracket-col { display: flex; flex-direction: column; gap: 10px; }
-.bracket-match {
-  background: #f8faf8; border: 1px solid var(--line);
-  border-radius: 12px; overflow: hidden;
-}
-.bracket-team {
-  display: flex; align-items: center; gap: 8px;
-  padding: 9px 10px; border-bottom: 1px solid var(--line);
-  font-size: 12px; font-weight: 600;
-  transition: background .2s;
-}
-.bracket-team:last-child { border-bottom: none; }
-.bracket-team.win { background: rgba(127,227,191,.15); }
-.bracket-team.lost { opacity: .45; }
-.bracket-team-av {
-  width: 22px; height: 22px; border-radius: 5px;
-  display: grid; place-content: center;
-  font-size: 9px; font-weight: 800; color: white; flex-shrink: 0;
-}
-.bracket-team-score {
-  margin-left: auto; font-family: var(--fd);
-  font-size: 14px; font-weight: 800;
-}
-.bracket-connector {
-  display: flex; flex-direction: column;
-  align-items: center; justify-content: center; gap: 0;
-  color: rgba(15,46,34,.2); font-size: 18px;
-}
-.bracket-connector svg { width: 40px; flex-shrink: 0; }
-.bracket-final .bracket-match {
-  border-color: rgba(127,227,191,.5);
-  box-shadow: 0 0 0 2px rgba(127,227,191,.25);
+  overflow: hidden;
+  background: #0F2E22;
+  /* Hauteur : assez grande pour que le parallaxe soit visible */
+  min-height: 200vh;
 }
 
-/* Score ticker */
-.score-ticker {
-  margin-top: 20px; display: flex; gap: 8px;
-  overflow: hidden; position: relative;
-}
-.score-ticker::after {
-  content: ''; position: absolute; right: 0; top: 0; bottom: 0;
-  width: 60px;
-  background: linear-gradient(to right, transparent, white);
+/* ── Couche des formes (derrière le contenu) ─────────── */
+.par-shapes {
+  position: sticky;
+  top: 0;
+  height: 100vh;
+  width: 100%;
   pointer-events: none;
-}
-.ticker-item {
-  flex-shrink: 0; background: #f0f3f1; border-radius: 10px;
-  padding: 8px 12px; font-size: 11px; white-space: nowrap;
-}
-.ticker-item strong { font-weight: 700; }
-.ticker-item .sport-ico { margin-right: 5px; }
-
-/* ─── PAIEMENTS SIM ───────────────────────────── */
-.pay-section { background: white; }
-.pay-wrap {
-  display: grid; grid-template-columns: 1fr 1.15fr;
-  gap: 80px; align-items: center;
-}
-.pay-ui {
-  background: white; border-radius: var(--rxl);
-  border: 1px solid var(--line);
-  overflow: hidden; box-shadow: 0 16px 48px rgba(15,46,34,.1);
-}
-.pay-header {
-  background: var(--ink); padding: 20px 24px;
-  display: flex; align-items: center; justify-content: space-between;
-}
-.pay-header-title { font-family: var(--fd); font-size: 16px; font-weight: 700; color: white; }
-.pay-header-sub { font-size: 12px; color: rgba(255,255,255,.5); margin-top: 2px; }
-.pay-total-badge {
-  font-family: var(--fd); font-size: 28px; font-weight: 800;
-  color: var(--mint);
-}
-.pay-players { padding: 16px 20px; display: flex; flex-direction: column; gap: 8px; }
-.pay-row {
-  display: flex; align-items: center; gap: 12px;
-  padding: 10px 12px; border-radius: 12px;
-  background: #f8faf8; border: 1px solid rgba(15,46,34,.06);
-  transition: .2s; cursor: pointer;
-}
-.pay-row:hover { background: #f0f8f4; }
-.pay-av {
-  width: 36px; height: 36px; border-radius: 9px;
-  display: grid; place-content: center;
-  font-size: 11px; font-weight: 800; color: white;
-}
-.pay-name { flex: 1; font-size: 13px; font-weight: 600; }
-.pay-amt { font-size: 13px; font-weight: 700; }
-.pay-status {
-  font-size: 11px; font-weight: 700;
-  padding: 3px 10px; border-radius: 999px;
-  cursor: pointer; transition: .2s;
-}
-.s-paid { background: rgba(29,184,126,.12); color: #0a7a3e; }
-.s-wait { background: rgba(255,107,53,.12); color: #a64200; }
-.s-you { background: rgba(127,227,191,.2); color: #0a5e40; }
-.pay-progress { padding: 0 20px 16px; }
-.pay-prog-label { display: flex; justify-content: space-between; font-size: 12px; color: var(--muted); margin-bottom: 8px; }
-.pay-bar {
-  height: 8px; background: rgba(15,46,34,.08); border-radius: 999px; overflow: hidden;
-}
-.pay-bar-fill {
-  height: 100%; border-radius: 999px;
-  background: linear-gradient(90deg, #2ee4af, #6dffbd);
-  transition: width .6s cubic-bezier(.22,.61,.36,1);
-}
-.pay-cta {
-  margin: 0 20px 20px;
-  width: calc(100% - 40px);
-  background: var(--ink); color: white;
-  font-family: var(--fd); font-size: 14px; font-weight: 700;
-  border: none; border-radius: 999px; padding: 13px;
-  cursor: pointer; transition: .15s;
-  display: flex; align-items: center; justify-content: center; gap: 8px;
-}
-.pay-cta:hover { background: #1a4a35; }
-.pay-cta .amount { color: var(--mint); }
-
-/* ─── CLASSEMENT SIM ──────────────────────────── */
-.rank-section { background: #f0f3f1; }
-.rank-wrap {
-  display: grid; grid-template-columns: 1.1fr 1fr;
-  gap: 80px; align-items: center;
-}
-.rank-ui {
-  background: white; border-radius: var(--rxl);
-  border: 1px solid var(--line);
-  overflow: hidden; box-shadow: 0 16px 48px rgba(15,46,34,.1);
-}
-.rank-tabs-bar {
-  padding: 16px 20px 0;
-  display: flex; gap: 4px;
-  border-bottom: 1px solid var(--line);
-}
-.rank-tab {
-  font-size: 13px; font-weight: 600; padding: 8px 16px;
-  border-radius: 10px 10px 0 0; border: none; background: transparent;
-  color: var(--muted); cursor: pointer; transition: .2s;
-  border-bottom: 2px solid transparent;
-}
-.rank-tab.on { color: var(--ink); border-bottom-color: var(--mint); background: rgba(127,227,191,.08); }
-.rank-body { padding: 16px 20px; }
-.rank-my {
-  display: flex; align-items: center; gap: 12px;
-  background: rgba(127,227,191,.1); border: 1px solid rgba(127,227,191,.3);
-  border-radius: 12px; padding: 12px 14px; margin-bottom: 14px;
-}
-.rank-my-num { font-family: var(--fd); font-size: 20px; font-weight: 800; color: var(--mint); width: 28px; }
-.rank-my-av { width: 36px; height: 36px; border-radius: 9px; display: grid; place-content: center; font-size: 12px; font-weight: 800; color: white; background: #1DB87E; }
-.rank-my-info { flex: 1; }
-.rank-my-name { font-size: 13px; font-weight: 700; }
-.rank-my-co { font-size: 11px; color: var(--muted); }
-.rank-my-pts { font-family: var(--fd); font-size: 18px; font-weight: 800; }
-.rank-list { display: flex; flex-direction: column; gap: 8px; }
-.rank-item {
-  display: flex; align-items: center; gap: 10px;
-  padding: 9px 0; border-bottom: 1px solid rgba(15,46,34,.06);
-}
-.rank-item:last-child { border-bottom: none; }
-.rank-item-num { font-family: var(--fd); font-size: 14px; font-weight: 800; color: var(--muted); width: 22px; }
-.rank-gold { color: #FFB800; }
-.rank-silver { color: #8A8A82; }
-.rank-bronze { color: #CD7F32; }
-.rank-av { width: 32px; height: 32px; border-radius: 8px; display: grid; place-content: center; font-size: 10px; font-weight: 800; color: white; }
-.rank-info { flex: 1; }
-.rank-name { font-size: 12px; font-weight: 600; }
-.rank-co { font-size: 11px; color: var(--muted); }
-.rank-pts { font-size: 13px; font-weight: 800; }
-.rank-trend { font-size: 11px; margin-left: 6px; }
-
-/* ─── TARIFS ──────────────────────────────────── */
-.pricing-section { background: var(--ink); padding: 112px 40px; }
-.pricing-section .tag { background: rgba(255,236,109,.12); color: var(--yellow); }
-.pricing-section .tag .td { background: var(--yellow); }
-.pricing-section .section-h { color: white; }
-.pricing-section .section-h em { color: var(--yellow); }
-.pricing-section .section-p { color: rgba(255,255,255,.5); }
-.pricing-grid {
-  display: grid; grid-template-columns: repeat(4, 1fr);
-  gap: 16px; margin-top: 56px;
-}
-.price-card {
-  background: rgba(255,255,255,.05);
-  border: 1px solid rgba(255,255,255,.1);
-  border-radius: var(--rl); padding: 28px 24px;
-  transition: .25s; cursor: pointer; position: relative; overflow: hidden;
-}
-.price-card::before {
-  content: '';
-  position: absolute; top: 0; left: 0; right: 0; height: 3px;
-  border-radius: var(--rl) var(--rl) 0 0;
-  background: var(--mint); opacity: 0; transition: .25s;
-}
-.price-card:hover, .price-card.pop {
-  background: rgba(255,255,255,.09);
-  transform: translateY(-4px);
-  box-shadow: 0 16px 40px rgba(0,0,0,.25);
-}
-.price-card:hover::before, .price-card.pop::before { opacity: 1; }
-.price-card.pop {
-  border-color: rgba(127,227,191,.3);
-}
-.price-badge {
-  font-size: 11px; font-weight: 700; letter-spacing: .08em;
-  color: var(--yellow); text-transform: uppercase; margin-bottom: 14px;
-}
-.price-name { font-family: var(--fd); font-size: 22px; font-weight: 800; color: white; margin-bottom: 8px; }
-.price-val {
-  font-family: var(--fd); font-size: 44px; font-weight: 800;
-  color: white; line-height: 1; margin-bottom: 4px;
-}
-.price-val span { font-size: 16px; color: rgba(255,255,255,.4); font-family: var(--fb); font-weight: 400; }
-.price-mo { font-size: 13px; color: rgba(255,255,255,.4); margin-bottom: 20px; }
-.price-sep { border: none; border-top: 1px solid rgba(255,255,255,.08); margin: 16px 0; }
-.price-feat { font-size: 13px; color: rgba(255,255,255,.65); display: flex; gap: 8px; margin-bottom: 8px; align-items: flex-start; }
-.price-feat::before { content: '✓'; color: var(--mint); font-weight: 700; flex-shrink: 0; }
-.price-btn {
-  margin-top: 20px; width: 100%;
-  background: rgba(255,255,255,.1); border: 1px solid rgba(255,255,255,.15);
-  color: white; border-radius: 999px; padding: 11px;
-  font-family: var(--fb); font-size: 13px; font-weight: 600;
-  cursor: pointer; transition: .2s;
-}
-.price-btn:hover { background: rgba(255,255,255,.18); }
-.price-card.pop .price-btn {
-  background: var(--mint); border-color: var(--mint); color: var(--ink);
-}
-
-/* ─── COMMENT CA MARCHE ───────────────────────── */
-.how-section { background: white; }
-.steps-row { display: grid; grid-template-columns: repeat(4, 1fr); gap: 24px; margin-top: 56px; position: relative; }
-.steps-row::before {
-  content: ''; position: absolute;
-  top: 28px; left: 10%; right: 10%;
-  height: 1px; background: repeating-linear-gradient(90deg, var(--mint) 0, var(--mint) 8px, transparent 8px, transparent 18px);
   z-index: 0;
-}
-.step {
-  text-align: center; position: relative; z-index: 1;
-}
-.step-n {
-  width: 56px; height: 56px; border-radius: 50%;
-  background: white; border: 2px solid var(--mint);
-  display: grid; place-content: center;
-  font-family: var(--fd); font-size: 20px; font-weight: 800; color: var(--ink);
-  margin: 0 auto 20px;
-  box-shadow: 0 0 0 6px rgba(127,227,191,.1);
-}
-.step-name { font-size: 15px; font-weight: 700; margin-bottom: 8px; }
-.step-desc { font-size: 13px; color: var(--muted); }
-
-/* ─── CTA FINAL ───────────────────────────────── */
-.cta-final {
-  background: var(--ink); text-align: center; padding: 120px 40px;
-  position: relative; overflow: hidden;
-}
-.cta-final::before {
-  content: '';
-  position: absolute; inset: -80px;
-  background: radial-gradient(ellipse 60% 50% at 50% 100%, rgba(127,227,191,.18), transparent 65%);
-  pointer-events: none;
-}
-.cta-h {
-  font-family: var(--fd);
-  font-size: clamp(38px, 6vw, 80px);
-  font-weight: 800; line-height: 1.0; letter-spacing: -2px;
-  color: white; max-width: 800px; margin: 0 auto 20px;
-  position: relative; z-index: 1;
-}
-.cta-h em { font-style: normal; color: var(--mint); }
-.cta-sub { font-size: 17px; color: rgba(255,255,255,.4); max-width: 460px; margin: 0 auto 44px; position: relative; z-index: 1; }
-.cta-btns { display: flex; justify-content: center; gap: 12px; position: relative; z-index: 1; }
-.btn-cta-w {
-  font-size: 15px; font-weight: 600; color: var(--ink);
-  background: white; border: none; cursor: pointer;
-  padding: 16px 36px; border-radius: var(--r);
-  transition: .15s;
-}
-.btn-cta-w:hover { transform: translateY(-1px); box-shadow: 0 8px 24px rgba(0,0,0,.3); }
-.btn-cta-ghost {
-  font-size: 15px; color: rgba(255,255,255,.6);
-  background: none; border: 1px solid rgba(255,255,255,.15);
-  cursor: pointer; padding: 16px 36px; border-radius: var(--r);
+  /* On monte ce sticky dès que la section entre dans le viewport */
+  margin-bottom: -100vh;
 }
 
-/* ─── LOGOS BAND ──────────────────────────────── */
-.logos-band { background: white; padding: 52px 40px; border-bottom: 1px solid var(--line); }
-.logos-label { text-align: center; font-size: 12px; color: var(--muted); margin-bottom: 28px; text-transform: uppercase; letter-spacing: .12em; font-weight: 600; }
-.logos-row { display: flex; align-items: center; justify-content: center; gap: 56px; flex-wrap: wrap; }
-.logo-co {
-  font-family: var(--fd); font-size: 17px; font-weight: 700;
-  color: rgba(15,46,34,.22); transition: .2s; cursor: default;
-}
-.logo-co:hover { color: rgba(15,46,34,.55); transform: translateY(-1px); }
-
-/* ─── FOOTER ──────────────────────────────────── */
-footer {
-  background: #0a201a;
-  border-top: 1px solid rgba(255,255,255,.06);
-  padding: 48px 40px;
-}
-.footer-inner {
-  max-width: 1100px; margin: 0 auto;
-  display: flex; align-items: center; justify-content: space-between;
-}
-.footer-logo { font-family: var(--fd); font-size: 18px; font-weight: 800; color: rgba(255,255,255,.5); }
-.footer-links { display: flex; gap: 28px; }
-.footer-links a { font-size: 13px; color: rgba(255,255,255,.3); text-decoration: none; }
-.footer-copy { font-size: 12px; color: rgba(255,255,255,.2); }
-
-/* ─── ANIMATIONS ──────────────────────────────── */
-@keyframes fadeUp {
-  from { opacity: 0; transform: translateY(22px); }
-  to { opacity: 1; transform: translateY(0); }
-}
-@keyframes pulse {
-  0%, 100% { opacity: 1; }
-  50% { opacity: .35; }
-}
-@keyframes slideIn {
-  from { opacity: 0; transform: translateX(20px); }
-  to { opacity: 1; transform: translateX(0); }
-}
-@keyframes ticker {
-  0% { transform: translateX(0); }
-  100% { transform: translateX(-50%); }
+/* ── Chaque forme ────────────────────────────────────── */
+.par-shape {
+  position: absolute;
+  will-change: transform;
+  transition: transform 0.05s linear;
 }
 
-.reveal { opacity: 0; transform: translateY(28px); transition: opacity .7s ease, transform .7s ease; }
-.reveal.visible { opacity: 1; transform: none; }
-.reveal-l { opacity: 0; transform: translateX(-32px); transition: opacity .7s ease, transform .7s ease; }
-.reveal-r { opacity: 0; transform: translateX(32px); transition: opacity .7s ease, transform .7s ease; }
-.reveal-l.visible, .reveal-r.visible { opacity: 1; transform: none; }
-.reveal-z { opacity: 0; transform: scale(.93); transition: opacity .7s ease, transform .7s ease; }
-.reveal-z.visible { opacity: 1; transform: none; }
-.stagger > * {
-  opacity: 0; transform: translateY(20px);
-  transition: opacity .6s ease, transform .6s ease;
+/* Arcs : coin supérieur gauche */
+.par-arc-tl-1 {
+  left: -90px; top: 80px;
+  width: 340px; height: 340px;
+  border-radius: 50%;
+  border: 38px solid #7FE3BF;
+  border-right-color: transparent;
+  border-bottom-color: transparent;
+  transform: rotate(-45deg);
 }
-.stagger.visible > *:nth-child(1) { transition-delay: 0ms; }
-.stagger.visible > *:nth-child(2) { transition-delay: 80ms; }
-.stagger.visible > *:nth-child(3) { transition-delay: 160ms; }
-.stagger.visible > *:nth-child(4) { transition-delay: 240ms; }
-.stagger.visible > * { opacity: 1; transform: none; }
-
-/* ─── TICKER SCROLLING ────────────────────────── */
-.ticker-outer { overflow: hidden; margin-top: 16px; }
-.ticker-track { display: flex; width: max-content; animation: ticker 22s linear infinite; }
-.ticker-track:hover { animation-play-state: paused; }
-
-/* ─── NOTIFICATION TOAST ──────────────────────── */
-.toast {
-  position: fixed; bottom: 24px; right: 24px; z-index: 999;
-  background: var(--ink); color: white;
-  border-radius: 16px; padding: 14px 18px;
-  box-shadow: 0 12px 40px rgba(15,46,34,.3);
-  font-size: 13px; display: flex; align-items: center; gap: 10px;
-  transform: translateY(80px); opacity: 0;
-  transition: transform .4s cubic-bezier(.22,.61,.36,1), opacity .4s ease;
-  pointer-events: none; max-width: 300px;
+.par-arc-tl-2 {
+  left: -60px; top: 110px;
+  width: 272px; height: 272px;
+  border-radius: 50%;
+  border: 30px solid #1DB87E;
+  border-right-color: transparent;
+  border-bottom-color: transparent;
+  transform: rotate(-45deg);
 }
-.toast.show { transform: translateY(0); opacity: 1; }
-.toast-ico { font-size: 22px; }
-.toast-text strong { display: block; font-weight: 700; }
-.toast-text span { color: rgba(255,255,255,.6); font-size: 12px; }
-
-/* ─── RESPONSIVE ──────────────────────────────── */
-@media (max-width: 960px) {
-  nav { padding: 0 20px; }
-  section { padding: 80px 20px; }
-  .stats-band { grid-template-columns: 1fr 1fr; }
-  .stat-band-item { padding: 40px 24px; }
-  .stat-band-item:nth-child(2) { border-right: none; }
-  .match-sim-wrap, .tournoi-wrap, .pay-wrap, .rank-wrap { grid-template-columns: 1fr; gap: 48px; }
-  .sim-body { grid-template-columns: 1fr; }
-  .sim-sidebar { display: none; }
-  .sim-kpis { grid-template-columns: repeat(2, 1fr); }
-  .sim-grid { grid-template-columns: 1fr; }
-  .pricing-grid { grid-template-columns: 1fr 1fr; }
-  .steps-row { grid-template-columns: 1fr 1fr; }
-  .steps-row::before { display: none; }
-  .footer-inner { flex-direction: column; gap: 20px; text-align: center; }
-  .hero-actions { flex-direction: column; width: 100%; }
-  .btn-hero, .btn-hero-outline { width: 100%; justify-content: center; }
-  .logos-band { padding: 40px 20px; }
-  .logos-row { gap: 28px; }
+.par-arc-tl-3 {
+  left: -32px; top: 138px;
+  width: 210px; height: 210px;
+  border-radius: 50%;
+  border: 22px solid rgba(127,227,191,.32);
+  border-right-color: transparent;
+  border-bottom-color: transparent;
+  transform: rotate(-45deg);
 }
-@media (max-width: 600px) {
-  .pricing-grid { grid-template-columns: 1fr; }
-  .steps-row { grid-template-columns: 1fr; }
-  .stats-band { grid-template-columns: 1fr; }
-  .stat-band-item { border-right: none; border-bottom: 1px solid rgba(255,255,255,.08); }
+
+/* Arcs : coin supérieur droit */
+.par-arc-tr-1 {
+  right: -90px; top: 80px;
+  width: 340px; height: 340px;
+  border-radius: 50%;
+  border: 38px solid #FFEC6D;
+  border-left-color: transparent;
+  border-bottom-color: transparent;
+  transform: rotate(45deg);
+}
+.par-arc-tr-2 {
+  right: -60px; top: 110px;
+  width: 272px; height: 272px;
+  border-radius: 50%;
+  border: 30px solid rgba(255,236,109,.65);
+  border-left-color: transparent;
+  border-bottom-color: transparent;
+  transform: rotate(45deg);
+}
+.par-arc-tr-3 {
+  right: -32px; top: 138px;
+  width: 210px; height: 210px;
+  border-radius: 50%;
+  border: 22px solid rgba(255,236,109,.3);
+  border-left-color: transparent;
+  border-bottom-color: transparent;
+  transform: rotate(45deg);
+}
+
+/* Arcs : coin inférieur gauche */
+.par-arc-bl-1 {
+  left: -110px; bottom: 0; top: auto;
+  width: 400px; height: 400px;
+  border-radius: 50%;
+  border: 42px solid rgba(255,236,109,.5);
+  border-right-color: transparent;
+  border-top-color: transparent;
+  transform: rotate(45deg);
+}
+.par-arc-bl-2 {
+  left: -76px; bottom: 0; top: auto;
+  width: 330px; height: 330px;
+  border-radius: 50%;
+  border: 34px solid rgba(127,227,191,.38);
+  border-right-color: transparent;
+  border-top-color: transparent;
+  transform: rotate(45deg);
+}
+.par-arc-bl-3 {
+  left: -44px; bottom: 0; top: auto;
+  width: 264px; height: 264px;
+  border-radius: 50%;
+  border: 26px solid rgba(29,184,126,.28);
+  border-right-color: transparent;
+  border-top-color: transparent;
+  transform: rotate(45deg);
+}
+
+/* Arcs : coin inférieur droit */
+.par-arc-br-1 {
+  right: -110px; bottom: 0; top: auto;
+  width: 360px; height: 360px;
+  border-radius: 50%;
+  border: 40px solid rgba(127,227,191,.45);
+  border-left-color: transparent;
+  border-top-color: transparent;
+  transform: rotate(-45deg);
+}
+.par-arc-br-2 {
+  right: -78px; bottom: 0; top: auto;
+  width: 294px; height: 294px;
+  border-radius: 50%;
+  border: 32px solid rgba(255,236,109,.3);
+  border-left-color: transparent;
+  border-top-color: transparent;
+  transform: rotate(-45deg);
+}
+
+/* Barres verticales centrées */
+.par-bars {
+  position: absolute;
+  left: 50%; top: 55%;
+  transform: translateX(-50%);
+  display: flex;
+  align-items: flex-end;
+  gap: 10px;
+}
+.par-bar {
+  width: 38px;
+  border-radius: 12px 12px 0 0;
+}
+.par-bar-1 { height: 300px; background: #7FE3BF; opacity: .9; }
+.par-bar-2 { height: 240px; background: #FFEC6D; opacity: .85; }
+.par-bar-3 { height: 360px; background: #1DB87E; opacity: .9; }
+.par-bar-4 { height: 200px; background: #7FE3BF; opacity: .65; }
+.par-bar-5 { height: 270px; background: #FFEC6D; opacity: .7; }
+.par-bar-6 { height: 180px; background: #1DB87E; opacity: .5; }
+.par-bar-7 { height: 140px; background: #7FE3BF; opacity: .35; }
+
+/* Petits ronds décoratifs */
+.par-dot {
+  border-radius: 50%;
+}
+.par-dot-1 { width: 18px; height: 18px; background: #FFEC6D; opacity: .85; right: 90px;  top: 38%; }
+.par-dot-2 { width: 12px; height: 12px; background: #7FE3BF; opacity: .7;  left: 130px; top: 55%; }
+.par-dot-3 { width: 22px; height: 22px; background: #1DB87E; opacity: .55; right: 220px; top: 72%; }
+.par-dot-4 { width: 14px; height: 14px; background: #FFEC6D; opacity: .75; left:  70px;  top: 82%; }
+
+/* ── Contenu sticky par-dessus les formes ─────────────── */
+.par-content {
+  position: relative;
+  z-index: 2;
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+  justify-content: center;
+  min-height: 100vh;
+  padding: 100px 40px 120px;
+  text-align: center;
+}
+
+.par-tag {
+  display: inline-flex; align-items: center; gap: 7px;
+  font-family: 'DM Sans', sans-serif;
+  font-size: 11px; font-weight: 700; letter-spacing: .13em; text-transform: uppercase;
+  background: rgba(127,227,191,.14); color: #7FE3BF;
+  border-radius: 999px; padding: 5px 14px; margin-bottom: 26px;
+}
+.par-tag-dot { width: 6px; height: 6px; border-radius: 50%; background: #7FE3BF; flex-shrink: 0; }
+
+.par-title {
+  font-family: 'Bricolage Grotesque', sans-serif;
+  font-size: clamp(38px, 6vw, 76px);
+  font-weight: 800; line-height: 1.02; letter-spacing: -2.5px;
+  color: #FAFAF8; max-width: 760px; margin-bottom: 22px;
+}
+.par-title em { font-style: normal; color: #FFEC6D; }
+
+.par-sub {
+  font-family: 'DM Sans', sans-serif;
+  font-size: 17px; font-weight: 300;
+  color: rgba(255,255,255,.45);
+  max-width: 480px; line-height: 1.65; margin-bottom: 52px;
+}
+
+/* Grille de stats */
+.par-stats {
+  display: grid;
+  grid-template-columns: repeat(3, 1fr);
+  gap: 16px;
+  max-width: 860px; width: 100%;
+  margin-bottom: 48px;
+}
+.par-stat {
+  background: rgba(255,255,255,.06);
+  border: 1px solid rgba(255,255,255,.1);
+  border-radius: 20px; padding: 28px 22px;
+  text-align: left;
+  transition: background .2s, transform .2s;
+}
+.par-stat:hover {
+  background: rgba(255,255,255,.1);
+  transform: translateY(-3px);
+}
+.par-stat-label {
+  font-family: 'DM Sans', sans-serif;
+  font-size: 11px; font-weight: 700; letter-spacing: .1em;
+  text-transform: uppercase; color: #7FE3BF; margin-bottom: 10px;
+}
+.par-stat-val {
+  font-family: 'Bricolage Grotesque', sans-serif;
+  font-size: 46px; font-weight: 800; letter-spacing: -1.5px;
+  color: #fff; line-height: 1; margin-bottom: 8px;
+}
+.par-stat-val.yellow { color: #FFEC6D; }
+.par-stat-val.mint   { color: #7FE3BF; }
+.par-stat-desc {
+  font-family: 'DM Sans', sans-serif;
+  font-size: 13px; color: rgba(255,255,255,.45); line-height: 1.5;
+}
+
+/* CTA */
+.par-cta {
+  font-family: 'DM Sans', sans-serif;
+  font-size: 15px; font-weight: 600;
+  color: #0F2E22; background: #7FE3BF;
+  border: none; border-radius: 12px;
+  padding: 15px 32px; cursor: pointer;
+  transition: transform .15s, box-shadow .2s;
+  display: inline-flex; align-items: center; gap: 8px;
+}
+.par-cta:hover {
+  transform: translateY(-2px);
+  box-shadow: 0 10px 28px rgba(127,227,191,.35);
+}
+
+/* Citation bas de section */
+.par-quote-wrap {
+  position: relative; z-index: 2;
+  display: flex; align-items: center; justify-content: center;
+  padding: 80px 40px 120px;
+}
+.par-quote {
+  font-family: 'Bricolage Grotesque', sans-serif;
+  font-size: clamp(22px, 3.5vw, 42px);
+  font-weight: 800; line-height: 1.15; letter-spacing: -1px;
+  color: #fff; max-width: 720px; text-align: center;
+}
+.par-quote em { font-style: normal; color: #7FE3BF; }
+.par-quote cite {
+  display: block; margin-top: 20px;
+  font-family: 'DM Sans', sans-serif;
+  font-size: 13px; font-weight: 400;
+  color: rgba(255,255,255,.3); font-style: normal;
+}
+
+/* ── Responsive ───────────────────────────────────────── */
+@media (max-width: 768px) {
+  .par-stats { grid-template-columns: 1fr; max-width: 400px; }
+  .par-content { padding: 80px 24px 100px; }
+  .par-arc-tl-1, .par-arc-tl-2, .par-arc-tl-3 { transform: rotate(-45deg) scale(.7); transform-origin: top left; }
+  .par-arc-tr-1, .par-arc-tr-2, .par-arc-tr-3 { transform: rotate(45deg) scale(.7); transform-origin: top right; }
+  .par-bars { gap: 6px; }
+  .par-bar { width: 26px; }
 }
 </style>
 </head>
 <body>
 
-<!-- NAV -->
-<nav id="nav">
-  <div class="nav-logo">Hub2<span class="dot"></span>gether</div>
-  <div style="display:flex;align-items:center;gap:8px">
-    <button class="nav-ghost" onclick="scrollTo({top:document.getElementById('tarifs').offsetTop-70,behavior:'smooth'})">Tarifs</button>
-    <button class="nav-ghost" onclick="scrollTo({top:document.getElementById('how').offsetTop-70,behavior:'smooth'})">Comment ça marche</button>
-    <button class="nav-pill" id="nav-demo-btn">Voir la démo →</button>
-  </div>
-</nav>
+<!-- ═══════════════════════════════════════════════════════
+     SECTION PARALLAXE — copier depuis ici jusqu'à </section>
+     ═══════════════════════════════════════════════════════ -->
+<section class="par-section" id="par-section">
 
-<!-- HERO -->
-<section class="hero">
-  <div class="hero-noise"></div>
-  <div class="hero-glow"></div>
-  <div class="hero-grid-lines"></div>
-  <div class="hero-badge"><span class="pip">Nouveau</span>La plateforme sport B2B pensée pour vos équipes</div>
-  <h1 class="hero-title">Le sport en entreprise,<br><em>enfin centralisé.</em></h1>
-  <p class="hero-sub">Tournois, matchmaking, classements inter-entreprises, paiements — tout en un seul endroit pour vos collaborateurs.</p>
-  <div class="hero-actions">
-    <button class="btn-hero">Commencer gratuitement <span>→</span></button>
-    <button class="btn-hero-outline" id="hero-demo-btn">Voir la démo live</button>
-  </div>
-  <div class="hero-proof">
-    <div class="avatars">
-      <span style="background:#1E5EFF">JD</span><span style="background:#1DB87E">MS</span>
-      <span style="background:#FF6B35">AT</span><span style="background:#8B5CF6">LC</span>
-      <span style="background:#F5C842;color:#333">+</span>
+  <!-- FORMES EN PARALLAXE -->
+  <div class="par-shapes" id="par-shapes" aria-hidden="true">
+
+    <!-- Arcs haut-gauche -->
+    <div class="par-shape par-arc-tl-1" data-speed-y="-0.20" data-speed-x="0.04"></div>
+    <div class="par-shape par-arc-tl-2" data-speed-y="-0.14" data-speed-x="0.03"></div>
+    <div class="par-shape par-arc-tl-3" data-speed-y="-0.08" data-speed-x="0.02"></div>
+
+    <!-- Arcs haut-droite -->
+    <div class="par-shape par-arc-tr-1" data-speed-y="-0.20" data-speed-x="-0.04"></div>
+    <div class="par-shape par-arc-tr-2" data-speed-y="-0.14" data-speed-x="-0.03"></div>
+    <div class="par-shape par-arc-tr-3" data-speed-y="-0.08" data-speed-x="-0.02"></div>
+
+    <!-- Arcs bas-gauche -->
+    <div class="par-shape par-arc-bl-1" data-speed-y="-0.30" data-speed-x="0.05"></div>
+    <div class="par-shape par-arc-bl-2" data-speed-y="-0.22" data-speed-x="0.03"></div>
+    <div class="par-shape par-arc-bl-3" data-speed-y="-0.14" data-speed-x="0.02"></div>
+
+    <!-- Arcs bas-droite -->
+    <div class="par-shape par-arc-br-1" data-speed-y="-0.28" data-speed-x="-0.04"></div>
+    <div class="par-shape par-arc-br-2" data-speed-y="-0.18" data-speed-x="-0.03"></div>
+
+    <!-- Barres verticales -->
+    <div class="par-bars" id="par-bars">
+      <div class="par-shape par-bar par-bar-1" data-speed-y="-0.55"></div>
+      <div class="par-shape par-bar par-bar-2" data-speed-y="-0.42"></div>
+      <div class="par-shape par-bar par-bar-3" data-speed-y="-0.64"></div>
+      <div class="par-shape par-bar par-bar-4" data-speed-y="-0.36"></div>
+      <div class="par-shape par-bar par-bar-5" data-speed-y="-0.50"></div>
+      <div class="par-shape par-bar par-bar-6" data-speed-y="-0.30"></div>
+      <div class="par-shape par-bar par-bar-7" data-speed-y="-0.24"></div>
     </div>
-    <p class="proof-text"><strong>+2 400 collaborateurs</strong> actifs · 6 entreprises du CAC 40</p>
-  </div>
 
-  <!-- HERO DASHBOARD SIMULATION -->
-  <div class="hero-sim reveal-z">
-    <div class="sim-chrome">
-      <div class="sim-titlebar">
-        <span class="sim-dot" style="background:#ff5f57"></span>
-        <span class="sim-dot" style="background:#febc2e"></span>
-        <span class="sim-dot" style="background:#28c840"></span>
-        <div class="sim-url">app.hub2gether.com</div>
+    <!-- Petits ronds -->
+    <div class="par-shape par-dot par-dot-1" data-speed-y="-0.38" data-speed-x="-0.06"></div>
+    <div class="par-shape par-dot par-dot-2" data-speed-y="-0.26" data-speed-x=" 0.08"></div>
+    <div class="par-shape par-dot par-dot-3" data-speed-y="-0.44" data-speed-x="-0.05"></div>
+    <div class="par-shape par-dot par-dot-4" data-speed-y="-0.18" data-speed-x=" 0.07"></div>
+
+  </div><!-- /par-shapes -->
+
+  <!-- CONTENU -->
+  <div class="par-content">
+    <div class="par-tag"><div class="par-tag-dot"></div>La plateforme sport B2B</div>
+    <h2 class="par-title">Vos équipes méritent mieux<br>qu'un <em>groupe WhatsApp.</em></h2>
+    <p class="par-sub">Matchmaking, tournois, classements inter-entreprises, paiements — tout en un seul endroit pour vos collaborateurs.</p>
+
+    <div class="par-stats">
+      <div class="par-stat">
+        <div class="par-stat-label">Participation</div>
+        <div class="par-stat-val yellow">+31%</div>
+        <div class="par-stat-desc">d'activité sportive après le lancement de Hub2gether</div>
       </div>
-      <div class="sim-body">
-        <div class="sim-sidebar">
-          <div class="sim-sidebar-logo">H2G</div>
-          <div class="sim-nav-item active"><span class="ico">📊</span> Dashboard</div>
-          <div class="sim-nav-item"><span class="ico">⚡</span> Matchmaking</div>
-          <div class="sim-nav-item"><span class="ico">🏆</span> Tournois</div>
-          <div class="sim-nav-item"><span class="ico">📊</span> Classement</div>
-          <div class="sim-nav-item"><span class="ico">💳</span> Paiements</div>
-          <div class="sim-nav-item"><span class="ico">⚙️</span> Paramètres</div>
-        </div>
-        <div class="sim-main">
-          <div class="sim-topbar">
-            <div>
-              <div class="sim-greeting">Bonjour, Sarah 👋</div>
-              <div class="sim-date">Mercredi 1 avril 2026 · Paris</div>
-            </div>
-            <div class="sim-live-badge"><div class="sim-live-dot"></div>Live</div>
-          </div>
-          <div class="sim-kpis">
-            <div class="sim-kpi">
-              <div class="sim-kpi-label">Joueurs actifs</div>
-              <div class="sim-kpi-val" id="kpi-players">2 418</div>
-              <div class="sim-kpi-delta delta-up">↑ +14 aujourd'hui</div>
-              <div class="sim-kpi-bar"><div class="sim-kpi-bar-fill" style="width:78%;background:linear-gradient(90deg,#7FE3BF,#2ee4af)"></div></div>
-            </div>
-            <div class="sim-kpi">
-              <div class="sim-kpi-label">Matchs joués</div>
-              <div class="sim-kpi-val" id="kpi-matches">8 934</div>
-              <div class="sim-kpi-delta delta-up">↑ +23 cette semaine</div>
-              <div class="sim-kpi-bar"><div class="sim-kpi-bar-fill" style="width:62%;background:linear-gradient(90deg,#1DB87E,#6dffbd)"></div></div>
-            </div>
-            <div class="sim-kpi">
-              <div class="sim-kpi-label">Participation</div>
-              <div class="sim-kpi-val">+31<span style="font-size:16px;color:#6d7c72">%</span></div>
-              <div class="sim-kpi-delta delta-up">↑ vs. avant Hub2G</div>
-              <div class="sim-kpi-bar"><div class="sim-kpi-bar-fill" style="width:85%;background:linear-gradient(90deg,#FFEC6D,#ffd93d)"></div></div>
-            </div>
-            <div class="sim-kpi">
-              <div class="sim-kpi-label">Absentéisme</div>
-              <div class="sim-kpi-val">-24<span style="font-size:16px;color:#6d7c72">%</span></div>
-              <div class="sim-kpi-delta" style="color:#1DB87E">↓ Impact mesuré</div>
-              <div class="sim-kpi-bar"><div class="sim-kpi-bar-fill" style="width:70%;background:linear-gradient(90deg,#FF6B35,#ffb347)"></div></div>
-            </div>
-          </div>
-          <div class="sim-grid">
-            <div class="sim-card">
-              <div class="sim-card-title">Matchs à venir · Paris</div>
-              <div class="sim-match-row">
-                <div class="sim-av" style="background:#1E5EFF">JD</div>
-                <div class="sim-match-info">
-                  <div class="sim-match-name">Padel Doubles</div>
-                  <div class="sim-match-detail">Jérôme D. · Niveau 4 · 18h30 · UrbanPadel</div>
-                </div>
-                <span class="sim-badge bg-mint">€12</span>
-              </div>
-              <div class="sim-match-row">
-                <div class="sim-av" style="background:#FF6B35">MS</div>
-                <div class="sim-match-info">
-                  <div class="sim-match-name">Basketball 3v3</div>
-                  <div class="sim-match-detail">Marc S. · Intermédiaire · Demain 12h</div>
-                </div>
-                <span class="sim-badge bg-yellow">Gratuit</span>
-              </div>
-              <div class="sim-match-row">
-                <div class="sim-av" style="background:#8B5CF6">AT</div>
-                <div class="sim-match-info">
-                  <div class="sim-match-name">Tennis Simple</div>
-                  <div class="sim-match-detail">Alex T. · Avancé · Vendredi 8h</div>
-                </div>
-                <span class="sim-badge bg-red">2 places</span>
-              </div>
-              <div class="mini-bars" id="mini-bars">
-                <span style="height:22px"></span><span style="height:30px"></span>
-                <span style="height:24px"></span><span style="height:38px"></span>
-                <span style="height:44px" class="hi"></span><span style="height:52px" class="hi"></span>
-                <span style="height:48px" class="hi"></span>
-              </div>
-            </div>
-            <div class="sim-card">
-              <div class="sim-card-title">🏆 Top joueurs — Saison 4</div>
-              <div class="lb-row">
-                <div class="lb-rank" style="color:#FFB800">01</div>
-                <div class="lb-av" style="background:#1E5EFF">TR</div>
-                <div class="lb-name">Thomas R. <span style="font-size:10px;color:var(--muted)">Google</span></div>
-                <div class="lb-pts">2 480</div>
-              </div>
-              <div class="lb-row" style="background:rgba(127,227,191,.08);border-radius:8px;padding:6px 4px;">
-                <div class="lb-rank" style="color:#8A8A82">02</div>
-                <div class="lb-av" style="background:#1DB87E">SM</div>
-                <div class="lb-name">Sarah M. <span style="font-size:10px;color:var(--muted)">Hub2G ← Vous</span></div>
-                <div class="lb-pts" style="color:var(--mint)">2 315</div>
-              </div>
-              <div class="lb-row">
-                <div class="lb-rank" style="color:#CD7F32">03</div>
-                <div class="lb-av" style="background:#FF6B35">LV</div>
-                <div class="lb-name">Léa V. <span style="font-size:10px;color:var(--muted)">LVMH</span></div>
-                <div class="lb-pts">1 980</div>
-              </div>
-              <div class="lb-row">
-                <div class="lb-rank">04</div>
-                <div class="lb-av" style="background:#8B5CF6">JD</div>
-                <div class="lb-name">Jean D. <span style="font-size:10px;color:var(--muted)">BNP</span></div>
-                <div class="lb-pts">1 760</div>
-              </div>
-            </div>
-          </div>
-        </div>
+      <div class="par-stat">
+        <div class="par-stat-label">Absentéisme</div>
+        <div class="par-stat-val mint">-24%</div>
+        <div class="par-stat-desc">chez les équipes qui jouent régulièrement</div>
+      </div>
+      <div class="par-stat">
+        <div class="par-stat-label">Collaborateurs</div>
+        <div class="par-stat-val">2 400+</div>
+        <div class="par-stat-desc">actifs dans 6 entreprises du CAC 40</div>
       </div>
     </div>
+
+    <button class="par-cta">Demander une démo →</button>
   </div>
+
+  <!-- CITATION BAS DE SECTION -->
+  <div class="par-quote-wrap">
+    <blockquote class="par-quote">
+      Hub2gether transforme le sport en entreprise en un vrai <em>moteur de cohésion</em> qui rapproche les équipes et fidélise les talents.
+      <cite>— Retours clients Hub2gether, programmes actifs 2025</cite>
+    </blockquote>
+  </div>
+
 </section>
+<!-- ═══════════════════════════════════════════════════════
+     FIN DE LA SECTION PARALLAXE
+     ═══════════════════════════════════════════════════════ -->
 
-<!-- LOGOS -->
-<div class="logos-band">
-  <p class="logos-label">Des équipes de ces entreprises utilisent déjà Hub2gether</p>
-  <div class="logos-row">
-    <span class="logo-co">Capgemini</span>
-    <span class="logo-co">BNP Paribas</span>
-    <span class="logo-co">Decathlon</span>
-    <span class="logo-co">Veolia</span>
-    <span class="logo-co">LVMH</span>
-    <span class="logo-co">Société Générale</span>
-  </div>
-</div>
-
-<!-- STATS BAND -->
-<div class="stats-band">
-  <div class="stat-band-item reveal">
-    <div class="stat-num"><span class="counter" data-target="31" data-prefix="+">+0</span><span class="unit">%</span></div>
-    <div class="stat-label">de participation aux activités sportives internes après lancement</div>
-    <div class="stat-source">Source · Clients Hub2gether 2025</div>
-  </div>
-  <div class="stat-band-item reveal">
-    <div class="stat-num"><span class="counter" data-target="24" data-prefix="-">-0</span><span class="unit">%</span></div>
-    <div class="stat-label">d'absentéisme dans les équipes qui jouent régulièrement</div>
-    <div class="stat-source">Source · RH clients actifs</div>
-  </div>
-  <div class="stat-band-item reveal">
-    <div class="stat-num"><span class="counter" data-target="2400">0</span><span class="unit">+</span></div>
-    <div class="stat-label">collaborateurs actifs dans 6 entreprises du CAC 40</div>
-    <div class="stat-source">Données plateforme · Avril 2026</div>
-  </div>
-  <div class="stat-band-item reveal">
-    <div class="stat-num"><span class="counter" data-target="1" data-suffix="h">0h</span></div>
-    <div class="stat-label">pour être opérationnel, sans intégration technique complexe</div>
-    <div class="stat-source">Onboarding moyen constaté</div>
-  </div>
-</div>
-
-<!-- MATCHMAKING SIM -->
-<section class="match-sim-section" id="matchmaking">
-  <div class="inner">
-    <div class="match-sim-wrap">
-      <div class="reveal-l">
-        <div class="tag"><div class="td"></div>Matchmaking intelligent</div>
-        <h2 class="section-h">Trouvez des partenaires de jeu <em>en 30 secondes.</em></h2>
-        <p class="section-p">Filtrez par sport, niveau, disponibilité ou entreprise. L'algorithme Hub2gether propose les profils les plus compatibles en temps réel.</p>
-        <div style="margin-top:28px;display:flex;flex-direction:column;gap:12px">
-          <div style="display:flex;align-items:center;gap:10px;font-size:14px;color:var(--muted)"><span style="color:#1DB87E;font-size:18px">✓</span> Matching par niveau et disponibilité</div>
-          <div style="display:flex;align-items:center;gap:10px;font-size:14px;color:var(--muted)"><span style="color:#1DB87E;font-size:18px">✓</span> Paiement de la quote-part intégré</div>
-          <div style="display:flex;align-items:center;gap:10px;font-size:14px;color:var(--muted)"><span style="color:#1DB87E;font-size:18px">✓</span> Rappel automatique avant le match</div>
-        </div>
-      </div>
-      <!-- Phone mock -->
-      <div class="reveal-r" style="display:flex;justify-content:center">
-        <div class="match-phone">
-          <div class="match-screen">
-            <div class="match-screen-top">
-              <span>Hub2gether</span>
-              <strong>Matchmaking</strong>
-              <span style="background:rgba(127,227,191,.2);padding:3px 8px;border-radius:999px;font-size:11px;color:var(--mint)">Paris</span>
-            </div>
-            <div class="match-hero-area">
-              <div class="match-hero-title">Trouve ton prochain match 🔥</div>
-              <div class="match-sport-chips">
-                <span class="sport-chip on" data-sport="padel">🏸 Padel</span>
-                <span class="sport-chip" data-sport="tennis">🎾 Tennis</span>
-                <span class="sport-chip" data-sport="basket">🏀 Basket</span>
-                <span class="sport-chip" data-sport="foot">⚽ Foot</span>
-              </div>
-            </div>
-            <div class="match-cards" id="match-cards">
-              <div class="match-c sel" data-idx="0">
-                <div class="match-c-av" style="background:#1E5EFF">JD</div>
-                <div class="match-c-info">
-                  <div class="match-c-name">Padel Doubles</div>
-                  <div class="match-c-detail">Jérôme D. · Niveau 4 · Aujourd'hui 18h30</div>
-                </div>
-                <div class="match-c-right">
-                  <div class="match-c-price">€12.50</div>
-                  <div class="match-c-spots">1 place libre</div>
-                </div>
-              </div>
-              <div class="match-c" data-idx="1">
-                <div class="match-c-av" style="background:#8B5CF6">KL</div>
-                <div class="match-c-info">
-                  <div class="match-c-name">Padel Mixte</div>
-                  <div class="match-c-detail">Kim L. · Débutant · Jeudi 19h</div>
-                </div>
-                <div class="match-c-right">
-                  <div class="match-c-price">€10.00</div>
-                  <div class="match-c-spots">2 places libres</div>
-                </div>
-              </div>
-              <div class="match-c" data-idx="2">
-                <div class="match-c-av" style="background:#FF6B35">MS</div>
-                <div class="match-c-info">
-                  <div class="match-c-name">Padel Avancé</div>
-                  <div class="match-c-detail">Marc S. · Niveau 5 · Vendredi 8h</div>
-                </div>
-                <div class="match-c-right">
-                  <div class="match-c-price">€15.00</div>
-                  <div class="match-c-spots">1 place libre</div>
-                </div>
-              </div>
-            </div>
-            <button class="match-join-btn" id="join-btn">Rejoindre le match →</button>
-            <div class="join-anim" id="join-anim">
-              <div class="tick">✅</div>
-              <p>Tu rejoins le match !</p>
-              <small>Paiement sécurisé · Rappel automatique</small>
-            </div>
-          </div>
-        </div>
-      </div>
-    </div>
-  </div>
-</section>
-
-<!-- TOURNOIS SIM -->
-<section class="tournoi-section" id="tournois">
-  <div class="inner">
-    <div class="tournoi-wrap">
-      <!-- Bracket UI -->
-      <div class="reveal-l">
-        <div class="bracket-ui">
-          <div class="bracket-header">
-            <div>
-              <div class="bracket-title">🏆 Tournoi Padel — Finale</div>
-              <div style="font-size:11px;color:var(--muted);margin-top:3px">Capgemini × BNP Paribas · Paris</div>
-            </div>
-            <div class="bracket-live"><div class="bracket-dot"></div>EN DIRECT</div>
-          </div>
-
-          <div class="bracket-grid">
-            <!-- Quarts -->
-            <div class="bracket-col">
-              <div class="bracket-match">
-                <div class="bracket-team win">
-                  <div class="bracket-team-av" style="background:#1E5EFF">CA</div>
-                  Capgemini A
-                  <div class="bracket-team-score">6</div>
-                </div>
-                <div class="bracket-team lost">
-                  <div class="bracket-team-av" style="background:#8B5CF6">BN</div>
-                  BNP Nord
-                  <div class="bracket-team-score">2</div>
-                </div>
-              </div>
-              <div class="bracket-match">
-                <div class="bracket-team win">
-                  <div class="bracket-team-av" style="background:#1DB87E">VE</div>
-                  Veolia Est
-                  <div class="bracket-team-score">7</div>
-                </div>
-                <div class="bracket-team lost">
-                  <div class="bracket-team-av" style="background:#FF6B35">DX</div>
-                  Decathlon X
-                  <div class="bracket-team-score">5</div>
-                </div>
-              </div>
-            </div>
-
-            <!-- Connecteur -->
-            <div class="bracket-connector">
-              <svg viewBox="0 0 40 140" fill="none" xmlns="http://www.w3.org/2000/svg">
-                <path d="M0 35 H20 V70 H20 V105 H0" stroke="rgba(15,46,34,.15)" stroke-width="1.5" fill="none"/>
-              </svg>
-            </div>
-
-            <!-- Demi -->
-            <div class="bracket-col bracket-final">
-              <div class="bracket-match" style="margin:auto 0">
-                <div class="bracket-team win">
-                  <div class="bracket-team-av" style="background:#1E5EFF">CA</div>
-                  Capgemini A
-                  <div class="bracket-team-score" id="score-a">4</div>
-                </div>
-                <div class="bracket-team">
-                  <div class="bracket-team-av" style="background:#1DB87E">VE</div>
-                  Veolia Est
-                  <div class="bracket-team-score" id="score-b">3</div>
-                </div>
-              </div>
-            </div>
-
-            <div class="bracket-connector">
-              <svg viewBox="0 0 40 140" fill="none" xmlns="http://www.w3.org/2000/svg">
-                <path d="M40 70 H20" stroke="rgba(127,227,191,.5)" stroke-width="1.5" fill="none" stroke-dasharray="4 3"/>
-              </svg>
-            </div>
-
-            <!-- Vainqueur -->
-            <div class="bracket-col" style="justify-content:center">
-              <div style="text-align:center">
-                <div style="font-size:28px;margin-bottom:8px">🏆</div>
-                <div style="font-family:var(--fd);font-size:13px;font-weight:800;color:var(--ink)">En cours…</div>
-                <div style="font-size:11px;color:var(--muted);margin-top:4px" id="match-timer">Set 2 · 04:32</div>
-              </div>
-            </div>
-          </div>
-
-          <!-- Score ticker -->
-          <div class="ticker-outer">
-            <div class="ticker-track">
-              <div class="ticker-item" style="margin-right:10px"><span class="sport-ico">🏸</span><strong>Padel</strong> · Capgemini 4–3 Veolia · Set 2</div>
-              <div class="ticker-item" style="margin-right:10px"><span class="sport-ico">⚽</span><strong>Foot 5v5</strong> · BNP 2–1 LVMH · Terminé</div>
-              <div class="ticker-item" style="margin-right:10px"><span class="sport-ico">🏀</span><strong>Basket 3v3</strong> · Decathlon 21–18 SG · Terminé</div>
-              <div class="ticker-item" style="margin-right:10px"><span class="sport-ico">🎾</span><strong>Tennis</strong> · Sarah M. 6–4 Thomas R.</div>
-              <div class="ticker-item" style="margin-right:10px"><span class="sport-ico">🏸</span><strong>Padel</strong> · Capgemini 4–3 Veolia · Set 2</div>
-              <div class="ticker-item" style="margin-right:10px"><span class="sport-ico">⚽</span><strong>Foot 5v5</strong> · BNP 2–1 LVMH · Terminé</div>
-              <div class="ticker-item" style="margin-right:10px"><span class="sport-ico">🏀</span><strong>Basket 3v3</strong> · Decathlon 21–18 SG · Terminé</div>
-              <div class="ticker-item" style="margin-right:10px"><span class="sport-ico">🎾</span><strong>Tennis</strong> · Sarah M. 6–4 Thomas R.</div>
-            </div>
-          </div>
-        </div>
-      </div>
-
-      <div class="reveal-r">
-        <div class="tag"><div class="td"></div>Tournois inter-entreprises</div>
-        <h2 class="section-h">Des compétitions qui <em>fédèrent vos équipes.</em></h2>
-        <p class="section-p">Brackets automatiques, résultats en temps réel, classements inter-entreprises. Organisez votre premier tournoi en quelques clics.</p>
-        <div style="margin-top:28px;display:flex;flex-direction:column;gap:12px">
-          <div style="display:flex;align-items:center;gap:10px;font-size:14px;color:var(--muted)"><span style="color:#1DB87E;font-size:18px">✓</span> Brackets générés automatiquement</div>
-          <div style="display:flex;align-items:center;gap:10px;font-size:14px;color:var(--muted)"><span style="color:#1DB87E;font-size:18px">✓</span> Scores saisis en temps réel</div>
-          <div style="display:flex;align-items:center;gap:10px;font-size:14px;color:var(--muted)"><span style="color:#1DB87E;font-size:18px">✓</span> Classements inter-entreprises</div>
-          <div style="display:flex;align-items:center;gap:10px;font-size:14px;color:var(--muted)"><span style="color:#1DB87E;font-size:18px">✓</span> Récapitulatif automatique envoyé</div>
-        </div>
-      </div>
-    </div>
-  </div>
-</section>
-
-<!-- PAIEMENTS SIM -->
-<section class="pay-section" id="paiements">
-  <div class="inner">
-    <div class="pay-wrap">
-      <div class="reveal-l">
-        <div class="tag" style="background:rgba(29,184,126,.1);color:#0a7a3e"><div class="td" style="background:#1DB87E"></div>Paiements simplifiés</div>
-        <h2 class="section-h">Fini les virements manuels. Chaque joueur paie <em>automatiquement.</em></h2>
-        <p class="section-p">Plus de relances, plus d'avances. Chaque joueur paie sa quote-part directement depuis l'app. Zéro friction, zéro dette.</p>
-        <div style="margin-top:28px;display:flex;flex-direction:column;gap:12px">
-          <div style="display:flex;align-items:center;gap:10px;font-size:14px;color:var(--muted)"><span style="color:#1DB87E;font-size:18px">✓</span> Répartition automatique par joueur</div>
-          <div style="display:flex;align-items:center;gap:10px;font-size:14px;color:var(--muted)"><span style="color:#1DB87E;font-size:18px">✓</span> Rappels de paiement automatiques</div>
-          <div style="display:flex;align-items:center;gap:10px;font-size:14px;color:var(--muted)"><span style="color:#1DB87E;font-size:18px">✓</span> Remboursements en 1 clic</div>
-        </div>
-      </div>
-
-      <!-- Pay UI -->
-      <div class="reveal-r">
-        <div class="pay-ui">
-          <div class="pay-header">
-            <div>
-              <div class="pay-header-title">Match Padel · 1er avril</div>
-              <div class="pay-header-sub">UrbanPadel Paris 12e · 4 joueurs</div>
-            </div>
-            <div class="pay-total-badge">60.00€</div>
-          </div>
-          <div class="pay-players" id="pay-players">
-            <div class="pay-row">
-              <div class="pay-av" style="background:#1DB87E">DK</div>
-              <div class="pay-name">David King <span style="font-size:11px;color:var(--muted)">(organisateur)</span></div>
-              <div class="pay-amt">15.00€</div>
-              <span class="pay-status s-paid">PAYÉ ✓</span>
-            </div>
-            <div class="pay-row" id="pay-marc">
-              <div class="pay-av" style="background:#1E5EFF">MS</div>
-              <div class="pay-name">Marc S.</div>
-              <div class="pay-amt">15.00€</div>
-              <span class="pay-status s-wait" id="marc-status">EN ATTENTE</span>
-            </div>
-            <div class="pay-row" id="pay-julia">
-              <div class="pay-av" style="background:#8B5CF6">JL</div>
-              <div class="pay-name">Julia L.</div>
-              <div class="pay-amt">15.00€</div>
-              <span class="pay-status s-wait" id="julia-status">EN ATTENTE</span>
-            </div>
-            <div class="pay-row" style="background:rgba(127,227,191,.08);border-color:rgba(127,227,191,.3)">
-              <div class="pay-av" style="background:#1DB87E">Moi</div>
-              <div class="pay-name">Vous</div>
-              <div class="pay-amt">15.00€</div>
-              <span class="pay-status s-you">REMBOURSER</span>
-            </div>
-          </div>
-          <div class="pay-progress">
-            <div class="pay-prog-label">
-              <span>Collecté</span>
-              <span id="pay-pct">25% · 15€ / 60€</span>
-            </div>
-            <div class="pay-bar"><div class="pay-bar-fill" id="pay-fill" style="width:25%"></div></div>
-          </div>
-          <button class="pay-cta" id="pay-remind-btn">
-            📩 Envoyer un rappel · <span class="amount" id="pay-remain">45€ restants</span>
-          </button>
-        </div>
-      </div>
-    </div>
-  </div>
-</section>
-
-<!-- CLASSEMENT SIM -->
-<section class="rank-section" id="classement">
-  <div class="inner">
-    <div class="rank-wrap">
-      <!-- Rank UI -->
-      <div class="reveal-l">
-        <div class="rank-ui">
-          <div class="rank-tabs-bar">
-            <button class="rank-tab on" data-tab="joueurs">Joueurs</button>
-            <button class="rank-tab" data-tab="entreprises">Entreprises</button>
-            <button class="rank-tab" data-tab="sports">Sports</button>
-          </div>
-          <div class="rank-body">
-            <!-- My rank -->
-            <div class="rank-my">
-              <div class="rank-my-num">#2</div>
-              <div class="rank-my-av">SM</div>
-              <div class="rank-my-info">
-                <div class="rank-my-name">Sarah Miller</div>
-                <div class="rank-my-co">Hub2gether · 42 matchs</div>
-              </div>
-              <div class="rank-my-pts">2 315 pts</div>
-            </div>
-            <!-- List -->
-            <div class="rank-list" id="rank-list">
-              <div class="rank-item">
-                <div class="rank-item-num rank-gold">01</div>
-                <div class="rank-av" style="background:#1E5EFF">TR</div>
-                <div class="rank-info">
-                  <div class="rank-name">Thomas R.</div>
-                  <div class="rank-co">Google · 156 matchs</div>
-                </div>
-                <div class="rank-pts">2 480<span class="rank-trend" style="color:#1DB87E">▲3</span></div>
-              </div>
-              <div class="rank-item">
-                <div class="rank-item-num rank-bronze">03</div>
-                <div class="rank-av" style="background:#FF6B35">LV</div>
-                <div class="rank-info">
-                  <div class="rank-name">Léa V.</div>
-                  <div class="rank-co">LVMH · 89 matchs</div>
-                </div>
-                <div class="rank-pts">1 980<span class="rank-trend" style="color:#FF6B35">▼1</span></div>
-              </div>
-              <div class="rank-item">
-                <div class="rank-item-num">04</div>
-                <div class="rank-av" style="background:#8B5CF6">JD</div>
-                <div class="rank-info">
-                  <div class="rank-name">Jean D.</div>
-                  <div class="rank-co">BNP Paribas · 72 matchs</div>
-                </div>
-                <div class="rank-pts">1 760<span class="rank-trend" style="color:#1DB87E">▲2</span></div>
-              </div>
-              <div class="rank-item">
-                <div class="rank-item-num">05</div>
-                <div class="rank-av" style="background:#F5C842">KL</div>
-                <div class="rank-info">
-                  <div class="rank-name">Kim L.</div>
-                  <div class="rank-co">Capgemini · 68 matchs</div>
-                </div>
-                <div class="rank-pts">1 640<span class="rank-trend" style="color:#1DB87E">▲5</span></div>
-              </div>
-            </div>
-          </div>
-        </div>
-      </div>
-
-      <div class="reveal-r">
-        <div class="tag"><div class="td"></div>Profil & Classement</div>
-        <h2 class="section-h">Votre profil sportif, vos stats, <em>votre progression.</em></h2>
-        <p class="section-p">Classements individuels et inter-entreprises par sport. Une motivation saine qui donne envie de revenir.</p>
-        <div style="margin-top:28px;display:flex;flex-direction:column;gap:12px">
-          <div style="display:flex;align-items:center;gap:10px;font-size:14px;color:var(--muted)"><span style="color:#1DB87E;font-size:18px">✓</span> Classements joueurs et entreprises</div>
-          <div style="display:flex;align-items:center;gap:10px;font-size:14px;color:var(--muted)"><span style="color:#1DB87E;font-size:18px">✓</span> Historique et courbes de progression</div>
-          <div style="display:flex;align-items:center;gap:10px;font-size:14px;color:var(--muted)"><span style="color:#1DB87E;font-size:18px">✓</span> Badges et récompenses de saison</div>
-        </div>
-      </div>
-    </div>
-  </div>
-</section>
-
-<!-- TARIFS -->
-<section class="pricing-section" id="tarifs">
-  <div class="inner">
-    <div class="tag"><div class="td"></div>Tarifs</div>
-    <h2 class="section-h" style="color:white">Un prix qui s'adapte à la taille de votre <em>entreprise.</em></h2>
-    <p class="section-p" style="color:rgba(255,255,255,.5)">Démarrez gratuitement et montez en puissance avec vos équipes.</p>
-
-    <div class="pricing-grid stagger reveal">
-      <div class="price-card">
-        <div class="price-badge">PME</div>
-        <div class="price-name">Starter</div>
-        <div class="price-val">99€ <span>/ mois</span></div>
-        <div class="price-mo">Jusqu'à 80 joueurs</div>
-        <hr class="price-sep">
-        <div class="price-feat">Matchmaking & événements</div>
-        <div class="price-feat">Paiements intégrés</div>
-        <div class="price-feat">Classement interne</div>
-        <button class="price-btn">Commencer →</button>
-      </div>
-      <div class="price-card pop">
-        <div class="price-badge">⭐ Populaire · Scale-up</div>
-        <div class="price-name">Growth</div>
-        <div class="price-val">249€ <span>/ mois</span></div>
-        <div class="price-mo">Jusqu'à 300 joueurs</div>
-        <hr class="price-sep">
-        <div class="price-feat">Tout Starter</div>
-        <div class="price-feat">Classements & ligues inter-entreprises</div>
-        <div class="price-feat">Dashboard RH avancé</div>
-        <div class="price-feat">Tournois multi-équipes</div>
-        <button class="price-btn">Choisir Growth →</button>
-      </div>
-      <div class="price-card">
-        <div class="price-badge">ETI</div>
-        <div class="price-name">Business</div>
-        <div class="price-val">499€ <span>/ mois</span></div>
-        <div class="price-mo">Jusqu'à 1 000 joueurs</div>
-        <hr class="price-sep">
-        <div class="price-feat">Tout Growth</div>
-        <div class="price-feat">Multi-sites & filiales</div>
-        <div class="price-feat">Support dédié</div>
-        <div class="price-feat">Rapport mensuel RH</div>
-        <button class="price-btn">Choisir Business →</button>
-      </div>
-      <div class="price-card">
-        <div class="price-badge">Grand compte</div>
-        <div class="price-name">Enterprise</div>
-        <div class="price-val" style="font-size:28px;margin-top:8px">Sur devis</div>
-        <div class="price-mo">Joueurs illimités</div>
-        <hr class="price-sep">
-        <div class="price-feat">Tout Business</div>
-        <div class="price-feat">API & SSO</div>
-        <div class="price-feat">Success manager dédié</div>
-        <div class="price-feat">SLA garanti</div>
-        <button class="price-btn">Nous contacter →</button>
-      </div>
-    </div>
-  </div>
-</section>
-
-<!-- COMMENT CA MARCHE -->
-<section class="how-section" id="how">
-  <div class="inner" style="text-align:center">
-    <div class="tag" style="margin:0 auto 18px"><div class="td"></div>Comment ça marche</div>
-    <h2 class="section-h" style="margin:0 auto">Opérationnel en <em>moins d'une heure.</em></h2>
-    <p class="section-p" style="margin:18px auto 0">Pas d'intégration complexe. Vos collaborateurs créent leur compte et commencent à jouer.</p>
-    <div class="steps-row stagger reveal">
-      <div class="step">
-        <div class="step-n">1</div>
-        <div class="step-name">L'entreprise s'inscrit</div>
-        <div class="step-desc">Créez votre espace entreprise en 5 minutes.</div>
-      </div>
-      <div class="step">
-        <div class="step-n">2</div>
-        <div class="step-name">Les collaborateurs rejoignent</div>
-        <div class="step-desc">Un lien d'invitation suffit pour embarquer vos équipes.</div>
-      </div>
-      <div class="step">
-        <div class="step-n">3</div>
-        <div class="step-name">Jouez & compétissez</div>
-        <div class="step-desc">Matchs, tournois et défis inter-entreprises.</div>
-      </div>
-      <div class="step">
-        <div class="step-n">4</div>
-        <div class="step-name">Suivez les résultats</div>
-        <div class="step-desc">Dashboard RH avec KPIs d'engagement en temps réel.</div>
-      </div>
-    </div>
-  </div>
-</section>
-
-<!-- CTA FINAL -->
-<div class="cta-final">
-  <p style="font-size:12px;color:rgba(255,255,255,.28);text-transform:uppercase;letter-spacing:.15em;margin-bottom:22px;position:relative;z-index:1">Prêt à lancer le sport dans votre entreprise ?</p>
-  <h2 class="cta-h">Rejoignez les entreprises qui <em>gagnent</em> sur tous les terrains.</h2>
-  <p class="cta-sub">Démo gratuite, onboarding accompagné, premier tournoi organisé avec vous.</p>
-  <div class="cta-btns">
-    <button class="btn-cta-w">Demander une démo →</button>
-    <button class="btn-cta-ghost" onclick="scrollTo({top:document.getElementById('tarifs').offsetTop-70,behavior:'smooth'})">Voir les tarifs</button>
-  </div>
-</div>
-
-<!-- FOOTER -->
-<footer>
-  <div class="footer-inner">
-    <div class="footer-logo">Hub2gether</div>
-    <div class="footer-links">
-      <a href="#">Produit</a>
-      <a href="#tarifs">Tarifs</a>
-      <a href="#">Blog</a>
-      <a href="#">Contact</a>
-    </div>
-    <div class="footer-copy">© 2026 Hub2gether. Tous droits réservés.</div>
-  </div>
-</footer>
-
-<!-- TOAST NOTIFICATION -->
-<div class="toast" id="toast">
-  <div class="toast-ico">✅</div>
-  <div class="toast-text">
-    <strong id="toast-title">Marc S. a payé !</strong>
-    <span id="toast-sub">15.00€ reçus · Automatique</span>
-  </div>
-</div>
 
 <script>
-// ─── NAV scroll ────────────────────────────────
-window.addEventListener('scroll', () => {
-  document.getElementById('nav').classList.toggle('scrolled', window.scrollY > 20);
-}, { passive: true });
+(function () {
+  const section = document.getElementById('par-section');
+  if (!section) return;
 
-// ─── INTERSECTION OBSERVER ─────────────────────
-const io = new IntersectionObserver((entries) => {
-  entries.forEach(e => { if (e.isIntersecting) e.target.classList.add('visible'); });
-}, { threshold: 0.1 });
-document.querySelectorAll('.reveal,.reveal-l,.reveal-r,.reveal-z,.stagger').forEach(el => io.observe(el));
+  // Récupère toutes les formes SAUF le conteneur .par-bars (les barres sont gérées individuellement)
+  const shapes = Array.from(section.querySelectorAll('.par-shape')).filter(el => !el.classList.contains('par-bars'));
 
-// ─── COUNTERS ──────────────────────────────────
-const counterIO = new IntersectionObserver((entries) => {
-  entries.forEach(entry => {
-    const el = entry.target;
-    if (!entry.isIntersecting || el.dataset.done === '1') return;
-    const target = +el.dataset.target;
-    const prefix = el.dataset.prefix || '';
-    const suffix = el.dataset.suffix || '';
-    const dur = 1400;
-    const start = performance.now();
-    const tick = (now) => {
-      const p = Math.min((now - start) / dur, 1);
-      const e = 1 - Math.pow(1 - p, 3);
-      el.textContent = `${prefix}${Math.round(target * e).toLocaleString('fr-FR')}${suffix}`;
-      if (p < 1) requestAnimationFrame(tick);
-    };
-    requestAnimationFrame(tick);
-    el.dataset.done = '1';
-  });
-}, { threshold: 0.4 });
-document.querySelectorAll('.counter').forEach(el => { el.dataset.done = '0'; counterIO.observe(el); });
+  // Pré-calcule les vitesses depuis data-attributes
+  const items = shapes.map(el => ({
+    el,
+    speedY: parseFloat(el.dataset.speedY || '0'),
+    speedX: parseFloat(el.dataset.speedX || '0'),
+    // Rotation de base éventuelle (ex: les arcs ont déjà une transform CSS)
+    // On va injecter via une var CSS plutôt qu'écraser le transform
+    baseTransform: el.style.transform || '',
+  }));
 
-// ─── KPI LIVE TICKER (dashboard) ──────────────
-setInterval(() => {
-  const el = document.getElementById('kpi-players');
-  if (el) {
-    const v = parseInt(el.textContent.replace(/\s/g, ''));
-    el.textContent = (v + Math.floor(Math.random() * 2)).toLocaleString('fr-FR');
-  }
-}, 4000);
+  let ticking = false;
 
-// ─── MATCH CARDS INTERACTION ───────────────────
-document.querySelectorAll('.match-c').forEach(card => {
-  card.addEventListener('click', () => {
-    document.querySelectorAll('.match-c').forEach(c => c.classList.remove('sel'));
-    card.classList.add('sel');
-  });
-});
+  function update () {
+    // Position du scroll relatif à l'entrée de la section
+    const secTop  = section.getBoundingClientRect().top + window.scrollY;
+    const scrolled = Math.max(0, window.scrollY - secTop);
 
-document.querySelectorAll('.sport-chip').forEach(chip => {
-  chip.addEventListener('click', () => {
-    document.querySelectorAll('.sport-chip').forEach(c => c.classList.remove('on'));
-    chip.classList.add('on');
-    const sports = {
-      padel: [
-        { av: 'JD', color: '#1E5EFF', name: 'Padel Doubles', detail: 'Jérôme D. · Niveau 4 · Aujourd\'hui 18h30', price: '€12.50', spots: '1 place libre' },
-        { av: 'KL', color: '#8B5CF6', name: 'Padel Mixte', detail: 'Kim L. · Débutant · Jeudi 19h', price: '€10.00', spots: '2 places libres' },
-        { av: 'MS', color: '#FF6B35', name: 'Padel Avancé', detail: 'Marc S. · Niveau 5 · Vendredi 8h', price: '€15.00', spots: '1 place libre' }
-      ],
-      tennis: [
-        { av: 'AT', color: '#1DB87E', name: 'Tennis Simple', detail: 'Alex T. · Avancé · Vendredi 8h', price: '€8.00', spots: '1 place libre' },
-        { av: 'LV', color: '#FF6B35', name: 'Double Mixte', detail: 'Léa V. · Intermédiaire · Samedi 10h', price: '€6.00', spots: '2 places libres' }
-      ],
-      basket: [
-        { av: 'SM', color: '#1E5EFF', name: 'Basket 3v3', detail: 'Sam M. · Amateur · Demain 12h', price: 'Gratuit', spots: '2 places libres' },
-        { av: 'JD', color: '#8B5CF6', name: 'Basket 5v5', detail: 'Jordan D. · Intermédiaire · Jeudi', price: '€5.00', spots: '3 places libres' }
-      ],
-      foot: [
-        { av: 'RB', color: '#1DB87E', name: 'Foot 5v5', detail: 'Rayan B. · Amateur · Mercredi 20h', price: '€7.00', spots: '1 place libre' },
-        { av: 'KM', color: '#FF6B35', name: 'Futsal', detail: 'Karim M. · Intermédiaire · Vendredi', price: '€6.00', spots: '2 places libres' }
-      ]
-    };
-    const data = sports[chip.dataset.sport] || sports.padel;
-    const container = document.getElementById('match-cards');
-    container.innerHTML = data.map((d, i) => `
-      <div class="match-c${i===0?' sel':''}" style="animation:slideIn .3s ease both;animation-delay:${i*60}ms">
-        <div class="match-c-av" style="background:${d.color}">${d.av}</div>
-        <div class="match-c-info">
-          <div class="match-c-name">${d.name}</div>
-          <div class="match-c-detail">${d.detail}</div>
-        </div>
-        <div class="match-c-right">
-          <div class="match-c-price">${d.price}</div>
-          <div class="match-c-spots">${d.spots}</div>
-        </div>
-      </div>
-    `).join('');
-    container.querySelectorAll('.match-c').forEach(c => {
-      c.addEventListener('click', () => {
-        container.querySelectorAll('.match-c').forEach(x => x.classList.remove('sel'));
-        c.classList.add('sel');
-      });
+    items.forEach(({ el, speedY, speedX, baseTransform }) => {
+      const dy = scrolled * speedY;
+      const dx = speedX ? scrolled * speedX : 0;
+
+      // Les arcs ont déjà un transform (rotate). On les wrap avec translate.
+      // On utilise translateX/Y AVANT le rotate pour ne pas perturber l'orientation.
+      if (baseTransform && baseTransform.includes('rotate')) {
+        el.style.transform = `translate(${dx.toFixed(2)}px, ${dy.toFixed(2)}px) ${baseTransform}`;
+      } else {
+        el.style.transform = `translate(${dx.toFixed(2)}px, ${dy.toFixed(2)}px)`;
+      }
     });
-  });
-});
 
-// ─── JOIN BTN ANIMATION ────────────────────────
-document.getElementById('join-btn').addEventListener('click', () => {
-  const anim = document.getElementById('join-anim');
-  anim.classList.add('show');
-  showToast('🎾 Match rejoint !', 'Paiement sécurisé · Rappel envoyé');
-  setTimeout(() => anim.classList.remove('show'), 2800);
-});
-
-// ─── SCORE LIVE TICKER ─────────────────────────
-let scoreA = 4, scoreB = 3;
-let timerSecs = 272;
-setInterval(() => {
-  timerSecs++;
-  const m = Math.floor(timerSecs / 60);
-  const s = String(timerSecs % 60).padStart(2, '0');
-  const timerEl = document.getElementById('match-timer');
-  if (timerEl) timerEl.textContent = `Set 2 · ${String(m).padStart(2,'0')}:${s}`;
-}, 1000);
-setInterval(() => {
-  if (Math.random() > 0.6) {
-    if (Math.random() > 0.45) scoreA++;
-    else scoreB++;
-    const elA = document.getElementById('score-a');
-    const elB = document.getElementById('score-b');
-    if (elA) elA.textContent = scoreA;
-    if (elB) elB.textContent = scoreB;
+    ticking = false;
   }
-}, 3500);
 
-// ─── PAYMENTS SIMULATION ───────────────────────
-let paid = 1;
-const payStates = ['marc', 'julia'];
-let payIdx = 0;
-
-document.getElementById('pay-remind-btn').addEventListener('click', () => {
-  if (payIdx >= payStates.length) return;
-  const who = payStates[payIdx];
-  const statusEl = document.getElementById(`${who}-status`);
-  if (statusEl) {
-    statusEl.textContent = 'PAYÉ ✓';
-    statusEl.className = 'pay-status s-paid';
-    paid++;
-    const pct = Math.round((paid / 4) * 100);
-    const fill = document.getElementById('pay-fill');
-    const pctEl = document.getElementById('pay-pct');
-    const remainEl = document.getElementById('pay-remain');
-    if (fill) fill.style.width = pct + '%';
-    if (pctEl) pctEl.textContent = `${pct}% · ${paid * 15}€ / 60€`;
-    const remain = (4 - paid) * 15;
-    if (remainEl) remainEl.textContent = remain > 0 ? `${remain}€ restants` : 'Tout réglé 🎉';
-    const names = { marc: 'Marc S.', julia: 'Julia L.' };
-    showToast(`💰 ${names[who]} a payé !`, '15.00€ reçus · Automatique');
-    payIdx++;
-    if (payIdx >= payStates.length) {
-      const btn = document.getElementById('pay-remind-btn');
-      if (btn) { btn.textContent = '🎉 Tous les paiements reçus !'; btn.style.background = '#1DB87E'; }
+  window.addEventListener('scroll', function () {
+    if (!ticking) {
+      requestAnimationFrame(update);
+      ticking = true;
     }
-  }
-});
+  }, { passive: true });
 
-// Auto demo payment after 6s
-setTimeout(() => {
-  if (payIdx === 0 && paid === 1) {
-    const marcStatus = document.getElementById('marc-status');
-    if (marcStatus) {
-      marcStatus.textContent = 'PAYÉ ✓';
-      marcStatus.className = 'pay-status s-paid';
-      paid++;
-      const pct = Math.round((paid / 4) * 100);
-      const fill = document.getElementById('pay-fill');
-      const pctEl = document.getElementById('pay-pct');
-      const remainEl = document.getElementById('pay-remain');
-      if (fill) fill.style.width = pct + '%';
-      if (pctEl) pctEl.textContent = `${pct}% · ${paid * 15}€ / 60€`;
-      if (remainEl) remainEl.textContent = `${(4-paid)*15}€ restants`;
-      payIdx++;
-      showToast('💰 Marc S. a payé !', '15.00€ reçus · Automatique');
-    }
-  }
-}, 6000);
-
-// ─── RANK TABS ─────────────────────────────────
-const rankData = {
-  joueurs: [
-    { num:'01', numClass:'rank-gold', av:'TR', color:'#1E5EFF', name:'Thomas R.', co:'Google · 156 matchs', pts:'2 480', trend:'▲3', tColor:'#1DB87E' },
-    { num:'03', numClass:'rank-bronze', av:'LV', color:'#FF6B35', name:'Léa V.', co:'LVMH · 89 matchs', pts:'1 980', trend:'▼1', tColor:'#FF6B35' },
-    { num:'04', numClass:'', av:'JD', color:'#8B5CF6', name:'Jean D.', co:'BNP Paribas · 72 matchs', pts:'1 760', trend:'▲2', tColor:'#1DB87E' },
-    { num:'05', numClass:'', av:'KL', color:'#F5C842', name:'Kim L.', co:'Capgemini · 68 matchs', pts:'1 640', trend:'▲5', tColor:'#1DB87E' },
-  ],
-  entreprises: [
-    { num:'01', numClass:'rank-gold', av:'CG', color:'#1E5EFF', name:'Capgemini', co:'1 250 joueurs · 12 sports', pts:'48 200', trend:'▲2', tColor:'#1DB87E' },
-    { num:'02', numClass:'rank-silver', av:'BN', color:'#8B5CF6', name:'BNP Paribas', co:'980 joueurs · 9 sports', pts:'41 500', trend:'▲1', tColor:'#1DB87E' },
-    { num:'03', numClass:'rank-bronze', av:'SG', color:'#1DB87E', name:'Soc. Générale', co:'890 joueurs · 8 sports', pts:'36 100', trend:'stable', tColor:'#8A8A82' },
-    { num:'04', numClass:'', av:'LV', color:'#FF6B35', name:'LVMH', co:'640 joueurs · 7 sports', pts:'29 400', trend:'▲4', tColor:'#1DB87E' },
-  ],
-  sports: [
-    { num:'01', numClass:'rank-gold', av:'🏸', color:'#1DB87E', name:'Padel', co:'3 400 matchs cette saison', pts:'4.8 ★', trend:'+18%', tColor:'#1DB87E' },
-    { num:'02', numClass:'rank-silver', av:'⚽', color:'#1E5EFF', name:'Football 5v5', co:'2 100 matchs cette saison', pts:'4.6 ★', trend:'+12%', tColor:'#1DB87E' },
-    { num:'03', numClass:'rank-bronze', av:'🎾', color:'#FF6B35', name:'Tennis', co:'1 800 matchs cette saison', pts:'4.7 ★', trend:'+8%', tColor:'#1DB87E' },
-    { num:'04', numClass:'', av:'🏀', color:'#8B5CF6', name:'Basket 3v3', co:'1 200 matchs cette saison', pts:'4.5 ★', trend:'+22%', tColor:'#1DB87E' },
-  ]
-};
-
-document.querySelectorAll('.rank-tab').forEach(tab => {
-  tab.addEventListener('click', () => {
-    document.querySelectorAll('.rank-tab').forEach(t => t.classList.remove('on'));
-    tab.classList.add('on');
-    const key = tab.dataset.tab;
-    const list = document.getElementById('rank-list');
-    list.innerHTML = rankData[key].map(d => `
-      <div class="rank-item" style="animation:slideIn .3s ease both">
-        <div class="rank-item-num ${d.numClass}">${d.num}</div>
-        <div class="rank-av" style="background:${d.color}">${d.av}</div>
-        <div class="rank-info">
-          <div class="rank-name">${d.name}</div>
-          <div class="rank-co">${d.co}</div>
-        </div>
-        <div class="rank-pts">${d.pts}<span class="rank-trend" style="color:${d.tColor}">${d.trend}</span></div>
-      </div>
-    `).join('');
-  });
-});
-
-// ─── TOAST ─────────────────────────────────────
-function showToast(title, sub) {
-  const t = document.getElementById('toast');
-  document.getElementById('toast-title').textContent = title;
-  document.getElementById('toast-sub').textContent = sub;
-  t.classList.add('show');
-  setTimeout(() => t.classList.remove('show'), 3200);
-}
-
-// Demo button — auto show payment toast on first scroll past
-let demoToastShown = false;
-window.addEventListener('scroll', () => {
-  if (!demoToastShown && window.scrollY > 600) {
-    demoToastShown = true;
-    setTimeout(() => showToast('🏆 Tournoi terminé !', 'Capgemini remporte la finale'), 800);
-  }
-}, { passive: true });
-
-// ─── DEMO BTN ──────────────────────────────────
-['hero-demo-btn','nav-demo-btn'].forEach(id => {
-  const el = document.getElementById(id);
-  if (el) el.addEventListener('click', () => {
-    document.querySelector('.hero-sim').scrollIntoView({ behavior: 'smooth', block: 'center' });
-    showToast('🎮 Dashboard interactif', 'Explorez toutes les simulations ci-dessous !');
-  });
-});
+  // Appel initial
+  update();
+})();
 </script>
+
 </body>
 </html>
