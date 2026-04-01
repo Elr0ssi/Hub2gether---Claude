@@ -1,0 +1,838 @@
+<!DOCTYPE html>
+<html lang="fr">
+<head>
+  <meta charset="UTF-8" />
+  <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+  <title>Hub2gether — Le sport comme levier de cohésion en entreprise</title>
+  <link rel="stylesheet" href="style.css" />
+  <link rel="preconnect" href="https://fonts.googleapis.com">
+  <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+  <link href="https://fonts.googleapis.com/css2?family=Bricolage+Grotesque:opsz,wght@12..96,300;12..96,400;12..96,600;12..96,700;12..96,800&family=DM+Sans:ital,opsz,wght@0,9..40,300;0,9..40,400;0,9..40,500;1,9..40,300&display=swap" rel="stylesheet">
+</head>
+<body>
+
+  <!-- NAVBAR -->
+  <nav class="navbar" id="navbar">
+    <div class="nav-inner">
+      <a href="#" class="nav-logo">
+        <span class="logo-icon">⚡</span>
+        <span class="logo-text">Hub2gether</span>
+      </a>
+      <ul class="nav-links">
+        <li><a href="#solution">Solution</a></li>
+        <li><a href="#features">Fonctionnalités</a></li>
+        <li><a href="#entreprise">Entreprise</a></li>
+        <li><a href="#impact">Impact</a></li>
+      </ul>
+      <a href="#cta" class="btn-nav">Demander une démo</a>
+      <button class="nav-toggle" id="navToggle">
+        <span></span><span></span><span></span>
+      </button>
+    </div>
+    <div class="nav-mobile" id="navMobile">
+      <a href="#solution">Solution</a>
+      <a href="#features">Fonctionnalités</a>
+      <a href="#entreprise">Entreprise</a>
+      <a href="#cta">Demander une démo</a>
+    </div>
+  </nav>
+
+  <!-- HERO -->
+  <section class="hero" id="hero">
+    <div class="hero-bg-shapes">
+      <div class="shape shape-1"></div>
+      <div class="shape shape-2"></div>
+      <div class="shape shape-3"></div>
+    </div>
+    <div class="container hero-inner">
+      <div class="hero-left reveal-left">
+        <div class="hero-badge">
+          <span class="badge-dot"></span>
+          Nouveau — Plateforme sport & cohésion B2B
+        </div>
+        <h1 class="hero-title">
+          Transformez le <span class="accent-word">sport</span> en levier de cohésion en entreprise
+        </h1>
+        <p class="hero-sub">
+          Organisez facilement des matchs, créez des groupes sportifs et boostez l'engagement de vos collaborateurs — en quelques clics.
+        </p>
+        <div class="hero-actions">
+          <a href="#cta" class="btn-primary">
+            <span>Demander une démo</span>
+            <svg width="18" height="18" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.5"><path d="M5 12h14M12 5l7 7-7 7"/></svg>
+          </a>
+          <a href="#solution" class="btn-ghost">Découvrir la solution</a>
+        </div>
+        <div class="hero-social-proof">
+          <div class="avatars">
+            <div class="av av1"></div>
+            <div class="av av2"></div>
+            <div class="av av3"></div>
+            <div class="av av4"></div>
+          </div>
+          <p><strong>+200 entreprises</strong> utilisent Hub2gether</p>
+        </div>
+      </div>
+
+      <div class="hero-right reveal-right">
+        <div class="phone-carousel-wrapper">
+          <div class="phone-frame">
+            <div class="phone-notch"></div>
+            <div class="phone-screen">
+              <div class="carousel-slides" id="carouselSlides">
+                <!-- Slide 1 — Match -->
+                <div class="slide active">
+                  <div class="app-header">
+                    <div class="app-avatar" style="background:#78c8a3"></div>
+                    <div>
+                      <div class="app-title-sm">Bonjour Thomas 👋</div>
+                      <div class="app-sub-sm">Vos matchs du jour</div>
+                    </div>
+                    <div class="app-notif">3</div>
+                  </div>
+                  <div class="match-card mc1">
+                    <div class="match-sport">⚽ Football</div>
+                    <div class="match-time">Jeudi 18h30</div>
+                    <div class="match-meta">Stade Léon — 6 inscrits</div>
+                    <div class="match-bar"><div class="bar-fill" style="width:75%"></div></div>
+                    <button class="match-btn">Rejoindre</button>
+                  </div>
+                  <div class="match-card mc2">
+                    <div class="match-sport">🎾 Tennis</div>
+                    <div class="match-time">Vendredi 12h00</div>
+                    <div class="match-meta">Club Tennis — 2 inscrits</div>
+                    <div class="match-bar"><div class="bar-fill" style="width:30%"></div></div>
+                    <button class="match-btn">Rejoindre</button>
+                  </div>
+                </div>
+                <!-- Slide 2 — Groupes -->
+                <div class="slide">
+                  <div class="app-header">
+                    <div class="app-avatar" style="background:#78c8a3"></div>
+                    <div>
+                      <div class="app-title-sm">Mes Groupes</div>
+                      <div class="app-sub-sm">4 communautés actives</div>
+                    </div>
+                  </div>
+                  <div class="group-list">
+                    <div class="group-item">
+                      <div class="group-icon">⚽</div>
+                      <div><div class="group-name">Les Galactiques</div><div class="group-members">14 membres</div></div>
+                      <div class="group-badge">Actif</div>
+                    </div>
+                    <div class="group-item">
+                      <div class="group-icon">🏀</div>
+                      <div><div class="group-name">Basket Corp</div><div class="group-members">9 membres</div></div>
+                      <div class="group-badge">Actif</div>
+                    </div>
+                    <div class="group-item">
+                      <div class="group-icon">🎾</div>
+                      <div><div class="group-name">Tennis Pros</div><div class="group-members">6 membres</div></div>
+                      <div class="group-badge new-badge">Nouveau</div>
+                    </div>
+                    <div class="group-item">
+                      <div class="group-icon">🏃</div>
+                      <div><div class="group-name">Running Team</div><div class="group-members">22 membres</div></div>
+                      <div class="group-badge">Actif</div>
+                    </div>
+                  </div>
+                </div>
+                <!-- Slide 3 — Leaderboard -->
+                <div class="slide">
+                  <div class="app-header">
+                    <div class="app-avatar" style="background:#f0c040"></div>
+                    <div>
+                      <div class="app-title-sm">🏆 Classement</div>
+                      <div class="app-sub-sm">Ce mois-ci</div>
+                    </div>
+                  </div>
+                  <div class="leaderboard">
+                    <div class="lb-item lb-gold">
+                      <span class="lb-rank">🥇</span>
+                      <div class="lb-av" style="background:#78c8a3"></div>
+                      <div><div class="lb-name">Sophie M.</div><div class="lb-pts">1 240 pts</div></div>
+                      <div class="lb-trend up">▲</div>
+                    </div>
+                    <div class="lb-item lb-silver">
+                      <span class="lb-rank">🥈</span>
+                      <div class="lb-av" style="background:#a3d8f4"></div>
+                      <div><div class="lb-name">Marc D.</div><div class="lb-pts">1 090 pts</div></div>
+                      <div class="lb-trend up">▲</div>
+                    </div>
+                    <div class="lb-item lb-bronze">
+                      <span class="lb-rank">🥉</span>
+                      <div class="lb-av" style="background:#f4a3a3"></div>
+                      <div><div class="lb-name">Julie T.</div><div class="lb-pts">980 pts</div></div>
+                      <div class="lb-trend down">▼</div>
+                    </div>
+                    <div class="lb-item">
+                      <span class="lb-rank rank-n">4</span>
+                      <div class="lb-av" style="background:#c4a3f4"></div>
+                      <div><div class="lb-name">Thomas L.</div><div class="lb-pts">870 pts</div></div>
+                      <div class="lb-trend up">▲</div>
+                    </div>
+                  </div>
+                </div>
+                <!-- Slide 4 — Dashboard -->
+                <div class="slide">
+                  <div class="app-header">
+                    <div class="app-avatar" style="background:#78c8a3"></div>
+                    <div>
+                      <div class="app-title-sm">Dashboard RH</div>
+                      <div class="app-sub-sm">Vue globale équipes</div>
+                    </div>
+                  </div>
+                  <div class="dash-kpis">
+                    <div class="dash-kpi">
+                      <div class="kpi-val">87<span>%</span></div>
+                      <div class="kpi-lbl">Engagement</div>
+                    </div>
+                    <div class="dash-kpi">
+                      <div class="kpi-val">142</div>
+                      <div class="kpi-lbl">Matchs</div>
+                    </div>
+                    <div class="dash-kpi">
+                      <div class="kpi-val">34</div>
+                      <div class="kpi-lbl">Groupes</div>
+                    </div>
+                  </div>
+                  <div class="dash-chart">
+                    <div class="chart-bar-group">
+                      <div class="chart-bar" style="height:40%"></div>
+                      <div class="chart-bar" style="height:65%"></div>
+                      <div class="chart-bar" style="height:55%"></div>
+                      <div class="chart-bar" style="height:80%"></div>
+                      <div class="chart-bar" style="height:70%"></div>
+                      <div class="chart-bar" style="height:90%"></div>
+                    </div>
+                    <div class="chart-label">Activité — 6 derniers mois</div>
+                  </div>
+                </div>
+              </div>
+            </div>
+          </div>
+          <div class="carousel-dots" id="carouselDots">
+            <span class="dot active" data-idx="0"></span>
+            <span class="dot" data-idx="1"></span>
+            <span class="dot" data-idx="2"></span>
+            <span class="dot" data-idx="3"></span>
+          </div>
+          <div class="phone-glow"></div>
+        </div>
+      </div>
+    </div>
+    <div class="hero-scroll-hint">
+      <div class="scroll-mouse"><div class="scroll-wheel"></div></div>
+      <span>Scroll</span>
+    </div>
+  </section>
+
+  <!-- SECTION LOGOS -->
+  <section class="logos-bar">
+    <div class="container">
+      <p class="logos-title">Déjà adopté par des équipes qui bougent</p>
+      <div class="logos-track">
+        <div class="logos-inner" id="logosInner">
+          <span class="logo-pill">🏢 TechCorp</span>
+          <span class="logo-pill">🌍 GlobalWork</span>
+          <span class="logo-pill">💡 Innovate+</span>
+          <span class="logo-pill">🚀 StartupXL</span>
+          <span class="logo-pill">🏦 FinGroup</span>
+          <span class="logo-pill">🎯 StratCo</span>
+          <span class="logo-pill">🔬 MedTech</span>
+          <span class="logo-pill">✈️ AeroTeam</span>
+          <span class="logo-pill">🏢 TechCorp</span>
+          <span class="logo-pill">🌍 GlobalWork</span>
+          <span class="logo-pill">💡 Innovate+</span>
+          <span class="logo-pill">🚀 StartupXL</span>
+          <span class="logo-pill">🏦 FinGroup</span>
+          <span class="logo-pill">🎯 StratCo</span>
+        </div>
+      </div>
+    </div>
+  </section>
+
+  <!-- SECTION PROBLÈMES -->
+  <section class="problems" id="problems">
+    <div class="container">
+      <div class="section-tag reveal-up">Le constat</div>
+      <h2 class="section-title reveal-up">Ce qui freine vos équipes aujourd'hui</h2>
+      <div class="problems-grid">
+        <div class="problem-card reveal-up" data-delay="0">
+          <div class="problem-icon">😶‍🌫️</div>
+          <h3>Manque de cohésion entre équipes</h3>
+          <p>Les silos s'installent, les interactions entre départements s'amenuisent. Le lien humain se perd dans les réunions Zoom.</p>
+          <div class="problem-tag">72% des RH le citent comme priorité</div>
+        </div>
+        <div class="problem-card reveal-up" data-delay="150">
+          <div class="problem-icon">📅</div>
+          <h3>Organisation d'activités sportives complexe</h3>
+          <p>Entre les emails, les WhatsApp et les tableurs, organiser un simple match devient un casse-tête logistique qui décourage tout le monde.</p>
+          <div class="problem-tag">3h perdues en moyenne par événement</div>
+        </div>
+        <div class="problem-card reveal-up" data-delay="300">
+          <div class="problem-icon">📉</div>
+          <h3>Faible engagement collaborateurs</h3>
+          <p>Le désengagement coûte cher. Sans initiatives concrètes, les collaborateurs décrochent — et les talents partent ailleurs.</p>
+          <div class="problem-tag">-23% productivité par employé désengagé</div>
+        </div>
+      </div>
+    </div>
+  </section>
+
+  <!-- SECTION SOLUTION -->
+  <section class="solution" id="solution">
+    <div class="container solution-inner">
+      <div class="solution-left reveal-left">
+        <div class="section-tag">La solution</div>
+        <h2 class="section-title">Hub2gether centralise toute la pratique sportive en entreprise</h2>
+        <p class="solution-desc">Une plateforme unique qui connecte vos collaborateurs autour du sport — de l'organisation au suivi, en passant par la communauté.</p>
+        <ul class="solution-list">
+          <li>
+            <span class="check-icon">✓</span>
+            <span>Créez et rejoignez des événements sportifs en 30 secondes</span>
+          </li>
+          <li>
+            <span class="check-icon">✓</span>
+            <span>Formez des groupes sportifs par sport, département ou site</span>
+          </li>
+          <li>
+            <span class="check-icon">✓</span>
+            <span>Suivez l'engagement de vos équipes avec des KPI RH</span>
+          </li>
+          <li>
+            <span class="check-icon">✓</span>
+            <span>Gérez les paiements et dépenses entre participants</span>
+          </li>
+        </ul>
+        <a href="#cta" class="btn-primary">Voir la démo →</a>
+      </div>
+      <div class="solution-right reveal-right">
+        <div class="solution-visual">
+          <div class="visual-card vc-main">
+            <div class="vc-icon">⚽</div>
+            <div class="vc-content">
+              <div class="vc-title">Match organisé</div>
+              <div class="vc-sub">Football · Jeudi 18h30</div>
+            </div>
+            <div class="vc-status">Live</div>
+          </div>
+          <div class="visual-card vc-float vc-f1">
+            <span class="vc-emoji">🎉</span>
+            <span>+8 inscrits aujourd'hui</span>
+          </div>
+          <div class="visual-card vc-float vc-f2">
+            <span class="vc-emoji">📊</span>
+            <span>Engagement +34%</span>
+          </div>
+          <div class="visual-card vc-float vc-f3">
+            <span class="vc-emoji">👥</span>
+            <span>12 groupes actifs</span>
+          </div>
+          <div class="solution-orb"></div>
+        </div>
+      </div>
+    </div>
+  </section>
+
+  <!-- SECTION FEATURES -->
+  <section class="features" id="features">
+    <div class="container">
+      <div class="section-tag reveal-up">Fonctionnalités</div>
+      <h2 class="section-title reveal-up">Tout ce dont vous avez besoin</h2>
+      <p class="section-sub reveal-up">Conçu pour simplifier, engager, et mesurer.</p>
+      <div class="features-grid">
+        <div class="feature-card reveal-up" data-delay="0">
+          <div class="feat-icon-wrap" style="--feat-color: #78c8a3">
+            <span>⚡</span>
+          </div>
+          <h3>Organisez un match en 30 secondes</h3>
+          <p>Choisissez le sport, l'heure, le lieu. Invitez vos collègues en un clic. Hub2gether s'occupe du reste — rappels, confirmations, gestion des absences.</p>
+          <div class="feat-cta">En savoir plus →</div>
+        </div>
+        <div class="feature-card reveal-up" data-delay="100">
+          <div class="feat-icon-wrap" style="--feat-color: #a3d8f4">
+            <span>👥</span>
+          </div>
+          <h3>Créez des groupes sportifs internes</h3>
+          <p>Organisez vos collaborateurs par affinités sportives. Football le jeudi, yoga le mardi — chaque communauté vit de façon autonome.</p>
+          <div class="feat-cta">En savoir plus →</div>
+        </div>
+        <div class="feature-card reveal-up" data-delay="200">
+          <div class="feat-icon-wrap" style="--feat-color: #f4c87a">
+            <span>🏆</span>
+          </div>
+          <h3>Suivez les performances et classements</h3>
+          <p>Un leaderboard vivant qui gamifie l'expérience sportive. Challenges, badges, podiums — le tout visible par toute l'entreprise.</p>
+          <div class="feat-cta">En savoir plus →</div>
+        </div>
+        <div class="feature-card reveal-up" data-delay="300">
+          <div class="feat-icon-wrap" style="--feat-color: #c4a3f4">
+            <span>💸</span>
+          </div>
+          <h3>Gérez facilement les dépenses</h3>
+          <p>Location de terrain, équipements, arbitres — Hub2gether gère le partage des frais entre participants de façon transparente et automatique.</p>
+          <div class="feat-cta">En savoir plus →</div>
+        </div>
+      </div>
+    </div>
+  </section>
+
+  <!-- SECTION PRODUCT PREVIEW -->
+  <section class="preview" id="preview">
+    <div class="container">
+      <div class="section-tag reveal-up">Aperçu produit</div>
+      <h2 class="section-title reveal-up">Une expérience fluide, du mobile au dashboard</h2>
+      <div class="preview-carousel" id="previewCarousel">
+        <div class="preview-track" id="previewTrack">
+          <div class="preview-item active">
+            <div class="preview-screen dashboard-screen">
+              <div class="ds-header">
+                <div class="ds-logo">Hub2gether</div>
+                <div class="ds-nav">
+                  <span class="dsn active">Dashboard</span>
+                  <span class="dsn">Matchs</span>
+                  <span class="dsn">Groupes</span>
+                  <span class="dsn">KPIs</span>
+                </div>
+              </div>
+              <div class="ds-body">
+                <div class="ds-kpis">
+                  <div class="ds-kpi">
+                    <div class="dsk-val counter" data-target="87">0</div>
+                    <div class="dsk-lbl">% Engagement</div>
+                    <div class="dsk-trend up">▲ +12%</div>
+                  </div>
+                  <div class="ds-kpi">
+                    <div class="dsk-val counter" data-target="142">0</div>
+                    <div class="dsk-lbl">Matchs organisés</div>
+                    <div class="dsk-trend up">▲ +34</div>
+                  </div>
+                  <div class="ds-kpi">
+                    <div class="dsk-val counter" data-target="1248">0</div>
+                    <div class="dsk-lbl">Interactions</div>
+                    <div class="dsk-trend up">▲ +230</div>
+                  </div>
+                  <div class="ds-kpi">
+                    <div class="dsk-val counter" data-target="34">0</div>
+                    <div class="dsk-lbl">Groupes actifs</div>
+                    <div class="dsk-trend up">▲ +8</div>
+                  </div>
+                </div>
+                <div class="ds-chart-area">
+                  <div class="dsc-bars">
+                    <div class="dsc-col"><div class="dsc-bar" style="height:40%"></div><span>Jan</span></div>
+                    <div class="dsc-col"><div class="dsc-bar" style="height:55%"></div><span>Fév</span></div>
+                    <div class="dsc-col"><div class="dsc-bar" style="height:50%"></div><span>Mar</span></div>
+                    <div class="dsc-col"><div class="dsc-bar" style="height:72%"></div><span>Avr</span></div>
+                    <div class="dsc-col"><div class="dsc-bar" style="height:65%"></div><span>Mai</span></div>
+                    <div class="dsc-col"><div class="dsc-bar active" style="height:90%"></div><span>Jun</span></div>
+                  </div>
+                  <div class="dsc-title">Activité globale — 2025</div>
+                </div>
+              </div>
+            </div>
+            <div class="preview-label">Dashboard Entreprise</div>
+          </div>
+
+          <div class="preview-item">
+            <div class="preview-screen mobile-screen">
+              <div class="ms-top">
+                <div class="ms-logo">⚡ Hub2gether</div>
+                <div class="ms-greeting">Bonjour Sophie ! 👋</div>
+              </div>
+              <div class="ms-upcoming">
+                <div class="ms-section-title">Vos prochains matchs</div>
+                <div class="ms-match">
+                  <div class="ms-sport">⚽</div>
+                  <div class="ms-info"><div>Football · Jeudi 18h30</div><div class="ms-loc">Stade Léon</div></div>
+                  <div class="ms-join">OK</div>
+                </div>
+                <div class="ms-match">
+                  <div class="ms-sport">🏀</div>
+                  <div class="ms-info"><div>Basket · Sam. 10h</div><div class="ms-loc">Gymnase A</div></div>
+                  <div class="ms-join">OK</div>
+                </div>
+              </div>
+              <div class="ms-groups">
+                <div class="ms-section-title">Mes groupes</div>
+                <div class="ms-groups-pills">
+                  <span>⚽ Foot</span><span>🎾 Tennis</span><span>🏃 Run</span>
+                </div>
+              </div>
+            </div>
+            <div class="preview-label">Interface Mobile</div>
+          </div>
+
+          <div class="preview-item">
+            <div class="preview-screen groups-screen">
+              <div class="gs-header">Mes Groupes <span class="gs-count">4 actifs</span></div>
+              <div class="gs-list">
+                <div class="gs-card">
+                  <div class="gs-icon">⚽</div>
+                  <div class="gs-info">
+                    <div class="gs-name">Les Galactiques</div>
+                    <div class="gs-meta">14 membres · 3 matchs cette semaine</div>
+                  </div>
+                  <div class="gs-av-row">
+                    <div class="gs-av" style="background:#78c8a3"></div>
+                    <div class="gs-av" style="background:#a3d8f4"></div>
+                    <div class="gs-av" style="background:#f4c87a"></div>
+                    <div class="gs-av more">+11</div>
+                  </div>
+                </div>
+                <div class="gs-card">
+                  <div class="gs-icon">🏀</div>
+                  <div class="gs-info">
+                    <div class="gs-name">Basket Corp</div>
+                    <div class="gs-meta">9 membres · 1 match cette semaine</div>
+                  </div>
+                  <div class="gs-av-row">
+                    <div class="gs-av" style="background:#c4a3f4"></div>
+                    <div class="gs-av" style="background:#f4a3a3"></div>
+                    <div class="gs-av more">+7</div>
+                  </div>
+                </div>
+                <div class="gs-card">
+                  <div class="gs-icon">🏃</div>
+                  <div class="gs-info">
+                    <div class="gs-name">Running Team</div>
+                    <div class="gs-meta">22 membres · Sortie dimanche</div>
+                  </div>
+                  <div class="gs-av-row">
+                    <div class="gs-av" style="background:#78c8a3"></div>
+                    <div class="gs-av" style="background:#f4c87a"></div>
+                    <div class="gs-av more">+20</div>
+                  </div>
+                </div>
+              </div>
+            </div>
+            <div class="preview-label">Gestion des Groupes</div>
+          </div>
+
+          <div class="preview-item">
+            <div class="preview-screen leaderboard-screen">
+              <div class="ls-header">🏆 Classement du mois</div>
+              <div class="ls-podium">
+                <div class="ls-pod ls-2nd">
+                  <div class="ls-av" style="background:#a3d8f4"></div>
+                  <div class="ls-medal">🥈</div>
+                  <div class="ls-pname">Marc D.</div>
+                  <div class="ls-ppts">1 090 pts</div>
+                </div>
+                <div class="ls-pod ls-1st">
+                  <div class="ls-crown">👑</div>
+                  <div class="ls-av" style="background:#78c8a3"></div>
+                  <div class="ls-medal">🥇</div>
+                  <div class="ls-pname">Sophie M.</div>
+                  <div class="ls-ppts">1 240 pts</div>
+                </div>
+                <div class="ls-pod ls-3rd">
+                  <div class="ls-av" style="background:#f4a3a3"></div>
+                  <div class="ls-medal">🥉</div>
+                  <div class="ls-pname">Julie T.</div>
+                  <div class="ls-ppts">980 pts</div>
+                </div>
+              </div>
+              <div class="ls-rest">
+                <div class="ls-row"><span class="ls-rk">4</span><div class="ls-rav" style="background:#c4a3f4"></div><span>Thomas L.</span><span class="ls-rpts">870 pts</span></div>
+                <div class="ls-row"><span class="ls-rk">5</span><div class="ls-rav" style="background:#f4c87a"></div><span>Emma R.</span><span class="ls-rpts">760 pts</span></div>
+              </div>
+            </div>
+            <div class="preview-label">Leaderboard</div>
+          </div>
+        </div>
+      </div>
+      <div class="preview-nav">
+        <button class="pnav-btn" id="prevPreview">←</button>
+        <div class="preview-dots" id="previewDots">
+          <span class="pdot active" data-idx="0"></span>
+          <span class="pdot" data-idx="1"></span>
+          <span class="pdot" data-idx="2"></span>
+          <span class="pdot" data-idx="3"></span>
+        </div>
+        <button class="pnav-btn" id="nextPreview">→</button>
+      </div>
+    </div>
+  </section>
+
+  <!-- SECTION B2B -->
+  <section class="b2b" id="entreprise">
+    <div class="container b2b-inner">
+      <div class="b2b-right reveal-right">
+        <div class="section-tag light">Pour les entreprises</div>
+        <h2 class="section-title">Pensé pour les entreprises qui misent sur l'humain</h2>
+        <p class="b2b-desc">Hub2gether n'est pas une app sport. C'est un outil RH qui transforme l'activité physique en engagement mesurable.</p>
+        <div class="b2b-points">
+          <div class="b2b-point">
+            <div class="bp-icon">❤️</div>
+            <div>
+              <div class="bp-title">Amélioration du bien-être</div>
+              <div class="bp-desc">Réduisez le stress et l'absentéisme grâce à une pratique sportive régulière et sociale.</div>
+            </div>
+          </div>
+          <div class="b2b-point">
+            <div class="bp-icon">🤝</div>
+            <div>
+              <div class="bp-title">Cohésion inter-équipes</div>
+              <div class="bp-desc">Brisez les silos avec des activités qui réunissent tous les départements naturellement.</div>
+            </div>
+          </div>
+          <div class="b2b-point">
+            <div class="bp-icon">📊</div>
+            <div>
+              <div class="bp-title">Dashboard RH avec KPI</div>
+              <div class="bp-desc">Mesurez l'impact réel sur l'engagement, la rétention et la satisfaction des équipes.</div>
+            </div>
+          </div>
+          <div class="b2b-point">
+            <div class="bp-icon">⚡</div>
+            <div>
+              <div class="bp-title">Activation des collaborateurs</div>
+              <div class="bp-desc">Un outil que vos équipes adoptent naturellement — sans formation, sans friction.</div>
+            </div>
+          </div>
+        </div>
+      </div>
+      <div class="b2b-left reveal-left">
+        <div class="b2b-visual">
+          <div class="b2b-card-main">
+            <div class="b2bcm-header">Dashboard RH</div>
+            <div class="b2bcm-body">
+              <div class="b2b-metric">
+                <div class="bm-bar-wrap">
+                  <div class="bm-label">Bien-être</div>
+                  <div class="bm-track"><div class="bm-fill" data-width="82"></div></div>
+                  <div class="bm-val">82%</div>
+                </div>
+                <div class="bm-bar-wrap">
+                  <div class="bm-label">Cohésion</div>
+                  <div class="bm-track"><div class="bm-fill" data-width="74"></div></div>
+                  <div class="bm-val">74%</div>
+                </div>
+                <div class="bm-bar-wrap">
+                  <div class="bm-label">Engagement</div>
+                  <div class="bm-track"><div class="bm-fill" data-width="91"></div></div>
+                  <div class="bm-val">91%</div>
+                </div>
+                <div class="bm-bar-wrap">
+                  <div class="bm-label">Satisfaction</div>
+                  <div class="bm-track"><div class="bm-fill" data-width="88"></div></div>
+                  <div class="bm-val">88%</div>
+                </div>
+              </div>
+            </div>
+          </div>
+          <div class="b2b-float-card bfc1">
+            <span>📈</span> Score QVT +18 pts
+          </div>
+          <div class="b2b-float-card bfc2">
+            <span>🏅</span> 97% satisfaction équipes
+          </div>
+        </div>
+      </div>
+    </div>
+  </section>
+
+  <!-- SECTION IMPACT / ROI -->
+  <section class="impact" id="impact">
+    <div class="container">
+      <div class="section-tag reveal-up">Impact & ROI</div>
+      <h2 class="section-title reveal-up">Des résultats mesurables dès le premier mois</h2>
+      <div class="stats-grid">
+        <div class="stat-card reveal-up" data-delay="0">
+          <div class="stat-num"><span class="counter" data-target="30">0</span><span class="stat-unit">%</span></div>
+          <div class="stat-plus">d'engagement en plus</div>
+          <p class="stat-desc">En moyenne, après 4 semaines d'utilisation par les équipes.</p>
+        </div>
+        <div class="stat-card reveal-up" data-delay="150">
+          <div class="stat-num"><span class="counter" data-target="142">0</span></div>
+          <div class="stat-plus">matchs organisés / mois</div>
+          <p class="stat-desc">Par une entreprise de 200 collaborateurs en moyenne.</p>
+        </div>
+        <div class="stat-card reveal-up" data-delay="300">
+          <div class="stat-num"><span class="counter" data-target="1248">0</span></div>
+          <div class="stat-plus">interactions / mois</div>
+          <p class="stat-desc">Créées entre collègues qui ne se croisaient pas avant.</p>
+        </div>
+        <div class="stat-card reveal-up" data-delay="450">
+          <div class="stat-num"><span class="counter" data-target="94">0</span><span class="stat-unit">%</span></div>
+          <div class="stat-plus">de satisfaction utilisateurs</div>
+          <p class="stat-desc">Score NPS mesuré auprès de nos clients B2B actifs.</p>
+        </div>
+      </div>
+    </div>
+  </section>
+
+  <!-- SECTION STORYTELLING / TIMELINE -->
+  <section class="story" id="story">
+    <div class="container">
+      <div class="section-tag reveal-up">Comment ça marche</div>
+      <h2 class="section-title reveal-up">De l'idée à la communauté en 5 étapes</h2>
+      <div class="timeline">
+        <div class="timeline-line"></div>
+        <div class="tl-step reveal-up" data-delay="0">
+          <div class="tl-dot">
+            <span>1</span>
+          </div>
+          <div class="tl-card">
+            <div class="tl-icon">💡</div>
+            <h4>Thomas a une idée</h4>
+            <p>Il ouvre Hub2gether sur son téléphone et crée un match de football pour jeudi soir en 30 secondes.</p>
+          </div>
+        </div>
+        <div class="tl-step reveal-up" data-delay="100">
+          <div class="tl-dot">
+            <span>2</span>
+          </div>
+          <div class="tl-card">
+            <div class="tl-icon">📨</div>
+            <h4>Les collègues sont notifiés</h4>
+            <p>8 collègues de différents départements reçoivent une notification et s'inscrivent en 2 clics.</p>
+          </div>
+        </div>
+        <div class="tl-step reveal-up" data-delay="200">
+          <div class="tl-dot">
+            <span>3</span>
+          </div>
+          <div class="tl-card">
+            <div class="tl-icon">⚽</div>
+            <h4>Le match a lieu</h4>
+            <p>L'application gère les rappels, le partage des frais et les résultats sont automatiquement enregistrés.</p>
+          </div>
+        </div>
+        <div class="tl-step reveal-up" data-delay="300">
+          <div class="tl-dot">
+            <span>4</span>
+          </div>
+          <div class="tl-card">
+            <div class="tl-icon">👥</div>
+            <h4>Un groupe se forme</h4>
+            <p>Les joueurs créent un groupe "Foot du jeudi". D'autres collègues le rejoignent chaque semaine.</p>
+          </div>
+        </div>
+        <div class="tl-step reveal-up" data-delay="400">
+          <div class="tl-dot tl-dot-final">
+            <span>✓</span>
+          </div>
+          <div class="tl-card tl-card-final">
+            <div class="tl-icon">🚀</div>
+            <h4>Une communauté sportive naît</h4>
+            <p>L'entreprise voit son score d'engagement grimper. Le DRH mesure l'impact avec les KPIs Hub2gether.</p>
+          </div>
+        </div>
+      </div>
+    </div>
+  </section>
+
+  <!-- TESTIMONIALS -->
+  <section class="testimonials">
+    <div class="container">
+      <div class="section-tag reveal-up">Témoignages</div>
+      <h2 class="section-title reveal-up">Ce qu'en disent nos clients</h2>
+      <div class="testi-grid">
+        <div class="testi-card reveal-up" data-delay="0">
+          <div class="testi-stars">★★★★★</div>
+          <p class="testi-text">"En 3 mois, on a organisé plus de 40 matchs et créé 6 groupes sportifs. L'ambiance dans l'entreprise a radicalement changé."</p>
+          <div class="testi-author">
+            <div class="testi-av" style="background:#78c8a3"></div>
+            <div>
+              <div class="testi-name">Sarah C.</div>
+              <div class="testi-role">DRH · TechCorp</div>
+            </div>
+          </div>
+        </div>
+        <div class="testi-card reveal-up" data-delay="150">
+          <div class="testi-stars">★★★★★</div>
+          <p class="testi-text">"Hub2gether a résolu en 1 semaine ce qu'on n'arrivait pas à faire en 2 ans : créer du lien entre nos équipes terrain et bureau."</p>
+          <div class="testi-author">
+            <div class="testi-av" style="background:#a3d8f4"></div>
+            <div>
+              <div class="testi-name">Pierre M.</div>
+              <div class="testi-role">CEO · StartupXL</div>
+            </div>
+          </div>
+        </div>
+        <div class="testi-card reveal-up" data-delay="300">
+          <div class="testi-stars">★★★★★</div>
+          <p class="testi-text">"Le dashboard RH est une révélation. Pour la première fois, on peut montrer en chiffres l'impact de nos actions bien-être."</p>
+          <div class="testi-author">
+            <div class="testi-av" style="background:#f4c87a"></div>
+            <div>
+              <div class="testi-name">Laura B.</div>
+              <div class="testi-role">People Manager · FinGroup</div>
+            </div>
+          </div>
+        </div>
+      </div>
+    </div>
+  </section>
+
+  <!-- SECTION CTA FINAL -->
+  <section class="cta-final" id="cta">
+    <div class="cta-bg-orb cta-orb1"></div>
+    <div class="cta-bg-orb cta-orb2"></div>
+    <div class="container cta-inner reveal-up">
+      <div class="cta-badge">🚀 Démarrez gratuitement</div>
+      <h2 class="cta-title">Prêt à activer le sport dans votre entreprise ?</h2>
+      <p class="cta-sub">Rejoignez +200 entreprises qui utilisent déjà Hub2gether pour booster l'engagement de leurs équipes.</p>
+      <div class="cta-actions">
+        <a href="#" class="btn-primary btn-large">
+          <span>Demander une démo</span>
+          <svg width="20" height="20" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.5"><path d="M5 12h14M12 5l7 7-7 7"/></svg>
+        </a>
+        <a href="#" class="btn-ghost">Voir la démo vidéo</a>
+      </div>
+      <div class="cta-guarantees">
+        <span>✓ Onboarding en 48h</span>
+        <span>✓ Sans engagement</span>
+        <span>✓ Support dédié</span>
+      </div>
+    </div>
+  </section>
+
+  <!-- FOOTER -->
+  <footer class="footer">
+    <div class="container footer-inner">
+      <div class="footer-brand">
+        <span class="logo-icon">⚡</span>
+        <span class="logo-text">Hub2gether</span>
+        <p>Le sport au cœur de votre entreprise.</p>
+      </div>
+      <div class="footer-links">
+        <div class="fl-col">
+          <div class="fl-title">Produit</div>
+          <a href="#">Fonctionnalités</a>
+          <a href="#">Tarifs</a>
+          <a href="#">Sécurité</a>
+          <a href="#">Intégrations</a>
+        </div>
+        <div class="fl-col">
+          <div class="fl-title">Entreprise</div>
+          <a href="#">À propos</a>
+          <a href="#">Blog</a>
+          <a href="#">Carrières</a>
+          <a href="#">Contact</a>
+        </div>
+        <div class="fl-col">
+          <div class="fl-title">Ressources</div>
+          <a href="#">Guide RH</a>
+          <a href="#">Cas clients</a>
+          <a href="#">Webinars</a>
+          <a href="#">API Docs</a>
+        </div>
+      </div>
+    </div>
+    <div class="footer-bottom">
+      <span>© 2025 Hub2gether. Tous droits réservés.</span>
+      <div class="footer-legal">
+        <a href="#">Confidentialité</a>
+        <a href="#">CGU</a>
+        <a href="#">Cookies</a>
+      </div>
+    </div>
+  </footer>
+
+  <script src="script.js"></script>
+</body>
+</html>
