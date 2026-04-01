@@ -378,182 +378,214 @@
     </div>
   </section>
 
-  <!-- SECTION PRODUCT PREVIEW -->
-  <section class="preview" id="preview">
-    <div class="container">
-      <div class="section-tag reveal-up">Aperçu produit</div>
-      <h2 class="section-title reveal-up">Une expérience fluide, du mobile au dashboard</h2>
-      <div class="preview-carousel" id="previewCarousel">
-        <div class="preview-track" id="previewTrack">
-          <div class="preview-item active">
-            <div class="preview-screen dashboard-screen">
-              <div class="ds-header">
-                <div class="ds-logo">Hub2gether</div>
-                <div class="ds-nav">
-                  <span class="dsn active">Dashboard</span>
-                  <span class="dsn">Matchs</span>
-                  <span class="dsn">Groupes</span>
-                  <span class="dsn">KPIs</span>
-                </div>
-              </div>
-              <div class="ds-body">
-                <div class="ds-kpis">
-                  <div class="ds-kpi">
-                    <div class="dsk-val counter" data-target="87">0</div>
-                    <div class="dsk-lbl">% Engagement</div>
-                    <div class="dsk-trend up">▲ +12%</div>
-                  </div>
-                  <div class="ds-kpi">
-                    <div class="dsk-val counter" data-target="142">0</div>
-                    <div class="dsk-lbl">Matchs organisés</div>
-                    <div class="dsk-trend up">▲ +34</div>
-                  </div>
-                  <div class="ds-kpi">
-                    <div class="dsk-val counter" data-target="1248">0</div>
-                    <div class="dsk-lbl">Interactions</div>
-                    <div class="dsk-trend up">▲ +230</div>
-                  </div>
-                  <div class="ds-kpi">
-                    <div class="dsk-val counter" data-target="34">0</div>
-                    <div class="dsk-lbl">Groupes actifs</div>
-                    <div class="dsk-trend up">▲ +8</div>
-                  </div>
-                </div>
-                <div class="ds-chart-area">
-                  <div class="dsc-bars">
-                    <div class="dsc-col"><div class="dsc-bar" style="height:40%"></div><span>Jan</span></div>
-                    <div class="dsc-col"><div class="dsc-bar" style="height:55%"></div><span>Fév</span></div>
-                    <div class="dsc-col"><div class="dsc-bar" style="height:50%"></div><span>Mar</span></div>
-                    <div class="dsc-col"><div class="dsc-bar" style="height:72%"></div><span>Avr</span></div>
-                    <div class="dsc-col"><div class="dsc-bar" style="height:65%"></div><span>Mai</span></div>
-                    <div class="dsc-col"><div class="dsc-bar active" style="height:90%"></div><span>Jun</span></div>
-                  </div>
-                  <div class="dsc-title">Activité globale — 2025</div>
-                </div>
-              </div>
-            </div>
-            <div class="preview-label">Dashboard Entreprise</div>
-          </div>
+  <!-- SECTION PRODUCT PREVIEW — Sticky Scroll Horizontal -->
+  <section class="preview-sticky-outer" id="preview">
+    <div class="preview-sticky-inner" id="previewStickyInner">
 
-          <div class="preview-item">
-            <div class="preview-screen mobile-screen">
-              <div class="ms-top">
-                <div class="ms-logo">⚡ Hub2gether</div>
-                <div class="ms-greeting">Bonjour Sophie ! 👋</div>
-              </div>
-              <div class="ms-upcoming">
-                <div class="ms-section-title">Vos prochains matchs</div>
-                <div class="ms-match">
-                  <div class="ms-sport">⚽</div>
-                  <div class="ms-info"><div>Football · Jeudi 18h30</div><div class="ms-loc">Stade Léon</div></div>
-                  <div class="ms-join">OK</div>
-                </div>
-                <div class="ms-match">
-                  <div class="ms-sport">🏀</div>
-                  <div class="ms-info"><div>Basket · Sam. 10h</div><div class="ms-loc">Gymnase A</div></div>
-                  <div class="ms-join">OK</div>
-                </div>
-              </div>
-              <div class="ms-groups">
-                <div class="ms-section-title">Mes groupes</div>
-                <div class="ms-groups-pills">
-                  <span>⚽ Foot</span><span>🎾 Tennis</span><span>🏃 Run</span>
-                </div>
-              </div>
-            </div>
-            <div class="preview-label">Interface Mobile</div>
-          </div>
+      <!-- Sticky viewport -->
+      <div class="preview-sticky-viewport" id="previewViewport">
 
-          <div class="preview-item">
-            <div class="preview-screen groups-screen">
-              <div class="gs-header">Mes Groupes <span class="gs-count">4 actifs</span></div>
-              <div class="gs-list">
-                <div class="gs-card">
-                  <div class="gs-icon">⚽</div>
-                  <div class="gs-info">
-                    <div class="gs-name">Les Galactiques</div>
-                    <div class="gs-meta">14 membres · 3 matchs cette semaine</div>
-                  </div>
-                  <div class="gs-av-row">
-                    <div class="gs-av" style="background:#78c8a3"></div>
-                    <div class="gs-av" style="background:#a3d8f4"></div>
-                    <div class="gs-av" style="background:#f4c87a"></div>
-                    <div class="gs-av more">+11</div>
-                  </div>
-                </div>
-                <div class="gs-card">
-                  <div class="gs-icon">🏀</div>
-                  <div class="gs-info">
-                    <div class="gs-name">Basket Corp</div>
-                    <div class="gs-meta">9 membres · 1 match cette semaine</div>
-                  </div>
-                  <div class="gs-av-row">
-                    <div class="gs-av" style="background:#c4a3f4"></div>
-                    <div class="gs-av" style="background:#f4a3a3"></div>
-                    <div class="gs-av more">+7</div>
-                  </div>
-                </div>
-                <div class="gs-card">
-                  <div class="gs-icon">🏃</div>
-                  <div class="gs-info">
-                    <div class="gs-name">Running Team</div>
-                    <div class="gs-meta">22 membres · Sortie dimanche</div>
-                  </div>
-                  <div class="gs-av-row">
-                    <div class="gs-av" style="background:#78c8a3"></div>
-                    <div class="gs-av" style="background:#f4c87a"></div>
-                    <div class="gs-av more">+20</div>
-                  </div>
-                </div>
-              </div>
-            </div>
-            <div class="preview-label">Gestion des Groupes</div>
-          </div>
-
-          <div class="preview-item">
-            <div class="preview-screen leaderboard-screen">
-              <div class="ls-header">🏆 Classement du mois</div>
-              <div class="ls-podium">
-                <div class="ls-pod ls-2nd">
-                  <div class="ls-av" style="background:#a3d8f4"></div>
-                  <div class="ls-medal">🥈</div>
-                  <div class="ls-pname">Marc D.</div>
-                  <div class="ls-ppts">1 090 pts</div>
-                </div>
-                <div class="ls-pod ls-1st">
-                  <div class="ls-crown">👑</div>
-                  <div class="ls-av" style="background:#78c8a3"></div>
-                  <div class="ls-medal">🥇</div>
-                  <div class="ls-pname">Sophie M.</div>
-                  <div class="ls-ppts">1 240 pts</div>
-                </div>
-                <div class="ls-pod ls-3rd">
-                  <div class="ls-av" style="background:#f4a3a3"></div>
-                  <div class="ls-medal">🥉</div>
-                  <div class="ls-pname">Julie T.</div>
-                  <div class="ls-ppts">980 pts</div>
-                </div>
-              </div>
-              <div class="ls-rest">
-                <div class="ls-row"><span class="ls-rk">4</span><div class="ls-rav" style="background:#c4a3f4"></div><span>Thomas L.</span><span class="ls-rpts">870 pts</span></div>
-                <div class="ls-row"><span class="ls-rk">5</span><div class="ls-rav" style="background:#f4c87a"></div><span>Emma R.</span><span class="ls-rpts">760 pts</span></div>
-              </div>
-            </div>
-            <div class="preview-label">Leaderboard</div>
-          </div>
+        <!-- Header -->
+        <div class="preview-sticky-header">
+          <div class="section-tag">Aperçu produit</div>
+          <h2 class="section-title">Une expérience fluide,<br>du mobile au dashboard</h2>
+          <p class="preview-sticky-sub">Scrollez pour explorer →</p>
         </div>
-      </div>
-      <div class="preview-nav">
-        <button class="pnav-btn" id="prevPreview">←</button>
-        <div class="preview-dots" id="previewDots">
-          <span class="pdot active" data-idx="0"></span>
-          <span class="pdot" data-idx="1"></span>
-          <span class="pdot" data-idx="2"></span>
-          <span class="pdot" data-idx="3"></span>
+
+        <!-- Progress bar -->
+        <div class="preview-progress-bar">
+          <div class="preview-progress-fill" id="previewProgressFill"></div>
         </div>
-        <button class="pnav-btn" id="nextPreview">→</button>
-      </div>
-    </div>
+
+        <!-- Slide dots -->
+        <div class="preview-sticky-dots" id="previewStickyDots">
+          <span class="psd active" data-idx="0">Dashboard</span>
+          <span class="psd" data-idx="1">Mobile</span>
+          <span class="psd" data-idx="2">Groupes</span>
+          <span class="psd" data-idx="3">Leaderboard</span>
+          <span class="psd" data-idx="4">Ma photo</span>
+        </div>
+
+        <!-- Slides track -->
+        <div class="preview-slides-track" id="previewSlidesTrack">
+
+          <!-- Slide 1 — Dashboard -->
+          <div class="pslide" data-label="Dashboard Entreprise">
+            <div class="pslide-inner">
+              <div class="pslide-mockup">
+                <div class="preview-screen dashboard-screen">
+                  <div class="ds-header">
+                    <div class="ds-logo">Hub2gether</div>
+                    <div class="ds-nav">
+                      <span class="dsn active">Dashboard</span>
+                      <span class="dsn">Matchs</span>
+                      <span class="dsn">Groupes</span>
+                      <span class="dsn">KPIs</span>
+                    </div>
+                  </div>
+                  <div class="ds-body">
+                    <div class="ds-kpis">
+                      <div class="ds-kpi"><div class="dsk-val counter" data-target="87">0</div><div class="dsk-lbl">% Engagement</div><div class="dsk-trend up">▲ +12%</div></div>
+                      <div class="ds-kpi"><div class="dsk-val counter" data-target="142">0</div><div class="dsk-lbl">Matchs organisés</div><div class="dsk-trend up">▲ +34</div></div>
+                      <div class="ds-kpi"><div class="dsk-val counter" data-target="1248">0</div><div class="dsk-lbl">Interactions</div><div class="dsk-trend up">▲ +230</div></div>
+                      <div class="ds-kpi"><div class="dsk-val counter" data-target="34">0</div><div class="dsk-lbl">Groupes actifs</div><div class="dsk-trend up">▲ +8</div></div>
+                    </div>
+                    <div class="ds-chart-area">
+                      <div class="dsc-bars">
+                        <div class="dsc-col"><div class="dsc-bar" style="height:40%"></div><span>Jan</span></div>
+                        <div class="dsc-col"><div class="dsc-bar" style="height:55%"></div><span>Fév</span></div>
+                        <div class="dsc-col"><div class="dsc-bar" style="height:50%"></div><span>Mar</span></div>
+                        <div class="dsc-col"><div class="dsc-bar" style="height:72%"></div><span>Avr</span></div>
+                        <div class="dsc-col"><div class="dsc-bar" style="height:65%"></div><span>Mai</span></div>
+                        <div class="dsc-col"><div class="dsc-bar active" style="height:90%"></div><span>Jun</span></div>
+                      </div>
+                      <div class="dsc-title">Activité globale — 2025</div>
+                    </div>
+                  </div>
+                </div>
+                <div class="pslide-upload-btn" data-slide="0" title="Remplacer par votre screenshot">
+                  <svg width="16" height="16" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><path d="M21 15v4a2 2 0 01-2 2H5a2 2 0 01-2-2v-4"/><polyline points="17 8 12 3 7 8"/><line x1="12" y1="3" x2="12" y2="15"/></svg>
+                  Remplacer par votre image
+                </div>
+              </div>
+              <div class="pslide-caption">
+                <div class="pslide-num">01</div>
+                <h3>Dashboard Entreprise</h3>
+                <p>Vue globale de l'engagement, des matchs, des groupes et des KPIs RH — en temps réel.</p>
+              </div>
+            </div>
+          </div>
+
+          <!-- Slide 2 — Mobile -->
+          <div class="pslide" data-label="Interface Mobile">
+            <div class="pslide-inner">
+              <div class="pslide-mockup pslide-mockup-mobile">
+                <div class="preview-screen mobile-screen">
+                  <div class="ms-top">
+                    <div class="ms-logo">⚡ Hub2gether</div>
+                    <div class="ms-greeting">Bonjour Sophie ! 👋</div>
+                  </div>
+                  <div class="ms-upcoming">
+                    <div class="ms-section-title">Vos prochains matchs</div>
+                    <div class="ms-match"><div class="ms-sport">⚽</div><div class="ms-info"><div>Football · Jeudi 18h30</div><div class="ms-loc">Stade Léon</div></div><div class="ms-join">OK</div></div>
+                    <div class="ms-match"><div class="ms-sport">🏀</div><div class="ms-info"><div>Basket · Sam. 10h</div><div class="ms-loc">Gymnase A</div></div><div class="ms-join">OK</div></div>
+                  </div>
+                  <div class="ms-groups">
+                    <div class="ms-section-title">Mes groupes</div>
+                    <div class="ms-groups-pills"><span>⚽ Foot</span><span>🎾 Tennis</span><span>🏃 Run</span></div>
+                  </div>
+                </div>
+                <div class="pslide-upload-btn" data-slide="1" title="Remplacer par votre screenshot">
+                  <svg width="16" height="16" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><path d="M21 15v4a2 2 0 01-2 2H5a2 2 0 01-2-2v-4"/><polyline points="17 8 12 3 7 8"/><line x1="12" y1="3" x2="12" y2="15"/></svg>
+                  Remplacer par votre image
+                </div>
+              </div>
+              <div class="pslide-caption">
+                <div class="pslide-num">02</div>
+                <h3>Interface Mobile</h3>
+                <p>Une app intuitive que vos collaborateurs adoptent en moins d'une minute. iOS et Android.</p>
+              </div>
+            </div>
+          </div>
+
+          <!-- Slide 3 — Groupes -->
+          <div class="pslide" data-label="Gestion des Groupes">
+            <div class="pslide-inner">
+              <div class="pslide-mockup">
+                <div class="preview-screen groups-screen">
+                  <div class="gs-header">Mes Groupes <span class="gs-count">4 actifs</span></div>
+                  <div class="gs-list">
+                    <div class="gs-card"><div class="gs-icon">⚽</div><div class="gs-info"><div class="gs-name">Les Galactiques</div><div class="gs-meta">14 membres · 3 matchs cette semaine</div></div><div class="gs-av-row"><div class="gs-av" style="background:#78c8a3"></div><div class="gs-av" style="background:#a3d8f4"></div><div class="gs-av more">+11</div></div></div>
+                    <div class="gs-card"><div class="gs-icon">🏀</div><div class="gs-info"><div class="gs-name">Basket Corp</div><div class="gs-meta">9 membres · 1 match cette semaine</div></div><div class="gs-av-row"><div class="gs-av" style="background:#c4a3f4"></div><div class="gs-av more">+7</div></div></div>
+                    <div class="gs-card"><div class="gs-icon">🏃</div><div class="gs-info"><div class="gs-name">Running Team</div><div class="gs-meta">22 membres · Sortie dimanche</div></div><div class="gs-av-row"><div class="gs-av" style="background:#78c8a3"></div><div class="gs-av more">+20</div></div></div>
+                  </div>
+                </div>
+                <div class="pslide-upload-btn" data-slide="2" title="Remplacer par votre screenshot">
+                  <svg width="16" height="16" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><path d="M21 15v4a2 2 0 01-2 2H5a2 2 0 01-2-2v-4"/><polyline points="17 8 12 3 7 8"/><line x1="12" y1="3" x2="12" y2="15"/></svg>
+                  Remplacer par votre image
+                </div>
+              </div>
+              <div class="pslide-caption">
+                <div class="pslide-num">03</div>
+                <h3>Gestion des Groupes</h3>
+                <p>Créez des communautés sportives internes. Chaque groupe vit de façon autonome avec ses propres événements.</p>
+              </div>
+            </div>
+          </div>
+
+          <!-- Slide 4 — Leaderboard -->
+          <div class="pslide" data-label="Leaderboard">
+            <div class="pslide-inner">
+              <div class="pslide-mockup">
+                <div class="preview-screen leaderboard-screen">
+                  <div class="ls-header">🏆 Classement du mois</div>
+                  <div class="ls-podium">
+                    <div class="ls-pod ls-2nd"><div class="ls-av" style="background:#a3d8f4"></div><div class="ls-medal">🥈</div><div class="ls-pname">Marc D.</div><div class="ls-ppts">1 090 pts</div></div>
+                    <div class="ls-pod ls-1st"><div class="ls-crown">👑</div><div class="ls-av" style="background:#78c8a3"></div><div class="ls-medal">🥇</div><div class="ls-pname">Sophie M.</div><div class="ls-ppts">1 240 pts</div></div>
+                    <div class="ls-pod ls-3rd"><div class="ls-av" style="background:#f4a3a3"></div><div class="ls-medal">🥉</div><div class="ls-pname">Julie T.</div><div class="ls-ppts">980 pts</div></div>
+                  </div>
+                  <div class="ls-rest">
+                    <div class="ls-row"><span class="ls-rk">4</span><div class="ls-rav" style="background:#c4a3f4"></div><span>Thomas L.</span><span class="ls-rpts">870 pts</span></div>
+                    <div class="ls-row"><span class="ls-rk">5</span><div class="ls-rav" style="background:#f4c87a"></div><span>Emma R.</span><span class="ls-rpts">760 pts</span></div>
+                  </div>
+                </div>
+                <div class="pslide-upload-btn" data-slide="3" title="Remplacer par votre screenshot">
+                  <svg width="16" height="16" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><path d="M21 15v4a2 2 0 01-2 2H5a2 2 0 01-2-2v-4"/><polyline points="17 8 12 3 7 8"/><line x1="12" y1="3" x2="12" y2="15"/></svg>
+                  Remplacer par votre image
+                </div>
+              </div>
+              <div class="pslide-caption">
+                <div class="pslide-num">04</div>
+                <h3>Leaderboard & Gamification</h3>
+                <p>Un classement vivant qui motive vos équipes. Challenges, badges et podiums pour booster la participation.</p>
+              </div>
+            </div>
+          </div>
+
+          <!-- Slide 5 — Photo upload -->
+          <div class="pslide" data-label="Votre capture d'écran">
+            <div class="pslide-inner">
+              <div class="pslide-mockup pslide-upload-zone" id="uploadZone5">
+                <div class="upload-placeholder" id="uploadPlaceholder5">
+                  <div class="upload-icon">
+                    <svg width="48" height="48" viewBox="0 0 24 24" fill="none" stroke="#78c8a3" stroke-width="1.5"><rect x="3" y="3" width="18" height="18" rx="3"/><circle cx="8.5" cy="8.5" r="1.5"/><polyline points="21 15 16 10 5 21"/></svg>
+                  </div>
+                  <div class="upload-text">Ajoutez votre propre screenshot</div>
+                  <div class="upload-hint">Glissez-déposez ou cliquez pour choisir un fichier</div>
+                  <div class="upload-formats">JPG, PNG, WEBP · Max 10MB</div>
+                  <label class="upload-label-btn">
+                    Choisir une image
+                    <input type="file" accept="image/*" class="upload-input" data-target-slide="4">
+                  </label>
+                </div>
+                <img class="upload-preview-img" id="uploadPreviewImg5" style="display:none" alt="Votre screenshot">
+                <button class="upload-change-btn" id="uploadChangeBtn5" style="display:none">
+                  <svg width="14" height="14" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><path d="M21 15v4a2 2 0 01-2 2H5a2 2 0 01-2-2v-4"/><polyline points="17 8 12 3 7 8"/><line x1="12" y1="3" x2="12" y2="15"/></svg>
+                  Changer l'image
+                  <input type="file" accept="image/*" class="upload-input" data-target-slide="4">
+                </button>
+              </div>
+              <div class="pslide-caption">
+                <div class="pslide-num">05</div>
+                <h3>Votre propre capture</h3>
+                <p>Ajoutez ici n'importe quel screenshot de votre plateforme — dashboard personnalisé, résultats réels, interface client.</p>
+              </div>
+            </div>
+          </div>
+
+        </div><!-- /preview-slides-track -->
+
+        <!-- Scroll hint arrow -->
+        <div class="preview-scroll-hint" id="previewScrollHint">
+          <span>Continuez à scroller</span>
+          <svg width="20" height="20" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><path d="M12 5v14M5 12l7 7 7-7"/></svg>
+        </div>
+
+      </div><!-- /preview-sticky-viewport -->
+    </div><!-- /preview-sticky-inner -->
+
+    <!-- Hidden file inputs for slide overlays -->
+    <input type="file" accept="image/*" id="slideFileInput" style="display:none">
   </section>
 
   <!-- SECTION B2B -->
