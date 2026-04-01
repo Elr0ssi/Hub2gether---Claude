@@ -101,80 +101,170 @@ dots.forEach(dot => {
 
 startSlideShow();
 
-// ============ PRODUCT PREVIEW CAROUSEL ============
-const previewTrack = document.getElementById('previewTrack');
-const previewDots = document.querySelectorAll('#previewDots .pdot');
-const prevBtn = document.getElementById('prevPreview');
-const nextBtn = document.getElementById('nextPreview');
-let currentPreview = 0;
-let previewItems;
+// ============ STICKY HORIZONTAL SCROLL PREVIEW ============
+(function() {
+  const outer = document.querySelector('.preview-sticky-outer');
+  const track = document.getElementById('previewSlidesTrack');
+  const progressFill = document.getElementById('previewProgressFill');
+  const dots = document.querySelectorAll('.psd');
+  const scrollHint = document.getElementById('previewScrollHint');
+  const slides = document.querySelectorAll('.pslide');
 
-function initPreview() {
-  previewItems = document.querySelectorAll('.preview-item');
-  updatePreview();
-}
+  if (!outer || !track || !slides.length) return;
 
-function getItemWidth() {
-  const item = document.querySelector('.preview-item');
-  if (!item) return 0;
-  return item.offsetWidth + 24; // 24 = gap
-}
+  const SLIDE_COUNT = slides.length;
+  let lastActiveIdx = -1;
 
-function updatePreview() {
-  if (!previewTrack) return;
-  const offset = currentPreview * getItemWidth();
-  previewTrack.style.transform = `translateX(-${offset}px)`;
-  previewDots.forEach((dot, i) => {
-    dot.classList.toggle('active', i === currentPreview);
-  });
-  previewItems = document.querySelectorAll('.preview-item');
-  previewItems.forEach((item, i) => {
-    item.style.opacity = i === currentPreview ? '1' : '0.5';
-    item.style.transform = i === currentPreview ? 'scale(1)' : 'scale(0.96)';
-    item.style.transition = 'opacity .4s, transform .4s';
-  });
-}
-
-prevBtn?.addEventListener('click', () => {
-  if (currentPreview > 0) {
-    currentPreview--;
-    updatePreview();
+  function getSectionProgress() {
+    const rect = outer.getBoundingClientRect();
+    const totalScroll = outer.offsetHeight - window.innerHeight;
+    const scrolled = -rect.top;
+    return Math.max(0, Math.min(1, scrolled / totalScroll));
   }
-});
-nextBtn?.addEventListener('click', () => {
-  const items = document.querySelectorAll('.preview-item');
-  if (currentPreview < items.length - 1) {
-    currentPreview++;
-    updatePreview();
+
+  function updatePreviewScroll() {
+    if (window.innerWidth <= 768) return;
+
+    const progress = getSectionProgress();
+
+    // Total horizontal distance to slide = track scrollable width
+    const trackScrollable = track.scrollWidth - window.innerWidth + 80;
+    const translateX = progress * trackScrollable;
+    track.style.transform = `translateX(-${translateX}px)`;
+
+    // Progress bar
+    progressFill.style.width = (progress * 100) + '%';
+
+    // Which slide is active?
+    const rawIdx = progress * (SLIDE_COUNT - 1);
+    const activeIdx = Math.round(rawIdx);
+
+    if (activeIdx !== lastActiveIdx) {
+      lastActiveIdx = activeIdx;
+      slides.forEach((s, i) => {
+        s.classList.toggle('pslide-active', i === activeIdx);
+      });
+      dots.forEach((d, i) => {
+        d.classList.toggle('active', i === activeIdx);
+      });
+      // Hide scroll hint after first move
+      if (activeIdx > 0 && scrollHint) {
+        scrollHint.classList.add('hidden');
+      } else if (activeIdx === 0 && scrollHint) {
+        scrollHint.classList.remove('hidden');
+      }
+    }
   }
-});
-previewDots.forEach(dot => {
-  dot.addEventListener('click', () => {
-    currentPreview = parseInt(dot.dataset.idx);
-    updatePreview();
+
+  // Activate first slide
+  if (slides[0]) slides[0].classList.add('pslide-active');
+
+  window.addEventListener('scroll', updatePreviewScroll, { passive: true });
+  updatePreviewScroll();
+
+  // Click on dot → scroll to corresponding position
+  dots.forEach((dot, i) => {
+    dot.addEventListener('click', () => {
+      const outerTop = outer.getBoundingClientRect().top + window.scrollY;
+      const totalScroll = outer.offsetHeight - window.innerHeight;
+      const targetProgress = i / (SLIDE_COUNT - 1);
+      const targetScroll = outerTop + targetProgress * totalScroll;
+      window.scrollTo({ top: targetScroll, behavior: 'smooth' });
+    });
   });
-});
+})();
 
-// Touch swipe for preview
-let touchStartX = 0;
-previewTrack?.addEventListener('touchstart', e => {
-  touchStartX = e.touches[0].clientX;
-}, { passive: true });
-previewTrack?.addEventListener('touchend', e => {
-  const dx = e.changedTouches[0].clientX - touchStartX;
-  const items = document.querySelectorAll('.preview-item');
-  if (dx < -50 && currentPreview < items.length - 1) {
-    currentPreview++;
-    updatePreview();
-  } else if (dx > 50 && currentPreview > 0) {
-    currentPreview--;
-    updatePreview();
+// ============ PHOTO UPLOAD — ALL SLIDES ============
+(function() {
+  // For slides 0-3: click the overlay button to replace with custom image
+  document.querySelectorAll('.pslide-upload-btn').forEach(btn => {
+    btn.addEventListener('click', function(e) {
+      e.stopPropagation();
+      const slideIdx = parseInt(this.dataset.slide);
+      const input = document.createElement('input');
+      input.type = 'file';
+      input.accept = 'image/*';
+      input.onchange = (ev) => handleSlideUpload(ev.target.files[0], slideIdx, this.closest('.pslide-mockup'));
+      input.click();
+    });
+  });
+
+  function handleSlideUpload(file, slideIdx, mockupEl) {
+    if (!file) return;
+    const reader = new FileReader();
+    reader.onload = (e) => {
+      // Hide the original screen content
+      const screen = mockupEl.querySelector('.preview-screen');
+      const uploadBtn = mockupEl.querySelector('.pslide-upload-btn');
+
+      // Create or update the overlay img
+      let overlay = mockupEl.querySelector('.custom-img-overlay');
+      if (!overlay) {
+        overlay = document.createElement('div');
+        overlay.className = 'custom-img-overlay';
+        const img = document.createElement('img');
+        img.alt = 'Votre capture';
+        overlay.appendChild(img);
+
+        // Change btn
+        const changeBtn = document.createElement('label');
+        changeBtn.className = 'upload-overlay-change';
+        changeBtn.innerHTML = `<svg width="14" height="14" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><path d="M21 15v4a2 2 0 01-2 2H5a2 2 0 01-2-2v-4"/><polyline points="17 8 12 3 7 8"/><line x1="12" y1="3" x2="12" y2="15"/></svg> Changer`;
+        const newInput = document.createElement('input');
+        newInput.type = 'file';
+        newInput.accept = 'image/*';
+        newInput.style.display = 'none';
+        newInput.onchange = (ev2) => handleSlideUpload(ev2.target.files[0], slideIdx, mockupEl);
+        changeBtn.appendChild(newInput);
+        overlay.appendChild(changeBtn);
+        mockupEl.appendChild(overlay);
+      }
+
+      overlay.querySelector('img').src = e.target.result;
+      mockupEl.classList.add('has-custom-img');
+      if (screen) screen.style.display = 'none';
+      if (uploadBtn) uploadBtn.style.display = 'none';
+    };
+    reader.readAsDataURL(file);
   }
-}, { passive: true });
 
-window.addEventListener('resize', () => {
-  updatePreview();
-});
+  // Slide 5 — dedicated upload zone
+  const zone5 = document.getElementById('uploadZone5');
+  const placeholder5 = document.getElementById('uploadPlaceholder5');
+  const previewImg5 = document.getElementById('uploadPreviewImg5');
+  const changeBtn5 = document.getElementById('uploadChangeBtn5');
+
+  function applyUploadZone(file) {
+    if (!file || !file.type.startsWith('image/')) return;
+    const reader = new FileReader();
+    reader.onload = (e) => {
+      previewImg5.src = e.target.result;
+      previewImg5.style.display = 'block';
+      placeholder5.style.display = 'none';
+      changeBtn5.style.display = 'flex';
+      zone5.style.border = 'none';
+      zone5.style.borderRadius = 'var(--radius-xl)';
+    };
+    reader.readAsDataURL(file);
+  }
+
+  // Drag & drop
+  zone5?.addEventListener('dragover', (e) => {
+    e.preventDefault();
+    zone5.classList.add('drag-over');
+  });
+  zone5?.addEventListener('dragleave', () => zone5.classList.remove('drag-over'));
+  zone5?.addEventListener('drop', (e) => {
+    e.preventDefault();
+    zone5.classList.remove('drag-over');
+    applyUploadZone(e.dataTransfer.files[0]);
+  });
+
+  // All file inputs within slide 5
+  document.querySelectorAll('#uploadZone5 .upload-input, #uploadChangeBtn5 .upload-input').forEach(input => {
+    input.addEventListener('change', (e) => applyUploadZone(e.target.files[0]));
+  });
+})();
 
 // ============ COUNTER ANIMATION ============
 function animateCounter(el) {
@@ -302,9 +392,6 @@ window.addEventListener('load', () => {
       heroRight.style.transform = 'translateX(0)';
     }, 100);
   }
-
-  // Init preview after load
-  initPreview();
 });
 
 // ============ BUTTON RIPPLE EFFECT ============
