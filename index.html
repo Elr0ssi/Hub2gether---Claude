@@ -1,1847 +1,1765 @@
-<!DOCTYPE html>
+<!doctype html>
 <html lang="fr">
 <head>
-<meta charset="UTF-8"/>
-<meta name="viewport" content="width=device-width,initial-scale=1"/>
-<title>Hub2gether — Sport & Cohésion</title>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<title>Hub2gether — Le sport en entreprise, réinventé</title>
 <link rel="preconnect" href="https://fonts.googleapis.com">
-<link href="https://fonts.googleapis.com/css2?family=Clash+Display:wght@400;500;600;700&family=General+Sans:ital,wght@0,300;0,400;0,500;0,600;1,300&display=swap" rel="stylesheet">
+<link href="https://fonts.googleapis.com/css2?family=Bricolage+Grotesque:wght@300;400;500;600;700;800&family=DM+Sans:ital,wght@0,300;0,400;0,500;1,300&display=swap" rel="stylesheet">
 <style>
-/* ═══════════════════════════════════════
-   TOKENS
-═══════════════════════════════════════ */
-:root{
-  --g:#6ee8a8;
-  --g2:#3cca7e;
-  --g3:#1a6e42;
-  --ink:#09100d;
-  --ink2:#111a14;
-  --paper:#f5f7f5;
-  --muted:rgba(255,255,255,.38);
-  --border:rgba(255,255,255,.07);
-  --border2:rgba(255,255,255,.12);
-  --glow:rgba(110,232,168,.18);
-  --glow2:rgba(110,232,168,.08);
-  --f1:'Clash Display',sans-serif;
-  --f2:'General Sans',sans-serif;
-  --ease:cubic-bezier(.25,.46,.45,.94);
-  --spring:cubic-bezier(.34,1.56,.64,1);
-  --fast:cubic-bezier(.16,1,.3,1);
+*, *::before, *::after { box-sizing: border-box; margin: 0; padding: 0; }
+
+:root {
+  --ink: #0F2E22;
+  --ink2: #173d2d;
+  --mint: #7FE3BF;
+  --mint-dim: rgba(127,227,191,.13);
+  --yellow: #FFEC6D;
+  --cream: #FAFAF8;
+  --muted: #6d7c72;
+  --line: rgba(15,46,34,.1);
+  --fd: 'Bricolage Grotesque', sans-serif;
+  --fb: 'DM Sans', sans-serif;
+  --r: 14px;
+  --rl: 22px;
+  --rxl: 32px;
 }
 
-/* ═══ RESET ═══ */
-*,*::before,*::after{margin:0;padding:0;box-sizing:border-box}
-html{font-size:16px;scroll-behavior:smooth}
-body{
-  background:var(--ink);color:#fff;
-  font-family:var(--f2);overflow-x:hidden;
-  -webkit-font-smoothing:antialiased;
-  cursor:none;
-}
-a{text-decoration:none;color:inherit}
-img{max-width:100%;display:block}
-button{font-family:inherit;cursor:none;border:none;background:none}
+html { scroll-behavior: smooth; }
 
-/* ═══ CURSOR ═══ */
-#cur{
-  position:fixed;top:0;left:0;width:12px;height:12px;
-  background:var(--g);border-radius:50%;
-  pointer-events:none;z-index:99999;
-  mix-blend-mode:screen;
-  transition:width .3s var(--spring),height .3s var(--spring),opacity .2s;
-  transform:translate(-50%,-50%);
-}
-#cur2{
-  position:fixed;top:0;left:0;width:40px;height:40px;
-  border:1px solid rgba(110,232,168,.4);border-radius:50%;
-  pointer-events:none;z-index:99998;
-  transform:translate(-50%,-50%);
-  transition:width .35s var(--spring),height .35s var(--spring),border-color .3s;
-}
-body.hovering #cur{width:6px;height:6px}
-body.hovering #cur2{width:60px;height:60px;border-color:rgba(110,232,168,.7)}
-
-/* ═══ LOADER ═══ */
-#loader{
-  position:fixed;inset:0;background:var(--ink);z-index:9999;
-  display:flex;flex-direction:column;align-items:center;justify-content:center;gap:32px;
-  transition:opacity .8s var(--fast),visibility .8s;
-}
-#loader.done{opacity:0;visibility:hidden;pointer-events:none}
-.ld-logo{
-  font-family:var(--f1);font-size:52px;font-weight:700;
-  background:linear-gradient(135deg,#fff 0%,var(--g) 100%);
-  -webkit-background-clip:text;-webkit-text-fill-color:transparent;
-  letter-spacing:-.04em;
-  animation:ldPulse 1.2s ease-in-out infinite alternate;
-}
-@keyframes ldPulse{to{opacity:.6}}
-.ld-track{width:200px;height:1px;background:rgba(255,255,255,.1);border-radius:1px;overflow:hidden}
-.ld-fill{height:100%;background:linear-gradient(90deg,var(--g2),var(--g));width:0;transition:width .1s linear;border-radius:1px}
-.ld-words{
-  position:absolute;bottom:40px;
-  font-family:var(--f2);font-size:11px;font-weight:500;
-  letter-spacing:.12em;text-transform:uppercase;color:rgba(255,255,255,.2);
+body {
+  font-family: var(--fb);
+  background: #f0f3f1;
+  color: var(--ink);
+  overflow-x: hidden;
+  -webkit-font-smoothing: antialiased;
 }
 
-/* ═══ NAV ═══ */
-nav{
-  position:fixed;top:0;left:0;right:0;z-index:1000;
-  padding:0 32px;
-  transition:background .5s var(--ease),backdrop-filter .5s;
+/* ─── NAV ─────────────────────────────────────── */
+nav {
+  position: fixed; top: 0; left: 0; right: 0; z-index: 200;
+  height: 62px; padding: 0 40px;
+  display: flex; align-items: center; justify-content: space-between;
+  background: rgba(250,250,248,.88); backdrop-filter: blur(18px);
+  border-bottom: 1px solid var(--line);
+  transition: box-shadow .3s;
 }
-nav.solid{background:rgba(9,16,13,.85);backdrop-filter:blur(24px);border-bottom:1px solid var(--border)}
-.nav-in{
-  max-width:1280px;margin:0 auto;
-  display:flex;align-items:center;gap:40px;
-  padding:22px 0;
+nav.scrolled { box-shadow: 0 4px 24px rgba(15,46,34,.08); }
+.nav-logo {
+  font-family: var(--fd); font-size: 19px; font-weight: 800;
+  letter-spacing: -.5px; color: var(--ink);
+  display: flex; align-items: center; gap: 8px;
 }
-.nav-logo{
-  display:flex;align-items:center;gap:10px;flex-shrink:0;
-  font-family:var(--f1);font-size:18px;font-weight:600;letter-spacing:-.02em;
+.nav-logo .dot { 
+  width: 8px; height: 8px; border-radius: 50%;
+  background: var(--mint); display: inline-block;
 }
-.nav-logo-orb{
-  width:28px;height:28px;border-radius:8px;
-  background:linear-gradient(135deg,var(--g2),var(--g));
-  display:flex;align-items:center;justify-content:center;
-  font-size:14px;box-shadow:0 0 16px var(--glow);
-  animation:orbBreath 3s ease-in-out infinite;
+.nav-pill {
+  display: flex; align-items: center; gap: 6px;
+  background: var(--ink); color: #fff;
+  font-size: 13px; font-weight: 600;
+  padding: 9px 20px; border-radius: 999px;
+  border: none; cursor: pointer;
+  transition: transform .15s, box-shadow .15s;
 }
-@keyframes orbBreath{0%,100%{box-shadow:0 0 16px var(--glow)}50%{box-shadow:0 0 32px rgba(110,232,168,.35)}}
-.nav-links{
-  display:flex;gap:32px;margin:0 auto;
+.nav-pill:hover { transform: translateY(-1px); box-shadow: 0 6px 20px rgba(15,46,34,.22); }
+.nav-ghost {
+  font-size: 13px; color: var(--muted);
+  background: none; border: none; cursor: pointer;
+  padding: 8px 14px; border-radius: var(--r);
+  transition: background .2s;
 }
-.nav-link{
-  font-size:13.5px;font-weight:500;color:var(--muted);
-  transition:color .2s;position:relative;letter-spacing:.01em;
-}
-.nav-link:hover{color:#fff}
-.nav-cta-btn{
-  display:flex;align-items:center;gap:8px;flex-shrink:0;
-  background:linear-gradient(135deg,var(--g2),var(--g));
-  color:var(--ink);font-family:var(--f1);font-size:13.5px;font-weight:600;
-  padding:10px 22px;border-radius:50px;
-  transition:transform .25s var(--spring),box-shadow .25s,filter .2s;
-  box-shadow:0 0 24px rgba(110,232,168,.25);
-  letter-spacing:-.01em;
-}
-.nav-cta-btn:hover{transform:translateY(-1px) scale(1.02);box-shadow:0 0 40px rgba(110,232,168,.4)}
-.nav-burger{display:none;width:32px;height:22px;flex-direction:column;justify-content:space-between;background:none;border:none;padding:0;margin-left:auto}
-.nav-burger span{display:block;height:1.5px;background:#fff;border-radius:2px;transition:.3s}
-.nav-mob{display:none;flex-direction:column;padding:16px 32px 28px;border-top:1px solid var(--border)}
-.nav-mob a{padding:13px 0;font-size:16px;font-weight:500;color:var(--muted);border-bottom:1px solid var(--border)}
-.nav-mob.open{display:flex}
+.nav-ghost:hover { background: rgba(15,46,34,.06); }
 
-/* ═══ HERO ═══ */
-.hero{
-  position:relative;min-height:100svh;
-  display:grid;grid-template-columns:1fr 1fr;
-  align-items:center;gap:0;
-  overflow:hidden;
-  padding:0;
+/* ─── HERO ────────────────────────────────────── */
+.hero {
+  min-height: 100vh;
+  display: flex; flex-direction: column;
+  align-items: center; justify-content: center;
+  text-align: center;
+  padding: 130px 40px 60px;
+  position: relative; overflow: hidden;
+  background: #f0f3f1;
 }
+.hero-noise {
+  position: absolute; inset: 0; z-index: 0; pointer-events: none; opacity: .025;
+  background-image: url("data:image/svg+xml,%3Csvg viewBox='0 0 200 200' xmlns='http://www.w3.org/2000/svg'%3E%3Cfilter id='n'%3E%3CfeTurbulence type='fractalNoise' baseFrequency='0.9' numOctaves='4' stitchTiles='stitch'/%3E%3C/filter%3E%3Crect width='100%25' height='100%25' filter='url(%23n)'/%3E%3C/svg%3E");
+  background-size: 200px 200px;
+}
+.hero-glow {
+  position: absolute; inset: 0; z-index: 0; pointer-events: none;
+  background: radial-gradient(ellipse 60% 50% at 50% -5%, rgba(127,227,191,.28) 0%, transparent 65%),
+              radial-gradient(ellipse 40% 35% at 15% 60%, rgba(255,236,109,.12) 0%, transparent 60%),
+              radial-gradient(ellipse 35% 30% at 85% 55%, rgba(29,184,126,.1) 0%, transparent 60%);
+}
+.hero-grid-lines {
+  position: absolute; inset: 0; z-index: 0; pointer-events: none;
+  background-image: linear-gradient(rgba(15,46,34,.06) 1px, transparent 1px),
+                    linear-gradient(90deg, rgba(15,46,34,.06) 1px, transparent 1px);
+  background-size: 64px 64px;
+  mask-image: radial-gradient(ellipse 80% 70% at 50% 35%, black 20%, transparent 75%);
+}
+.hero-badge {
+  display: inline-flex; align-items: center; gap: 8px;
+  background: white; border: 1px solid var(--line);
+  border-radius: 999px; padding: 5px 14px 5px 6px;
+  font-size: 12px; font-weight: 500; color: var(--muted);
+  margin-bottom: 28px; position: relative; z-index: 1;
+  box-shadow: 0 2px 12px rgba(15,46,34,.08);
+  animation: fadeUp .55s ease both;
+}
+.hero-badge .pip {
+  background: #1DB87E; color: white;
+  font-size: 11px; font-weight: 700;
+  padding: 3px 8px; border-radius: 999px;
+}
+.hero-title {
+  font-family: var(--fd);
+  font-size: clamp(48px, 7.5vw, 100px);
+  font-weight: 800; line-height: .97;
+  letter-spacing: -3px;
+  position: relative; z-index: 1;
+  animation: fadeUp .55s .1s ease both;
+  max-width: 860px;
+}
+.hero-title em {
+  font-style: normal;
+  background: linear-gradient(120deg, #1acd8b, #7FE3BF 60%);
+  -webkit-background-clip: text; -webkit-text-fill-color: transparent;
+}
+.hero-sub {
+  font-size: 17px; font-weight: 300; color: var(--muted);
+  max-width: 520px; line-height: 1.65;
+  margin: 22px auto 0;
+  position: relative; z-index: 1;
+  animation: fadeUp .55s .2s ease both;
+}
+.hero-actions {
+  display: flex; align-items: center; gap: 10px;
+  margin-top: 36px; position: relative; z-index: 1;
+  animation: fadeUp .55s .3s ease both;
+}
+.btn-hero {
+  font-family: var(--fb); font-size: 15px; font-weight: 600;
+  color: white; background: var(--ink);
+  border: none; cursor: pointer;
+  padding: 14px 28px; border-radius: var(--r);
+  display: flex; align-items: center; gap: 8px;
+  transition: transform .15s, box-shadow .2s;
+}
+.btn-hero:hover { transform: translateY(-1px); box-shadow: 0 8px 24px rgba(15,46,34,.22); }
+.btn-hero-outline {
+  font-family: var(--fb); font-size: 15px; color: var(--ink);
+  background: white; border: 1px solid var(--line);
+  cursor: pointer; padding: 14px 28px; border-radius: var(--r);
+  transition: box-shadow .2s;
+}
+.btn-hero-outline:hover { box-shadow: 0 4px 16px rgba(15,46,34,.1); }
 
-/* Ambient background */
-.hero-ambient{position:absolute;inset:0;pointer-events:none;z-index:0}
-.amb-orb{
-  position:absolute;border-radius:50%;filter:blur(80px);
-  animation:orbFloat 12s ease-in-out infinite;
+/* social proof */
+.hero-proof {
+  display: flex; align-items: center; gap: 14px;
+  margin-top: 44px; position: relative; z-index: 1;
+  animation: fadeUp .55s .4s ease both;
 }
-.amb-1{width:600px;height:600px;background:radial-gradient(circle,rgba(110,232,168,.12) 0%,transparent 70%);top:-100px;left:-100px}
-.amb-2{width:500px;height:500px;background:radial-gradient(circle,rgba(60,202,126,.08) 0%,transparent 70%);bottom:-50px;right:-80px;animation-delay:-4s}
-.amb-3{width:300px;height:300px;background:radial-gradient(circle,rgba(110,232,168,.06) 0%,transparent 70%);top:40%;left:35%;animation-delay:-7s}
-@keyframes orbFloat{0%,100%{transform:translate(0,0)}33%{transform:translate(30px,-20px)}66%{transform:translate(-20px,30px)}}
+.avatars { display: flex; }
+.avatars span {
+  width: 30px; height: 30px; border-radius: 50%;
+  border: 2px solid white; display: grid; place-content: center;
+  font-size: 10px; font-weight: 800; color: white;
+  margin-left: -8px;
+}
+.avatars span:first-child { margin-left: 0; }
+.proof-text { font-size: 12px; color: var(--muted); }
+.proof-text strong { color: var(--ink); }
 
-/* Grid lines overlay */
-.hero-grid{
-  position:absolute;inset:0;pointer-events:none;z-index:0;
-  background-image:
-    linear-gradient(rgba(255,255,255,.025) 1px,transparent 1px),
-    linear-gradient(90deg,rgba(255,255,255,.025) 1px,transparent 1px);
-  background-size:80px 80px;
-  mask-image:radial-gradient(ellipse 80% 80% at 50% 50%,black 0%,transparent 100%);
+/* ─── HERO LIVE DASHBOARD SIM ─────────────────── */
+.hero-sim {
+  position: relative; z-index: 1;
+  margin-top: 72px; width: 100%; max-width: 1060px;
+  animation: fadeUp .6s .5s ease both;
 }
+.sim-chrome {
+  border-radius: 22px; overflow: hidden;
+  border: 1px solid rgba(15,46,34,.15);
+  box-shadow: 0 32px 80px rgba(15,46,34,.2), 0 0 0 1px rgba(255,255,255,.4);
+  background: #1a2e26;
+  -webkit-mask-image: linear-gradient(to bottom, #000 0%, #000 78%, rgba(0,0,0,.8) 88%, transparent 100%);
+  mask-image: linear-gradient(to bottom, #000 0%, #000 78%, rgba(0,0,0,.8) 88%, transparent 100%);
+}
+.sim-titlebar {
+  height: 42px; background: #1a2e26;
+  display: flex; align-items: center; gap: 7px; padding: 0 16px;
+  border-bottom: 1px solid rgba(255,255,255,.08);
+}
+.sim-dot { width: 11px; height: 11px; border-radius: 50%; }
+.sim-url {
+  flex: 1; max-width: 300px; margin: 0 auto;
+  background: rgba(255,255,255,.08); border-radius: 6px;
+  padding: 4px 12px; font-size: 11px; color: rgba(255,255,255,.35);
+  text-align: center;
+}
+.sim-body {
+  display: grid; grid-template-columns: 200px 1fr;
+  min-height: 480px; background: #f3f6f4;
+}
+.sim-sidebar {
+  background: #162820; padding: 16px 12px;
+  display: flex; flex-direction: column; gap: 4px;
+}
+.sim-sidebar-logo {
+  font-family: var(--fd); font-size: 14px; font-weight: 800;
+  color: var(--mint); padding: 8px 8px 16px;
+  border-bottom: 1px solid rgba(255,255,255,.08); margin-bottom: 8px;
+}
+.sim-nav-item {
+  display: flex; align-items: center; gap: 9px;
+  padding: 9px 10px; border-radius: 10px;
+  font-size: 12px; font-weight: 500; color: rgba(255,255,255,.5);
+  cursor: pointer; transition: .2s;
+}
+.sim-nav-item:hover, .sim-nav-item.active {
+  background: rgba(127,227,191,.12); color: var(--mint);
+}
+.sim-nav-item .ico { font-size: 14px; }
+.sim-main { padding: 16px; overflow: hidden; }
+.sim-topbar {
+  display: flex; align-items: center; justify-content: space-between;
+  margin-bottom: 14px;
+}
+.sim-greeting { font-family: var(--fd); font-size: 16px; font-weight: 700; }
+.sim-date { font-size: 11px; color: var(--muted); }
+.sim-live-badge {
+  display: flex; align-items: center; gap: 5px;
+  font-size: 11px; font-weight: 700; color: #1DB87E;
+  background: rgba(29,184,126,.1); border-radius: 999px;
+  padding: 4px 10px;
+}
+.sim-live-dot { width: 7px; height: 7px; border-radius: 50%; background: #1DB87E; animation: pulse 1.5s infinite; }
 
-/* Left panel */
-.hero-left{
-  position:relative;z-index:2;
-  padding:160px 80px 120px 80px;
-  max-width:720px;
+/* KPI Row */
+.sim-kpis { display: grid; grid-template-columns: repeat(4, 1fr); gap: 10px; margin-bottom: 12px; }
+.sim-kpi {
+  background: white; border: 1px solid rgba(15,46,34,.08);
+  border-radius: 14px; padding: 12px 14px;
+  position: relative; overflow: hidden;
+  transition: transform .2s;
 }
-.hero-eyebrow{
-  display:inline-flex;align-items:center;gap:10px;
-  border:1px solid var(--border2);border-radius:50px;
-  padding:7px 16px 7px 10px;margin-bottom:40px;
-  background:rgba(255,255,255,.04);backdrop-filter:blur(8px);
-  opacity:0;animation:fadeUp .7s var(--fast) .6s forwards;
+.sim-kpi:hover { transform: translateY(-2px); }
+.sim-kpi-label { font-size: 10px; text-transform: uppercase; letter-spacing: .08em; color: var(--muted); margin-bottom: 6px; }
+.sim-kpi-val { font-family: var(--fd); font-size: 26px; font-weight: 800; line-height: 1; }
+.sim-kpi-delta { font-size: 11px; margin-top: 4px; }
+.delta-up { color: #1DB87E; }
+.delta-down { color: #FF6B35; }
+.sim-kpi-bar {
+  position: absolute; bottom: 0; left: 0; right: 0; height: 3px;
+  background: rgba(15,46,34,.06);
 }
-.ey-dot{width:8px;height:8px;background:var(--g);border-radius:50%;box-shadow:0 0 8px var(--g);animation:orbBreath 2s ease-in-out infinite}
-.ey-text{font-size:12.5px;font-weight:500;color:var(--muted);letter-spacing:.04em}
-.ey-pill{
-  background:rgba(110,232,168,.12);color:var(--g);
-  font-size:11px;font-weight:600;padding:3px 10px;border-radius:20px;
-  letter-spacing:.04em;
-}
+.sim-kpi-bar-fill { height: 100%; border-radius: 999px; }
 
-.hero-title{
-  font-family:var(--f1);font-size:clamp(48px,5.5vw,82px);
-  line-height:1.0;letter-spacing:-.04em;margin-bottom:32px;
-  overflow:hidden;
+/* bottom grid */
+.sim-grid { display: grid; grid-template-columns: 1.4fr 1fr; gap: 10px; }
+.sim-card {
+  background: white; border: 1px solid rgba(15,46,34,.08);
+  border-radius: 14px; padding: 14px; overflow: hidden;
 }
-.ht-line{display:block;overflow:hidden;padding-bottom:.06em}
-.ht-inner{
-  display:block;transform:translateY(110%);
-  animation:lineReveal .8s var(--fast) forwards;
+.sim-card-title { font-size: 13px; font-weight: 700; margin-bottom: 12px; }
+.sim-match-row {
+  display: flex; align-items: center; gap: 10px;
+  padding: 8px 0; border-bottom: 1px solid rgba(15,46,34,.06);
 }
-.ht-line:nth-child(1) .ht-inner{animation-delay:.7s}
-.ht-line:nth-child(2) .ht-inner{animation-delay:.82s}
-.ht-line:nth-child(3) .ht-inner{animation-delay:.94s;color:var(--g)}
-.ht-line:nth-child(4) .ht-inner{animation-delay:1.04s}
-@keyframes lineReveal{to{transform:translateY(0)}}
+.sim-match-row:last-child { border-bottom: none; }
+.sim-av {
+  width: 32px; height: 32px; border-radius: 8px;
+  display: grid; place-content: center;
+  font-size: 11px; font-weight: 800; color: white; flex-shrink: 0;
+}
+.sim-match-info { flex: 1; }
+.sim-match-name { font-size: 12px; font-weight: 600; }
+.sim-match-detail { font-size: 10px; color: var(--muted); }
+.sim-badge {
+  font-size: 10px; font-weight: 700;
+  padding: 3px 8px; border-radius: 999px;
+}
+.bg-mint { background: rgba(127,227,191,.2); color: #0a5e40; }
+.bg-yellow { background: rgba(255,236,109,.25); color: #6b5800; }
+.bg-red { background: rgba(255,107,53,.15); color: #b33a00; }
 
-.hero-sub{
-  font-size:18px;font-weight:300;color:var(--muted);line-height:1.75;
-  max-width:480px;margin-bottom:48px;
-  opacity:0;animation:fadeUp .7s var(--fast) 1.2s forwards;
+/* mini sparkline bars */
+.mini-bars { display: flex; align-items: flex-end; gap: 3px; height: 52px; margin-top: 10px; }
+.mini-bars span {
+  flex: 1; border-radius: 4px 4px 0 0;
+  background: rgba(127,227,191,.25);
+  transition: height .3s;
 }
-.hero-sub strong{color:#fff;font-weight:500}
+.mini-bars span.hi { background: var(--mint); }
 
-.hero-btns{
-  display:flex;align-items:center;gap:16px;flex-wrap:wrap;margin-bottom:56px;
-  opacity:0;animation:fadeUp .7s var(--fast) 1.35s forwards;
+/* leaderboard */
+.lb-row {
+  display: flex; align-items: center; gap: 10px;
+  padding: 7px 0; border-bottom: 1px solid rgba(15,46,34,.06);
 }
-.btn-glow{
-  display:inline-flex;align-items:center;gap:10px;
-  background:linear-gradient(135deg,var(--g2),var(--g));
-  color:var(--ink);font-family:var(--f1);font-size:15px;font-weight:600;
-  padding:16px 32px;border-radius:50px;letter-spacing:-.02em;
-  box-shadow:0 0 40px rgba(110,232,168,.3);
-  transition:transform .25s var(--spring),box-shadow .25s,filter .2s;
-  position:relative;overflow:hidden;
-}
-.btn-glow::before{
-  content:'';position:absolute;inset:0;
-  background:linear-gradient(135deg,rgba(255,255,255,.2),transparent);
-  opacity:0;transition:opacity .3s;border-radius:50px;
-}
-.btn-glow:hover{transform:translateY(-2px) scale(1.03);box-shadow:0 0 60px rgba(110,232,168,.5);filter:brightness(1.05)}
-.btn-glow:hover::before{opacity:1}
-.btn-outline{
-  display:inline-flex;align-items:center;gap:8px;
-  color:var(--muted);font-size:14.5px;font-weight:500;
-  padding:16px 24px;border-radius:50px;
-  border:1px solid var(--border2);
-  transition:color .2s,border-color .2s,background .2s;
-  letter-spacing:.01em;
-}
-.btn-outline:hover{color:#fff;border-color:rgba(255,255,255,.25);background:rgba(255,255,255,.04)}
+.lb-row:last-child { border-bottom: none; }
+.lb-rank { font-family: var(--fd); font-size: 16px; font-weight: 800; width: 24px; }
+.lb-av { width: 28px; height: 28px; border-radius: 8px; display: grid; place-content: center; font-size: 10px; font-weight: 800; color: white; }
+.lb-name { flex: 1; font-size: 12px; font-weight: 600; }
+.lb-pts { font-size: 13px; font-weight: 800; color: var(--mint); }
 
-.hero-proof{
-  display:flex;align-items:center;gap:14px;
-  opacity:0;animation:fadeUp .7s var(--fast) 1.5s forwards;
+/* ─── STATS BAND ──────────────────────────────── */
+.stats-band {
+  background: var(--ink);
+  padding: 0 40px;
+  display: grid; grid-template-columns: repeat(4, 1fr);
+  border-top: 1px solid rgba(255,255,255,.06);
 }
-.proof-faces{display:flex}
-.pf{
-  width:34px;height:34px;border-radius:50%;
-  border:2px solid var(--ink);margin-left:-10px;
-  background:var(--c,#333);
+.stat-band-item {
+  padding: 52px 32px;
+  border-right: 1px solid rgba(255,255,255,.08);
+  position: relative; overflow: hidden;
 }
-.pf:first-child{margin-left:0}
-.proof-txt{font-size:13.5px;color:var(--muted);font-weight:400}
-.proof-txt strong{color:#fff;font-weight:600}
+.stat-band-item:last-child { border-right: none; }
+.stat-band-item::before {
+  content: '';
+  position: absolute; top: -60px; left: -60px;
+  width: 200px; height: 200px;
+  border-radius: 50%;
+  background: radial-gradient(circle, rgba(127,227,191,.12), transparent 65%);
+  pointer-events: none;
+}
+.stat-num {
+  font-family: var(--fd);
+  font-size: 62px; font-weight: 800; line-height: 1;
+  color: white; display: flex; align-items: flex-start;
+}
+.stat-num .unit { font-size: 28px; margin-top: 10px; color: var(--mint); font-weight: 700; }
+.stat-label { font-size: 14px; color: rgba(255,255,255,.5); margin-top: 10px; line-height: 1.4; }
+.stat-source { font-size: 11px; color: rgba(255,255,255,.25); margin-top: 8px; }
 
-/* Right panel — phone */
-.hero-right{
-  position:relative;z-index:2;
-  display:flex;align-items:center;justify-content:center;
-  height:100%;padding:140px 60px 100px 0;
+/* ─── SECTIONS SHARED ─────────────────────────── */
+section { padding: 112px 40px; }
+.inner { max-width: 1100px; margin: 0 auto; }
+.tag {
+  display: inline-flex; align-items: center; gap: 6px;
+  font-size: 11px; font-weight: 700; letter-spacing: .1em;
+  text-transform: uppercase;
+  background: rgba(127,227,191,.18); color: #0a5e40;
+  border-radius: 999px; padding: 4px 12px; margin-bottom: 18px;
 }
-.phone-scene{
-  position:relative;
-  opacity:0;transform:translateY(32px) scale(.96);
-  animation:sceneIn 1s var(--fast) .8s forwards;
+.tag .td { width: 6px; height: 6px; border-radius: 50%; background: #1DB87E; }
+.section-h {
+  font-family: var(--fd); font-size: clamp(34px, 5vw, 58px);
+  font-weight: 800; line-height: 1.04; letter-spacing: -1.5px;
+  max-width: 680px;
 }
-@keyframes sceneIn{to{opacity:1;transform:translateY(0) scale(1)}}
-.phone-aura{
-  position:absolute;inset:-40px;border-radius:50%;
-  background:radial-gradient(circle,rgba(110,232,168,.15) 0%,transparent 70%);
-  filter:blur(30px);animation:orbBreath 4s ease-in-out infinite;
-}
-.phone{
-  width:280px;height:570px;position:relative;
-  background:linear-gradient(170deg,#1c2421 0%,#0d1410 100%);
-  border-radius:46px;
-  border:1px solid rgba(255,255,255,.1);
-  box-shadow:
-    0 80px 120px rgba(0,0,0,.6),
-    0 0 0 1px rgba(255,255,255,.05) inset,
-    0 1px 0 rgba(255,255,255,.12) inset;
-  overflow:hidden;
-  animation:phoneTilt 7s ease-in-out infinite;
-}
-@keyframes phoneTilt{0%,100%{transform:rotate(1.5deg) translateY(0)}50%{transform:rotate(1.5deg) translateY(-16px)}}
-.phone-notch{
-  position:absolute;top:0;left:50%;transform:translateX(-50%);
-  width:100px;height:28px;background:#0d1410;border-radius:0 0 20px 20px;
-  z-index:10;
-  display:flex;align-items:center;justify-content:center;gap:8px;padding-top:6px;
-}
-.notch-cam{width:8px;height:8px;border-radius:50%;background:#1a2520}
-.notch-pill{width:28px;height:6px;border-radius:3px;background:#1a2520}
-.phone-face{
-  position:absolute;inset:0;background:#f4f6f4;
-  overflow:hidden;border-radius:44px;
-}
-.phone-home{
-  position:absolute;bottom:8px;left:50%;transform:translateX(-50%);
-  width:80px;height:4px;border-radius:2px;background:rgba(255,255,255,.15);z-index:10;
-}
-
-/* App screens inside phone */
-.app-scr{
-  position:absolute;inset:0;padding:32px 14px 14px;
-  background:#f4f6f4;overflow:hidden;
-  opacity:0;transform:translateX(28px);
-  transition:opacity .55s var(--fast),transform .55s var(--fast);pointer-events:none;
-}
-.app-scr.on{opacity:1;transform:translateX(0);pointer-events:auto}
-.app-scr.off{opacity:0;transform:translateX(-28px)}
-
-/* App topbar */
-.atb{display:flex;align-items:center;justify-content:space-between;margin-bottom:16px}
-.atb-brand{font-family:var(--f1);font-size:14px;font-weight:700;color:#0d1410;letter-spacing:-.02em}
-.atb-bell{width:30px;height:30px;background:#e8ede9;border-radius:9px;display:flex;align-items:center;justify-content:center;position:relative;font-size:14px}
-.atb-badge{position:absolute;top:-4px;right:-4px;width:14px;height:14px;background:#e84040;border-radius:50%;font-size:7px;font-weight:800;color:#fff;display:flex;align-items:center;justify-content:center;border:1.5px solid #f4f6f4}
-
-/* Greeting */
-.app-greet{font-family:var(--f1);font-size:20px;font-weight:600;color:#0d1410;margin-bottom:3px;letter-spacing:-.03em}
-.app-sub{font-size:11px;color:#7a8a7e;margin-bottom:16px}
-
-/* Match card */
-.mcard{
-  border-radius:16px;padding:13px;margin-bottom:10px;
-  border:1px solid rgba(0,0,0,.06);
-  background:linear-gradient(135deg,rgba(110,232,168,.1),rgba(110,232,168,.03));
-}
-.mcard.blue{background:linear-gradient(135deg,rgba(100,160,255,.1),rgba(100,160,255,.03))}
-.mc-sport{font-size:11px;font-weight:700;color:#0d1410;font-family:var(--f1);margin-bottom:3px}
-.mc-time{font-size:11px;color:var(--g3);font-weight:600;margin-bottom:3px}
-.mc-loc{font-size:10px;color:#7a8a7e;margin-bottom:10px}
-.mc-row{display:flex;align-items:center;gap:4px;margin-bottom:9px}
-.mc-av{width:20px;height:20px;border-radius:50%;border:1.5px solid #fff;margin-left:-5px;background:var(--c,#ccc)}
-.mc-av:first-child{margin-left:0}
-.mc-more{font-size:7.5px;font-weight:800;color:#7a8a7e;background:#e8ede9;display:flex;align-items:center;justify-content:center}
-.mc-spots{font-size:9.5px;color:#7a8a7e;margin-left:5px}
-.mc-btn{
-  width:100%;background:linear-gradient(90deg,var(--g2),var(--g));
-  border:none;border-radius:9px;padding:7px;
-  font-size:11px;font-weight:700;font-family:var(--f1);color:var(--ink);
-}
-
-/* Leaderboard in phone */
-.app-lb-month{font-size:10.5px;color:#7a8a7e;font-weight:500;margin-bottom:12px}
-.lb-podium{display:flex;justify-content:center;align-items:flex-end;gap:10px;margin-bottom:14px}
-.lp{display:flex;flex-direction:column;align-items:center;gap:4px}
-.lp-av{width:38px;height:38px;border-radius:50%;background:var(--c)}
-.lp.lp1 .lp-av{width:50px;height:50px;border:2.5px solid #f0c040}
-.lp2{padding-bottom:8px}.lp3{padding-bottom:16px}
-.lp1{position:relative;padding-top:20px}
-.lp-crown{position:absolute;top:-2px;font-size:14px}
-.lp-medal{font-size:14px}
-.lp-name{font-size:9.5px;font-weight:700;color:#0d1410;font-family:var(--f1)}
-.lp-pts{font-size:8.5px;color:var(--g3);font-weight:600}
-.lb-rows{display:flex;flex-direction:column;gap:6px}
-.lb-row{display:flex;align-items:center;gap:7px;background:#e8ede9;border-radius:9px;padding:7px 9px}
-.lbr-n{font-size:9px;font-weight:700;color:#7a8a7e;width:12px}
-.lbr-av{width:22px;height:22px;border-radius:50%;background:var(--c)}
-.lbr-name{flex:1;font-size:10px;font-weight:600;color:#0d1410}
-.lbr-pts{font-size:9px;color:var(--g3);font-weight:700}
-
-/* Groups in phone */
-.app-groups{display:flex;flex-direction:column;gap:8px;margin-top:4px}
-.ag-item{display:flex;align-items:center;gap:10px;background:#fff;border-radius:12px;padding:11px;border:1px solid rgba(0,0,0,.05)}
-.ag-icon{font-size:20px}
-.ag-name{font-size:11.5px;font-weight:700;color:#0d1410;font-family:var(--f1)}
-.ag-meta{font-size:9.5px;color:#7a8a7e}
-.ag-badge{margin-left:auto;background:rgba(110,232,168,.15);color:var(--g3);font-size:9px;font-weight:700;padding:3px 8px;border-radius:20px}
-.ag-badge.new{background:rgba(255,180,50,.15);color:#c47a00}
-
-/* Phone dots */
-.phone-dots{display:flex;gap:6px;justify-content:center;margin-top:14px;position:relative;z-index:2}
-.pdot{width:6px;height:6px;border-radius:50%;background:rgba(255,255,255,.2);transition:.3s var(--spring)}
-.pdot.on{width:20px;border-radius:3px;background:var(--g)}
-
-/* Floating chips */
-.chip{
-  position:absolute;display:flex;align-items:center;gap:10px;
-  background:rgba(255,255,255,.06);backdrop-filter:blur(20px);
-  border:1px solid rgba(255,255,255,.1);border-radius:16px;
-  padding:10px 16px;box-shadow:0 20px 40px rgba(0,0,0,.3);
-  font-family:var(--f2);
-  opacity:0;animation:chipFloat .6s var(--spring) forwards;
-}
-.chip-icon{font-size:18px}
-.chip-v{font-family:var(--f1);font-size:16px;font-weight:700;color:#fff;line-height:1}
-.chip-l{font-size:10.5px;color:var(--muted)}
-.c1{top:8%;right:-50px;animation-delay:1.4s}
-.c2{bottom:22%;right:-60px;animation-delay:1.6s}
-.c3{bottom:40%;left:-50px;animation-delay:1.8s}
-@keyframes chipFloat{from{opacity:0;transform:translateY(12px)}to{opacity:1;transform:translateY(0)}}
-
-/* ═══ SCROLL CUE ═══ */
-.scroll-cue{
-  position:absolute;bottom:36px;left:80px;z-index:10;
-  display:flex;align-items:center;gap:12px;
-  font-size:11.5px;font-weight:500;color:rgba(255,255,255,.25);
-  letter-spacing:.1em;text-transform:uppercase;
-  opacity:0;animation:fadeUp .6s var(--fast) 2s forwards;
-}
-.sc-line{width:40px;height:1px;background:rgba(255,255,255,.15);position:relative;overflow:hidden}
-.sc-run{position:absolute;top:0;left:-100%;width:100%;height:100%;background:var(--g);animation:scRun 2s ease-in-out infinite 2s}
-@keyframes scRun{0%{left:-100%}100%{left:100%}}
-
-@keyframes fadeUp{from{opacity:0;transform:translateY(16px)}to{opacity:1;transform:translateY(0)}}
-
-/* ═══ MARQUEE ═══ */
-.marquee-sect{
-  overflow:hidden;
-  border-top:1px solid var(--border);
-  border-bottom:1px solid var(--border);
-  padding:0;
-  background:linear-gradient(90deg,var(--ink) 0%,var(--ink2) 50%,var(--ink) 100%);
-}
-.marquee-tr{
-  display:flex;width:max-content;
-  animation:mq 25s linear infinite;
-  padding:18px 0;
-}
-.mq-item{
-  white-space:nowrap;padding:0 24px;
-  font-family:var(--f1);font-size:14px;font-weight:500;
-  color:rgba(255,255,255,.25);letter-spacing:.04em;
-}
-.mq-dot{color:var(--g);opacity:.4;padding:0 8px}
-@keyframes mq{from{transform:translateX(0)}to{transform:translateX(-50%)}}
-
-/* ═══ SECTION BASE ═══ */
-.sect{padding:140px 0;position:relative}
-.container{max-width:1280px;margin:0 auto;padding:0 80px}
-
-.tag{
-  display:inline-flex;align-items:center;gap:8px;
-  font-size:11px;font-weight:600;letter-spacing:.12em;text-transform:uppercase;
-  color:var(--g);background:rgba(110,232,168,.08);border:1px solid rgba(110,232,168,.2);
-  padding:6px 14px;border-radius:50px;margin-bottom:20px;
-}
-.tag::before{content:'';width:5px;height:5px;border-radius:50%;background:var(--g);box-shadow:0 0 6px var(--g)}
-
-h2.sh{
-  font-family:var(--f1);font-size:clamp(36px,4.5vw,64px);
-  line-height:1.05;letter-spacing:-.04em;color:#fff;margin-bottom:16px;
-}
-h2.sh em{color:var(--g);font-style:italic}
-.sh-sub{font-size:17px;color:var(--muted);font-weight:300;line-height:1.7;max-width:560px}
-
-/* ═══ PROBLEMS ═══ */
-.prob-sect{background:var(--ink)}
-.prob-grid{
-  display:grid;grid-template-columns:repeat(3,1fr);gap:1px;
-  border:1px solid var(--border);border-radius:24px;overflow:hidden;
-  margin-top:72px;background:var(--border);
-}
-.pcard{
-  background:var(--ink2);padding:44px 40px;
-  position:relative;overflow:hidden;
-  transition:background .3s;
-}
-.pcard::before{
-  content:'';position:absolute;top:0;left:0;right:0;height:2px;
-  background:linear-gradient(90deg,transparent,var(--g),transparent);
-  transform:scaleX(0);transform-origin:center;
-  transition:transform .5s var(--ease);
-}
-.pcard:hover{background:rgba(110,232,168,.04)}
-.pcard:hover::before{transform:scaleX(1)}
-.pcard-n{
-  position:absolute;top:28px;right:28px;
-  font-family:var(--f1);font-size:11px;font-weight:600;letter-spacing:.1em;
-  color:rgba(255,255,255,.08);
-}
-.pcard-icon{
-  width:52px;height:52px;border-radius:14px;
-  background:rgba(110,232,168,.08);border:1px solid rgba(110,232,168,.15);
-  display:flex;align-items:center;justify-content:center;
-  font-size:24px;margin-bottom:24px;
-  transition:background .3s,border-color .3s,box-shadow .3s;
-}
-.pcard:hover .pcard-icon{background:rgba(110,232,168,.14);border-color:rgba(110,232,168,.3);box-shadow:0 0 20px rgba(110,232,168,.15)}
-.pcard h3{font-family:var(--f1);font-size:21px;font-weight:600;color:#fff;margin-bottom:12px;letter-spacing:-.03em}
-.pcard p{font-size:14.5px;color:var(--muted);line-height:1.68;margin-bottom:24px}
-.pcard-stat{
-  display:inline-flex;align-items:baseline;gap:8px;
-  background:rgba(255,255,255,.04);border:1px solid var(--border2);
-  border-radius:8px;padding:8px 14px;
-}
-.pcard-stat strong{font-family:var(--f1);font-size:18px;font-weight:700;color:var(--g)}
-.pcard-stat span{font-size:11.5px;color:var(--muted)}
-
-/* ═══ SOLUTION ═══ */
-.sol-sect{
-  background:var(--paper);overflow:hidden;
-  position:relative;
-}
-.sol-sect::before{
-  content:'';position:absolute;inset:0;
-  background:
-    radial-gradient(ellipse 60% 60% at 80% 50%,rgba(110,232,168,.06) 0%,transparent 70%);
-  pointer-events:none;
-}
-.sol-grid{
-  display:grid;grid-template-columns:1fr 1.1fr;gap:80px;align-items:center;
-}
-.sol-tag .tag{background:rgba(110,232,168,.1);color:var(--g3);border-color:rgba(60,202,126,.3)}
-.sol-h{font-family:var(--f1);font-size:clamp(36px,4vw,58px);line-height:1.05;letter-spacing:-.04em;color:var(--ink);margin-bottom:20px}
-.sol-h em{color:var(--g2);font-style:italic}
-.sol-p{font-size:17px;color:#4a6054;line-height:1.75;font-weight:300;margin-bottom:36px}
-.sol-list{list-style:none;display:flex;flex-direction:column;gap:14px;margin-bottom:40px}
-.sol-list li{display:flex;align-items:flex-start;gap:13px;font-size:15px;color:#2d4038;font-weight:400}
-.slc{
-  width:22px;height:22px;border-radius:50%;flex-shrink:0;
-  background:linear-gradient(135deg,var(--g2),var(--g));
-  display:flex;align-items:center;justify-content:center;
-  font-size:11px;font-weight:700;color:var(--ink);
-}
-.sol-cta{
-  display:inline-flex;align-items:center;gap:10px;
-  background:var(--ink);color:#fff;
-  font-family:var(--f1);font-size:15px;font-weight:600;letter-spacing:-.02em;
-  padding:15px 30px;border-radius:50px;
-  transition:transform .25s var(--spring),box-shadow .25s;
-  box-shadow:0 8px 32px rgba(0,0,0,.2);
-}
-.sol-cta:hover{transform:translateY(-2px);box-shadow:0 16px 48px rgba(0,0,0,.25)}
-
-/* Sol dashboard */
-.sol-dash{
-  background:#fff;border-radius:24px;
-  border:1px solid rgba(0,0,0,.07);
-  box-shadow:0 40px 80px rgba(0,0,0,.1),0 0 0 1px rgba(0,0,0,.03);
-  overflow:hidden;
-}
-.sd-hd{
-  display:flex;align-items:center;gap:16px;padding:16px 20px;
-  border-bottom:1px solid rgba(0,0,0,.06);
-}
-.sd-hd-logo{font-family:var(--f1);font-size:14px;font-weight:700;color:var(--ink);letter-spacing:-.03em;margin-right:auto}
-.sd-pill{font-size:11.5px;font-weight:600;color:#7a8a7e;padding:5px 12px;border-radius:20px;background:rgba(0,0,0,.04)}
-.sd-pill.on{color:var(--g2);background:rgba(60,202,126,.1)}
-.sd-new{font-size:11.5px;font-weight:600;color:var(--g2);background:rgba(60,202,126,.1);padding:5px 12px;border-radius:20px}
-.sd-body{padding:18px;display:grid;grid-template-columns:1fr 1fr;gap:14px}
-.sd-kpis{display:grid;grid-template-columns:1fr 1fr;gap:10px}
-.sdk{background:#f4f6f4;border-radius:14px;padding:16px}
-.sdk-v{font-family:var(--f1);font-size:28px;font-weight:700;color:var(--ink);letter-spacing:-.04em}
-.sdk-l{font-size:11px;color:#7a8a7e;margin-top:4px}
-.sdk-d{font-size:11px;font-weight:700;color:var(--g2);margin-top:6px}
-.sd-chart{background:#f4f6f4;border-radius:14px;padding:16px}
-.sdc-bars{display:flex;align-items:flex-end;gap:6px;height:80px;margin-bottom:8px}
-.sdcb{flex:1;display:flex;flex-direction:column;align-items:center;justify-content:flex-end;gap:5px;height:100%}
-.sdcb-bar{width:100%;border-radius:3px 3px 0 0;background:rgba(110,232,168,.2)}
-.sdcb-bar.hi{background:linear-gradient(to top,var(--g2),var(--g))}
-.sdcb span{font-size:8.5px;color:#7a8a7e}
-.sdc-lbl{font-size:9px;color:#7a8a7e}
-
-.sol-notifs{position:absolute;pointer-events:none}
-.snotif{
-  position:absolute;
-  background:rgba(255,255,255,.92);backdrop-filter:blur(12px);
-  border:1px solid rgba(0,0,0,.07);border-radius:14px;
-  padding:10px 14px;font-size:12.5px;color:var(--ink);
-  box-shadow:0 16px 40px rgba(0,0,0,.1);white-space:nowrap;
-  font-weight:500;
-}
-.snotif strong{font-weight:700}
-.sn1{top:-30px;right:0;animation:notifDance 6s ease-in-out infinite}
-.sn2{bottom:-20px;left:-10px;animation:notifDance 8s ease-in-out infinite 1.5s}
-@keyframes notifDance{0%,100%{transform:translateY(0)}50%{transform:translateY(-8px)}}
-
-/* ═══ FEATURES BENTO ═══ */
-.feat-sect{background:var(--ink)}
-.bento{
-  display:grid;
-  grid-template-columns:repeat(12,1fr);
-  grid-auto-rows:minmax(200px,auto);
-  gap:12px;margin-top:72px;
-}
-.bc{
-  background:var(--ink2);border:1px solid var(--border);border-radius:20px;
-  padding:36px;position:relative;overflow:hidden;
-  transition:border-color .3s,background .3s,transform .3s var(--spring);
-}
-.bc:hover{border-color:rgba(110,232,168,.25);background:rgba(110,232,168,.03);transform:translateY(-2px)}
-.bc::after{
-  content:'';position:absolute;inset:0;
-  background:radial-gradient(circle at var(--mx,50%) var(--my,50%),rgba(110,232,168,.06) 0%,transparent 60%);
-  opacity:0;transition:opacity .4s;pointer-events:none;border-radius:20px;
-}
-.bc:hover::after{opacity:1}
-.bc1{grid-column:1/6;grid-row:1/3}
-.bc2{grid-column:6/9;grid-row:1}
-.bc3{grid-column:9/13;grid-row:1}
-.bc4{grid-column:6/9;grid-row:2}
-.bc5{grid-column:9/13;grid-row:2}
-
-.bc-tag{
-  position:absolute;top:24px;right:24px;
-  font-size:10.5px;font-weight:700;letter-spacing:.1em;
-  color:rgba(255,255,255,.1);
-}
-.bc-icon-wrap{
-  width:54px;height:54px;border-radius:15px;
-  background:rgba(110,232,168,.08);border:1px solid rgba(110,232,168,.15);
-  display:flex;align-items:center;justify-content:center;
-  font-size:24px;margin-bottom:20px;
-  transition:all .3s;
-}
-.bc:hover .bc-icon-wrap{background:rgba(110,232,168,.15);border-color:rgba(110,232,168,.35);box-shadow:0 0 24px rgba(110,232,168,.2)}
-.bc h3{font-family:var(--f1);font-size:22px;font-weight:600;color:#fff;line-height:1.2;letter-spacing:-.03em;margin-bottom:10px}
-.bc p{font-size:14px;color:var(--muted);line-height:1.65}
-
-/* Timer visual */
-.bc-timer-vis{display:flex;justify-content:center;margin-top:32px}
-.btv{position:relative;width:120px;height:120px}
-.btv svg{width:100%;height:100%;transform:rotate(-90deg)}
-.btv-circle{
-  stroke-dasharray:283;
-  stroke-dashoffset:240;
-  animation:timerAnim 2.5s var(--fast) 1.5s forwards;
-}
-@keyframes timerAnim{to{stroke-dashoffset:30}}
-.btv-val{
-  position:absolute;inset:0;display:flex;align-items:center;justify-content:center;
-  font-family:var(--f1);font-size:30px;font-weight:700;color:#fff;letter-spacing:-.05em;
-}
-.btv-val span{font-size:16px;color:var(--g);margin-left:2px}
-
-/* Groups visual */
-.bc-groups-v{display:flex;flex-direction:column;gap:8px;margin-top:16px}
-.bgv-pill{
-  display:flex;align-items:center;justify-content:space-between;
-  background:rgba(255,255,255,.04);border:1px solid var(--border);
-  border-radius:10px;padding:10px 14px;
-  font-size:13px;font-weight:500;color:rgba(255,255,255,.75);
-  transition:background .2s,border-color .2s;
-}
-.bc:hover .bgv-pill{background:rgba(110,232,168,.05);border-color:rgba(110,232,168,.1)}
-.bgv-pill em{color:var(--g);font-style:normal;font-size:12px;font-weight:700}
-.bgv-new{color:var(--g);border-style:dashed;border-color:rgba(110,232,168,.2)}
-
-/* LB visual */
-.bc-lb-v{display:flex;flex-direction:column;gap:8px;margin-top:14px}
-.blv-row{display:flex;align-items:center;gap:8px}
-.blv-medal{font-size:14px;width:20px}
-.blv-name{font-size:12.5px;font-weight:500;color:rgba(255,255,255,.7);width:80px;font-family:var(--f1)}
-.blv-bar{flex:1;height:5px;background:rgba(255,255,255,.06);border-radius:3px;overflow:hidden}
-.blv-fill{height:100%;border-radius:3px;background:linear-gradient(90deg,var(--g2),var(--g));width:0;transition:width 1.2s var(--fast) .6s}
-.blv-pts{font-size:11px;color:var(--g);font-weight:700;font-family:var(--f1);width:34px;text-align:right}
-
-/* Split visual */
-.bc-split-v{display:flex;align-items:center;gap:10px;margin-top:18px;flex-wrap:wrap}
-.bsv-av{width:46px;height:46px;border-radius:50%;display:flex;align-items:center;justify-content:center;font-size:10px;font-weight:700;color:#fff;background:var(--c)}
-.bsv-eq{font-family:var(--f1);font-size:13px;color:var(--g);font-weight:700}
-
-/* KPI visual */
-.bc-kpi-v{display:flex;gap:10px;margin-top:18px}
-.bkv{flex:1;background:rgba(110,232,168,.06);border:1px solid rgba(110,232,168,.12);border-radius:12px;padding:14px;text-align:center}
-.bkv-v{font-family:var(--f1);font-size:22px;font-weight:700;color:var(--g);display:block}
-.bkv-l{font-size:10px;color:var(--muted);margin-top:3px;display:block}
-
-/* ═══ PREVIEW STICKY ═══ */
-.prev-outer{
-  position:relative;
-  height:calc(6 * 100vh);
-  background:var(--ink);
-}
-.prev-sticky{position:sticky;top:0;height:100vh;overflow:hidden;display:grid;grid-template-columns:360px 1fr}
-
-/* Sidebar */
-.prev-side{
-  border-right:1px solid var(--border);
-  padding:56px 44px;display:flex;flex-direction:column;
-  background:rgba(255,255,255,.015);
-}
-.prev-side-title{font-family:var(--f1);font-size:38px;font-weight:600;color:#fff;line-height:1.1;letter-spacing:-.04em;margin-bottom:10px}
-.prev-side-hint{font-size:12px;color:rgba(255,255,255,.25);margin-bottom:40px;letter-spacing:.04em}
-.prev-nav-items{display:flex;flex-direction:column;gap:4px;margin-bottom:auto}
-.pni{
-  display:flex;align-items:center;gap:16px;padding:13px 16px;
-  border-radius:12px;background:transparent;color:rgba(255,255,255,.3);
-  border:1px solid transparent;text-align:left;width:100%;
-  transition:all .25s var(--ease);font-family:var(--f2);cursor:none;
-}
-.pni:hover{background:rgba(255,255,255,.04);color:rgba(255,255,255,.7)}
-.pni.on{background:rgba(110,232,168,.08);border-color:rgba(110,232,168,.15);color:#fff}
-.pni-num{font-size:10px;font-weight:700;color:var(--g);opacity:.5;font-family:var(--f1);width:18px}
-.pni.on .pni-num{opacity:1}
-.pni-lbl{font-size:13.5px;font-weight:600}
-.prev-prog{height:2px;background:rgba(255,255,255,.06);border-radius:2px;margin-top:32px;overflow:hidden}
-.prev-prog-f{height:100%;background:linear-gradient(90deg,var(--g2),var(--g));width:0;border-radius:2px;transition:width .1s linear}
-
-/* Slides */
-.prev-slides{overflow:hidden;display:flex;align-items:center;padding:0 60px}
-.prev-track{display:flex;gap:40px;align-items:center;width:max-content;transition:transform .06s linear;will-change:transform}
-.pslide{
-  width:min(820px,66vw);flex-shrink:0;
-  display:grid;grid-template-columns:1.4fr 1fr;gap:36px;align-items:center;
-  opacity:.2;transform:scale(.93);
-  transition:opacity .5s var(--fast),transform .5s var(--fast);
-}
-.pslide.active{opacity:1;transform:scale(1)}
-
-.pslide-frame{
-  position:relative;border-radius:22px;overflow:hidden;
-  box-shadow:0 48px 80px rgba(0,0,0,.5),0 0 0 1px rgba(255,255,255,.06);
-  background:#fff;
-}
-.pslide-frame.narrow{max-width:340px;margin:0 auto}
-.ps-upload-btn{
-  position:absolute;bottom:12px;right:12px;z-index:10;
-  display:flex;align-items:center;gap:7px;
-  background:rgba(0,0,0,.7);backdrop-filter:blur(12px);
-  color:rgba(255,255,255,.85);border:1px solid rgba(255,255,255,.12);
-  font-family:var(--f2);font-size:11.5px;font-weight:600;
-  padding:7px 14px;border-radius:9px;
-  transition:background .2s,border-color .2s;cursor:pointer;
-}
-.ps-upload-btn:hover{background:rgba(110,232,168,.75);border-color:var(--g);color:var(--ink)}
-.ps-custom{position:absolute;inset:0;display:none}
-.ps-custom img{width:100%;height:100%;object-fit:cover}
-.ps-custom.show{display:block}
-
-.pslide-info{}
-.psi-num{
-  font-family:var(--f1);font-size:80px;font-weight:700;
-  color:rgba(255,255,255,.06);line-height:1;letter-spacing:-.06em;
-  margin-bottom:-8px;
-}
-.psi-label{
-  font-size:10.5px;font-weight:700;letter-spacing:.12em;text-transform:uppercase;
-  color:var(--g);margin-bottom:10px;
-}
-.psi-title{font-family:var(--f1);font-size:26px;font-weight:600;color:#fff;margin-bottom:12px;letter-spacing:-.03em}
-.psi-desc{font-size:14px;color:var(--muted);line-height:1.7}
-
-/* Upload zone */
-.pf-uzone{
-  border:2px dashed rgba(110,232,168,.25);
-  display:flex;align-items:center;justify-content:center;
-  min-height:380px;cursor:pointer;
-  transition:border-color .2s,background .2s;
-}
-.pf-uzone:hover,.pf-uzone.dg{border-color:var(--g);background:rgba(110,232,168,.04)}
-.puz-in{display:flex;flex-direction:column;align-items:center;gap:14px;padding:40px;text-align:center}
-.puz-title{font-family:var(--f1);font-size:18px;font-weight:600;color:rgba(255,255,255,.6)}
-.puz-hint{font-size:13px;color:rgba(255,255,255,.25)}
-.puz-btn{
-  display:inline-flex;align-items:center;gap:8px;
-  background:rgba(110,232,168,.15);color:var(--g);
-  font-family:var(--f1);font-size:13px;font-weight:600;
-  padding:10px 22px;border-radius:50px;margin-top:4px;cursor:pointer;
-  border:1px solid rgba(110,232,168,.3);
-  transition:background .2s,box-shadow .2s;
-}
-.puz-btn:hover{background:rgba(110,232,168,.25);box-shadow:0 0 24px rgba(110,232,168,.2)}
-.puz-img{width:100%;height:100%;object-fit:cover;border-radius:20px;position:absolute;inset:0;display:none}
-.puz-chg{
-  position:absolute;bottom:12px;right:12px;z-index:10;display:none;
-  align-items:center;gap:7px;
-  background:rgba(0,0,0,.7);backdrop-filter:blur(12px);
-  color:rgba(255,255,255,.85);border:1px solid rgba(255,255,255,.12);
-  font-size:11.5px;font-weight:600;font-family:var(--f2);
-  padding:7px 14px;border-radius:9px;cursor:pointer;
+.section-h em { font-style: normal; color: var(--mint); }
+.section-p {
+  font-size: 17px; font-weight: 300; color: var(--muted);
+  max-width: 500px; line-height: 1.65; margin-top: 18px;
 }
 
-/* ═══ PREVIEW SCREENS ═══ */
-.preview-screen{background:#fff}
-.dashboard-screen{padding:0;min-height:360px}
-.ds-header{display:flex;align-items:center;gap:16px;padding:15px 18px;border-bottom:1px solid rgba(0,0,0,.06)}
-.ds-logo{font-family:var(--f1);font-weight:700;font-size:14px;color:var(--ink);letter-spacing:-.03em;margin-right:auto}
-.ds-nav{display:flex;gap:14px}
-.dsn{font-size:11px;font-weight:600;color:#7a8a7e;cursor:default}
-.dsn.on{color:var(--g2)}
-.ds-body{display:grid;grid-template-columns:1fr 1fr;gap:12px;padding:14px}
-.ds-kpis{display:grid;grid-template-columns:1fr 1fr;gap:10px}
-.ds-kpi{background:#f4f6f4;border-radius:12px;padding:14px}
-.dsk-v{font-family:var(--f1);font-size:26px;font-weight:700;color:var(--ink);letter-spacing:-.04em}
-.dsk-l{font-size:10px;color:#7a8a7e;margin-top:3px}
-.dsk-d{font-size:10px;font-weight:700;color:var(--g2);margin-top:5px}
-.ds-chart{background:#f4f6f4;border-radius:12px;padding:14px}
-.dsc-bars{display:flex;align-items:flex-end;gap:5px;height:76px;margin-bottom:8px}
-.dscb{flex:1;display:flex;flex-direction:column;align-items:center;justify-content:flex-end;gap:5px;height:100%}
-.dscb-bar{width:100%;border-radius:3px 3px 0 0;background:rgba(110,232,168,.2)}
-.dscb-bar.hi{background:linear-gradient(to top,var(--g2),var(--g))}
-.dscb span{font-size:8px;color:#7a8a7e}
-.dsc-lbl{font-size:9px;color:#7a8a7e}
+/* ─── MATCHMAKING SIM ─────────────────────────── */
+.match-sim-section { background: white; }
+.match-sim-wrap {
+  display: grid; grid-template-columns: 1fr 1.1fr;
+  gap: 80px; align-items: center;
+}
+.match-phone {
+  background: var(--ink); border-radius: 36px;
+  padding: 10px; box-shadow: 0 24px 56px rgba(15,46,34,.22);
+  max-width: 300px; margin: 0 auto;
+  position: relative;
+}
+.match-screen {
+  background: #1e3328; border-radius: 28px;
+  overflow: hidden; min-height: 540px;
+}
+.match-screen-top {
+  background: #162820; padding: 12px 14px 10px;
+  display: flex; align-items: center; justify-content: space-between;
+}
+.match-screen-top span { font-size: 12px; color: rgba(255,255,255,.6); }
+.match-screen-top strong { font-family: var(--fd); font-size: 13px; color: white; }
+.match-hero-area {
+  padding: 16px 14px 10px;
+}
+.match-hero-title {
+  font-family: var(--fd); font-size: 22px; font-weight: 800;
+  color: white; line-height: 1.1;
+}
+.match-sport-chips {
+  display: flex; gap: 6px; margin-top: 10px; flex-wrap: wrap;
+}
+.sport-chip {
+  font-size: 11px; font-weight: 600; padding: 5px 11px;
+  border-radius: 999px; border: 1px solid rgba(255,255,255,.15);
+  color: rgba(255,255,255,.7); cursor: pointer; transition: .2s;
+}
+.sport-chip.on { background: var(--mint); color: var(--ink); border-color: var(--mint); }
+.match-cards { padding: 0 14px 14px; display: flex; flex-direction: column; gap: 8px; }
+.match-c {
+  background: rgba(255,255,255,.07); border-radius: 14px;
+  border: 1px solid rgba(255,255,255,.1);
+  padding: 12px; display: flex; gap: 10px; align-items: center;
+  cursor: pointer; transition: .2s;
+}
+.match-c:hover, .match-c.sel { background: rgba(127,227,191,.12); border-color: rgba(127,227,191,.3); }
+.match-c-av {
+  width: 40px; height: 40px; border-radius: 10px;
+  display: grid; place-content: center;
+  font-size: 13px; font-weight: 800; color: white; flex-shrink: 0;
+}
+.match-c-info { flex: 1; }
+.match-c-name { font-size: 13px; font-weight: 700; color: white; }
+.match-c-detail { font-size: 11px; color: rgba(255,255,255,.5); margin-top: 2px; }
+.match-c-right { text-align: right; }
+.match-c-price { font-size: 14px; font-weight: 800; color: var(--mint); }
+.match-c-spots { font-size: 10px; color: rgba(255,255,255,.4); margin-top: 2px; }
+.match-join-btn {
+  margin: 0 14px 14px; width: calc(100% - 28px);
+  background: linear-gradient(90deg, #2ee4af, #6dffbd);
+  color: var(--ink); font-family: var(--fd); font-size: 14px; font-weight: 800;
+  border: none; border-radius: 999px; padding: 13px;
+  cursor: pointer; transition: transform .15s;
+}
+.match-join-btn:hover { transform: scale(1.02); }
 
-.mobile-screen{padding:26px 14px 14px;min-height:340px;background:#f4f6f4}
-.ms-logo{font-family:var(--f1);font-size:12.5px;font-weight:700;color:var(--ink);margin-bottom:4px}
-.ms-greet{font-family:var(--f1);font-size:18px;font-weight:600;color:var(--ink);margin-bottom:18px;letter-spacing:-.03em}
-.ms-sect{font-size:9.5px;font-weight:700;text-transform:uppercase;letter-spacing:.08em;color:#7a8a7e;margin-bottom:8px}
-.ms-match{display:flex;align-items:center;gap:10px;background:#fff;border-radius:12px;padding:10px;margin-bottom:7px;border:1px solid rgba(0,0,0,.05)}
-.ms-sport{font-size:18px}
-.ms-info{flex:1}
-.ms-name{font-family:var(--f1);font-size:11.5px;font-weight:600;color:var(--ink)}
-.ms-loc{font-size:10px;color:#7a8a7e;margin-top:2px}
-.ms-ok{background:linear-gradient(90deg,var(--g2),var(--g));color:var(--ink);font-size:10px;font-weight:700;padding:5px 12px;border-radius:8px;font-family:var(--f1)}
-.ms-groups{margin-top:16px}
-.ms-pills{display:flex;gap:7px;flex-wrap:wrap}
-.ms-pills span{background:#fff;color:var(--g2);font-size:11px;font-weight:600;padding:5px 12px;border-radius:20px;border:1px solid rgba(60,202,126,.2);font-family:var(--f1)}
+/* join animation */
+.join-anim {
+  position: absolute; inset: 0; border-radius: 28px;
+  background: rgba(29,184,126,.95);
+  display: grid; place-content: center; text-align: center;
+  color: white; opacity: 0; pointer-events: none;
+  transition: opacity .3s;
+}
+.join-anim.show { opacity: 1; }
+.join-anim .tick { font-size: 48px; margin-bottom: 10px; }
+.join-anim p { font-family: var(--fd); font-size: 18px; font-weight: 800; }
+.join-anim small { font-size: 12px; opacity: .7; }
 
-.groups-screen{padding:20px;min-height:340px}
-.gs-hd{font-family:var(--f1);font-size:18px;font-weight:700;color:var(--ink);letter-spacing:-.03em;margin-bottom:16px}
-.gs-ct{font-size:12px;color:var(--g2);background:rgba(60,202,126,.1);padding:3px 10px;border-radius:20px;margin-left:8px}
-.gs-list{display:flex;flex-direction:column;gap:8px}
-.gs-card{display:flex;align-items:center;gap:11px;background:#f4f6f4;border-radius:12px;padding:11px}
-.gs-icon{font-size:22px}
-.gs-name{font-family:var(--f1);font-size:12px;font-weight:700;color:var(--ink)}
-.gs-meta{font-size:10px;color:#7a8a7e;margin-top:1px}
-.gs-avs{display:flex;margin-left:auto}
-.gs-av{width:22px;height:22px;border-radius:50%;border:2px solid #f4f6f4;margin-left:-5px;background:var(--c)}
-.gs-av:first-child{margin-left:0}
-.gs-av.plus{font-size:8px;font-weight:800;color:#7a8a7e;display:flex;align-items:center;justify-content:center;background:#e0e8e2}
-
-.lb-screen{padding:20px;min-height:340px}
-.lb-hd{font-family:var(--f1);font-size:16px;font-weight:700;color:var(--ink);text-align:center;margin-bottom:16px;letter-spacing:-.03em}
-.lb-pod{display:flex;justify-content:center;align-items:flex-end;gap:10px;margin-bottom:16px}
-.lpd{display:flex;flex-direction:column;align-items:center;gap:4px;position:relative}
-.lpd-av{width:38px;height:38px;border-radius:50%;background:var(--c)}
-.lpd1 .lpd-av{width:50px;height:50px;border:2.5px solid #f0c040}
-.lpd2{padding-bottom:8px}.lpd3{padding-bottom:16px}
-.lpd1{position:relative;padding-top:22px}
-.lpd-crown{position:absolute;top:-2px;font-size:14px}
-.lpd-medal{font-size:14px}
-.lpd-name{font-size:9.5px;font-weight:700;color:var(--ink);font-family:var(--f1)}
-.lpd-pts{font-size:8.5px;color:var(--g2);font-weight:600}
-.lb-rest{display:flex;flex-direction:column;gap:6px}
-.lb-row{display:flex;align-items:center;gap:7px;background:#f4f6f4;border-radius:9px;padding:7px 10px}
-.lbr-rk{font-size:9.5px;font-weight:700;color:#7a8a7e;width:13px}
-.lbr-av{width:22px;height:22px;border-radius:50%;background:var(--c)}
-.lb-row span:nth-child(3){flex:1;font-size:10.5px;font-weight:600;color:var(--ink);font-family:var(--f1)}
-.lbr-pts{font-size:9.5px;color:var(--g2);font-weight:700}
-
-/* ═══ STATS ═══ */
-.stats-sect{padding:0 0 140px;background:var(--ink)}
-.stats-grid{
-  display:grid;grid-template-columns:repeat(4,1fr);
-  gap:1px;background:var(--border);
-  border:1px solid var(--border);border-radius:24px;overflow:hidden;
-  margin-top:72px;
+/* ─── TOURNOIS SIM ────────────────────────────── */
+.tournoi-section { background: #f0f3f1; }
+.tournoi-wrap {
+  display: grid; grid-template-columns: 1.1fr 1fr;
+  gap: 80px; align-items: center;
 }
-.scard{
-  background:var(--ink2);padding:52px 40px;
-  position:relative;overflow:hidden;
-  transition:background .3s;
+.bracket-ui {
+  background: white; border-radius: var(--rxl);
+  border: 1px solid var(--line);
+  padding: 24px; box-shadow: 0 16px 48px rgba(15,46,34,.1);
 }
-.scard::before{
-  content:'';position:absolute;top:0;left:0;right:0;height:2px;
-  background:linear-gradient(90deg,transparent,var(--g),transparent);
-  opacity:0;transition:opacity .4s;
+.bracket-header {
+  display: flex; align-items: center; justify-content: space-between;
+  margin-bottom: 20px;
 }
-.scard:hover{background:rgba(110,232,168,.04)}
-.scard:hover::before{opacity:1}
-.scard-big{
-  font-family:var(--f1);font-size:clamp(48px,4.5vw,72px);
-  color:#fff;line-height:1;margin-bottom:8px;letter-spacing:-.05em;
+.bracket-title { font-family: var(--fd); font-size: 17px; font-weight: 700; }
+.bracket-live {
+  display: flex; align-items: center; gap: 5px;
+  font-size: 11px; font-weight: 700; color: #e63946;
+  background: rgba(230,57,70,.1); border-radius: 999px; padding: 4px 10px;
 }
-.scard-big .sfx{color:var(--g)}
-.scard-name{font-family:var(--f1);font-size:15px;font-weight:600;color:rgba(255,255,255,.5);margin-bottom:8px}
-.scard-detail{font-size:13px;color:rgba(255,255,255,.25);line-height:1.6}
-
-/* ═══ TIMELINE ═══ */
-.tl-sect{padding:140px 0;background:var(--ink2)}
-.tl-wrap{
-  display:grid;grid-template-columns:repeat(5,1fr);
-  position:relative;margin-top:72px;
+.bracket-dot { width: 7px; height: 7px; border-radius: 50%; background: #e63946; animation: pulse 1s infinite; }
+.bracket-grid {
+  display: grid; grid-template-columns: 1fr 40px 1fr 40px 1fr;
+  gap: 0; align-items: center; min-height: 300px;
 }
-.tl-wrap::after{
-  content:'';position:absolute;
-  top:20px;left:calc(10% + 20px);right:calc(10% + 20px);
-  height:1px;
-  background:linear-gradient(90deg,transparent,var(--g) 20%,var(--g) 80%,transparent);
-  opacity:.3;
+.bracket-col { display: flex; flex-direction: column; gap: 10px; }
+.bracket-match {
+  background: #f8faf8; border: 1px solid var(--line);
+  border-radius: 12px; overflow: hidden;
 }
-.tl-step{
-  display:flex;flex-direction:column;align-items:center;gap:24px;
-  padding:0 16px;z-index:1;
+.bracket-team {
+  display: flex; align-items: center; gap: 8px;
+  padding: 9px 10px; border-bottom: 1px solid var(--line);
+  font-size: 12px; font-weight: 600;
+  transition: background .2s;
 }
-.tls-d{
-  width:40px;height:40px;border-radius:50%;
-  background:var(--ink);border:1px solid var(--border2);
-  display:flex;align-items:center;justify-content:center;
-  font-family:var(--f1);font-size:11px;font-weight:700;color:var(--muted);
-  box-shadow:0 0 0 8px var(--ink2);
-  transition:all .3s;flex-shrink:0;
+.bracket-team:last-child { border-bottom: none; }
+.bracket-team.win { background: rgba(127,227,191,.15); }
+.bracket-team.lost { opacity: .45; }
+.bracket-team-av {
+  width: 22px; height: 22px; border-radius: 5px;
+  display: grid; place-content: center;
+  font-size: 9px; font-weight: 800; color: white; flex-shrink: 0;
 }
-.tls-d.last{background:linear-gradient(135deg,var(--g2),var(--g));border-color:transparent;color:var(--ink);box-shadow:0 0 0 8px var(--ink2),0 0 24px rgba(110,232,168,.3)}
-.tl-step:hover .tls-d{border-color:rgba(110,232,168,.4);color:#fff;background:rgba(110,232,168,.08)}
-.tls-body{text-align:center}
-.tls-icon{font-size:28px;margin-bottom:12px;display:block}
-.tls-body h4{font-family:var(--f1);font-size:15px;font-weight:600;color:#fff;margin-bottom:8px;letter-spacing:-.02em}
-.tls-body p{font-size:13px;color:var(--muted);line-height:1.65}
-.tls-body.final{
-  background:rgba(110,232,168,.06);border:1px solid rgba(110,232,168,.15);
-  border-radius:16px;padding:20px;
+.bracket-team-score {
+  margin-left: auto; font-family: var(--fd);
+  font-size: 14px; font-weight: 800;
 }
-.tls-body.final h4{color:var(--g)}
-
-/* ═══ TESTIMONIALS ═══ */
-.testi-sect{padding:140px 0;background:var(--ink)}
-.testi-grid{display:grid;grid-template-columns:repeat(3,1fr);gap:16px;margin-top:72px}
-.tcard{
-  background:var(--ink2);border:1px solid var(--border);border-radius:20px;
-  padding:36px;transition:border-color .3s,transform .3s var(--spring),background .3s;
-  position:relative;overflow:hidden;
+.bracket-connector {
+  display: flex; flex-direction: column;
+  align-items: center; justify-content: center; gap: 0;
+  color: rgba(15,46,34,.2); font-size: 18px;
 }
-.tcard::before{
-  content:'';position:absolute;top:0;left:0;width:100%;height:2px;
-  background:linear-gradient(90deg,transparent,var(--g),transparent);
-  opacity:0;transition:opacity .4s;
-}
-.tcard:hover{border-color:rgba(110,232,168,.2);transform:translateY(-4px);background:rgba(110,232,168,.03)}
-.tcard:hover::before{opacity:1}
-.tcard.feat{
-  background:linear-gradient(135deg,rgba(110,232,168,.06) 0%,rgba(60,202,126,.03) 100%);
-  border-color:rgba(110,232,168,.2);
-}
-.tc-stars{letter-spacing:2px;font-size:14px;color:var(--g);margin-bottom:20px}
-.tc-q{
-  font-family:var(--f1);font-style:italic;font-size:17px;line-height:1.6;
-  color:rgba(255,255,255,.75);margin-bottom:28px;letter-spacing:-.01em;
-}
-.tc-auth{display:flex;align-items:center;gap:12px}
-.tc-av{width:40px;height:40px;border-radius:50%;background:var(--c);flex-shrink:0}
-.tc-name{font-family:var(--f1);font-size:14px;font-weight:600;color:#fff;display:block}
-.tc-role{font-size:12px;color:var(--muted);display:block;margin-top:2px}
-
-/* ═══ CTA ═══ */
-.cta-sect{
-  position:relative;padding:180px 0;overflow:hidden;
-  background:radial-gradient(ellipse 80% 60% at 50% 50%,rgba(110,232,168,.07) 0%,transparent 70%),var(--ink);
-  text-align:center;
-}
-#ctaCanvas{position:absolute;inset:0;width:100%;height:100%;pointer-events:none}
-.cta-in{position:relative;z-index:1;max-width:800px;margin:0 auto;padding:0 40px}
-.cta-badge{
-  display:inline-flex;align-items:center;gap:8px;
-  background:rgba(110,232,168,.1);border:1px solid rgba(110,232,168,.25);
-  color:var(--g);font-size:13px;font-weight:600;letter-spacing:.04em;
-  padding:8px 20px;border-radius:50px;margin-bottom:40px;
-}
-.cta-h{
-  font-family:var(--f1);font-size:clamp(56px,8vw,110px);
-  color:#fff;line-height:.95;letter-spacing:-.05em;margin-bottom:28px;
-}
-.cta-h em{color:var(--g);font-style:italic}
-.cta-p{font-size:18px;color:var(--muted);line-height:1.7;margin-bottom:52px;font-weight:300}
-.cta-btns{display:flex;align-items:center;justify-content:center;gap:16px;flex-wrap:wrap;margin-bottom:40px}
-.cta-primary{
-  display:inline-flex;align-items:center;gap:12px;
-  background:linear-gradient(135deg,var(--g2),var(--g));
-  color:var(--ink);font-family:var(--f1);font-size:17px;font-weight:700;
-  padding:20px 40px;border-radius:50px;letter-spacing:-.02em;
-  box-shadow:0 0 60px rgba(110,232,168,.3);
-  transition:transform .25s var(--spring),box-shadow .25s;
-}
-.cta-primary:hover{transform:translateY(-3px) scale(1.02);box-shadow:0 0 80px rgba(110,232,168,.5)}
-.cta-ghost{
-  display:inline-flex;align-items:center;gap:8px;
-  color:var(--muted);font-size:16px;font-weight:500;
-  padding:20px 28px;border-radius:50px;border:1px solid var(--border2);
-  transition:color .2s,border-color .2s,background .2s;
-}
-.cta-ghost:hover{color:#fff;border-color:rgba(255,255,255,.2);background:rgba(255,255,255,.04)}
-.cta-trust{
-  display:flex;align-items:center;justify-content:center;gap:32px;flex-wrap:wrap;
-  font-size:12.5px;color:rgba(255,255,255,.2);font-weight:500;letter-spacing:.04em;
+.bracket-connector svg { width: 40px; flex-shrink: 0; }
+.bracket-final .bracket-match {
+  border-color: rgba(127,227,191,.5);
+  box-shadow: 0 0 0 2px rgba(127,227,191,.25);
 }
 
-/* ═══ FOOTER ═══ */
-footer{
-  background:rgba(5,10,7,.8);
-  border-top:1px solid var(--border);
-  padding:64px 80px 32px;
-  max-width:100%;
+/* Score ticker */
+.score-ticker {
+  margin-top: 20px; display: flex; gap: 8px;
+  overflow: hidden; position: relative;
 }
-.foot-top{
-  max-width:1280px;margin:0 auto;
-  display:flex;gap:80px;padding-bottom:48px;border-bottom:1px solid var(--border);
-  flex-wrap:wrap;
+.score-ticker::after {
+  content: ''; position: absolute; right: 0; top: 0; bottom: 0;
+  width: 60px;
+  background: linear-gradient(to right, transparent, white);
+  pointer-events: none;
 }
-.foot-brand-name{font-family:var(--f1);font-size:18px;font-weight:700;color:#fff;letter-spacing:-.03em;margin-bottom:8px}
-.foot-brand-desc{font-size:13.5px;color:rgba(255,255,255,.25);max-width:220px;line-height:1.6}
-.foot-links{display:flex;gap:60px;flex-wrap:wrap;margin-left:auto}
-.foot-col{display:flex;flex-direction:column;gap:12px}
-.foot-col-title{font-size:11px;font-weight:700;text-transform:uppercase;letter-spacing:.12em;color:rgba(255,255,255,.2);margin-bottom:4px}
-.foot-col a{font-size:14px;color:rgba(255,255,255,.35);transition:color .2s}
-.foot-col a:hover{color:var(--g)}
-.foot-bottom{
-  max-width:1280px;margin:0 auto;padding-top:24px;
-  display:flex;align-items:center;justify-content:space-between;flex-wrap:wrap;gap:12px;
-  font-size:12.5px;color:rgba(255,255,255,.15);
+.ticker-item {
+  flex-shrink: 0; background: #f0f3f1; border-radius: 10px;
+  padding: 8px 12px; font-size: 11px; white-space: nowrap;
 }
-.foot-bottom a{color:rgba(255,255,255,.15);transition:color .2s}
-.foot-bottom a:hover{color:var(--g)}
-.foot-bottom div{display:flex;gap:20px}
+.ticker-item strong { font-weight: 700; }
+.ticker-item .sport-ico { margin-right: 5px; }
 
-/* ═══ REVEAL SYSTEM ═══ */
-[data-r]{opacity:0;transition:opacity .8s var(--fast),transform .8s var(--fast)}
-[data-r=up]{transform:translateY(52px)}
-[data-r=left]{transform:translateX(-52px)}
-[data-r=right]{transform:translateX(52px)}
-[data-r=scale]{transform:scale(.94)}
-[data-r].vis{opacity:1;transform:none}
-
-/* ═══ RESPONSIVE ═══ */
-@media(max-width:1100px){
-  .hero{grid-template-columns:1fr}
-  .hero-right{display:none}
-  .hero-left{padding:160px 40px 100px}
-  .container{padding:0 40px}
-  .prob-grid{grid-template-columns:1fr}
-  .prob-grid .pcard{border-bottom:1px solid var(--border)}
-  .sol-grid{grid-template-columns:1fr;gap:40px}
-  .bento{grid-template-columns:1fr 1fr}
-  .bc1,.bc2,.bc3,.bc4,.bc5{grid-column:auto;grid-row:auto}
-  .stats-grid{grid-template-columns:repeat(2,1fr)}
-  .tl-wrap{grid-template-columns:1fr 1fr;gap:32px}
-  .tl-wrap::after{display:none}
-  .testi-grid{grid-template-columns:1fr}
-  .nav-links,.nav-cta-btn{display:none}
-  .nav-burger{display:flex}
-  .prev-outer{height:auto}
-  .prev-sticky{position:relative;height:auto;display:flex;flex-direction:column}
-  .prev-side{border-right:none;border-bottom:1px solid var(--border);padding:32px}
-  .prev-slides{overflow-x:auto;padding:24px;scrollbar-width:none}
-  .prev-slides::-webkit-scrollbar{display:none}
-  .prev-track{transform:none!important}
-  .pslide{width:min(340px,80vw);opacity:1;transform:scale(1)}
-  .pslide{grid-template-columns:1fr}
-  .pslide-info{display:none}
-  .foot-links{margin-left:0}
-  footer{padding:48px 24px 24px}
+/* ─── PAIEMENTS SIM ───────────────────────────── */
+.pay-section { background: white; }
+.pay-wrap {
+  display: grid; grid-template-columns: 1fr 1.15fr;
+  gap: 80px; align-items: center;
 }
-@media(max-width:640px){
-  .bento{grid-template-columns:1fr}
-  .stats-grid{grid-template-columns:1fr 1fr;gap:0}
-  .tl-wrap{grid-template-columns:1fr}
-  .cta-h{font-size:clamp(44px,12vw,72px)}
-  .cta-btns{flex-direction:column;align-items:center}
-  .hero-left{padding:140px 24px 80px}
-  .container{padding:0 24px}
-  .c1,.c2,.c3{display:none}
+.pay-ui {
+  background: white; border-radius: var(--rxl);
+  border: 1px solid var(--line);
+  overflow: hidden; box-shadow: 0 16px 48px rgba(15,46,34,.1);
+}
+.pay-header {
+  background: var(--ink); padding: 20px 24px;
+  display: flex; align-items: center; justify-content: space-between;
+}
+.pay-header-title { font-family: var(--fd); font-size: 16px; font-weight: 700; color: white; }
+.pay-header-sub { font-size: 12px; color: rgba(255,255,255,.5); margin-top: 2px; }
+.pay-total-badge {
+  font-family: var(--fd); font-size: 28px; font-weight: 800;
+  color: var(--mint);
+}
+.pay-players { padding: 16px 20px; display: flex; flex-direction: column; gap: 8px; }
+.pay-row {
+  display: flex; align-items: center; gap: 12px;
+  padding: 10px 12px; border-radius: 12px;
+  background: #f8faf8; border: 1px solid rgba(15,46,34,.06);
+  transition: .2s; cursor: pointer;
+}
+.pay-row:hover { background: #f0f8f4; }
+.pay-av {
+  width: 36px; height: 36px; border-radius: 9px;
+  display: grid; place-content: center;
+  font-size: 11px; font-weight: 800; color: white;
+}
+.pay-name { flex: 1; font-size: 13px; font-weight: 600; }
+.pay-amt { font-size: 13px; font-weight: 700; }
+.pay-status {
+  font-size: 11px; font-weight: 700;
+  padding: 3px 10px; border-radius: 999px;
+  cursor: pointer; transition: .2s;
+}
+.s-paid { background: rgba(29,184,126,.12); color: #0a7a3e; }
+.s-wait { background: rgba(255,107,53,.12); color: #a64200; }
+.s-you { background: rgba(127,227,191,.2); color: #0a5e40; }
+.pay-progress { padding: 0 20px 16px; }
+.pay-prog-label { display: flex; justify-content: space-between; font-size: 12px; color: var(--muted); margin-bottom: 8px; }
+.pay-bar {
+  height: 8px; background: rgba(15,46,34,.08); border-radius: 999px; overflow: hidden;
+}
+.pay-bar-fill {
+  height: 100%; border-radius: 999px;
+  background: linear-gradient(90deg, #2ee4af, #6dffbd);
+  transition: width .6s cubic-bezier(.22,.61,.36,1);
+}
+.pay-cta {
+  margin: 0 20px 20px;
+  width: calc(100% - 40px);
+  background: var(--ink); color: white;
+  font-family: var(--fd); font-size: 14px; font-weight: 700;
+  border: none; border-radius: 999px; padding: 13px;
+  cursor: pointer; transition: .15s;
+  display: flex; align-items: center; justify-content: center; gap: 8px;
+}
+.pay-cta:hover { background: #1a4a35; }
+.pay-cta .amount { color: var(--mint); }
+
+/* ─── CLASSEMENT SIM ──────────────────────────── */
+.rank-section { background: #f0f3f1; }
+.rank-wrap {
+  display: grid; grid-template-columns: 1.1fr 1fr;
+  gap: 80px; align-items: center;
+}
+.rank-ui {
+  background: white; border-radius: var(--rxl);
+  border: 1px solid var(--line);
+  overflow: hidden; box-shadow: 0 16px 48px rgba(15,46,34,.1);
+}
+.rank-tabs-bar {
+  padding: 16px 20px 0;
+  display: flex; gap: 4px;
+  border-bottom: 1px solid var(--line);
+}
+.rank-tab {
+  font-size: 13px; font-weight: 600; padding: 8px 16px;
+  border-radius: 10px 10px 0 0; border: none; background: transparent;
+  color: var(--muted); cursor: pointer; transition: .2s;
+  border-bottom: 2px solid transparent;
+}
+.rank-tab.on { color: var(--ink); border-bottom-color: var(--mint); background: rgba(127,227,191,.08); }
+.rank-body { padding: 16px 20px; }
+.rank-my {
+  display: flex; align-items: center; gap: 12px;
+  background: rgba(127,227,191,.1); border: 1px solid rgba(127,227,191,.3);
+  border-radius: 12px; padding: 12px 14px; margin-bottom: 14px;
+}
+.rank-my-num { font-family: var(--fd); font-size: 20px; font-weight: 800; color: var(--mint); width: 28px; }
+.rank-my-av { width: 36px; height: 36px; border-radius: 9px; display: grid; place-content: center; font-size: 12px; font-weight: 800; color: white; background: #1DB87E; }
+.rank-my-info { flex: 1; }
+.rank-my-name { font-size: 13px; font-weight: 700; }
+.rank-my-co { font-size: 11px; color: var(--muted); }
+.rank-my-pts { font-family: var(--fd); font-size: 18px; font-weight: 800; }
+.rank-list { display: flex; flex-direction: column; gap: 8px; }
+.rank-item {
+  display: flex; align-items: center; gap: 10px;
+  padding: 9px 0; border-bottom: 1px solid rgba(15,46,34,.06);
+}
+.rank-item:last-child { border-bottom: none; }
+.rank-item-num { font-family: var(--fd); font-size: 14px; font-weight: 800; color: var(--muted); width: 22px; }
+.rank-gold { color: #FFB800; }
+.rank-silver { color: #8A8A82; }
+.rank-bronze { color: #CD7F32; }
+.rank-av { width: 32px; height: 32px; border-radius: 8px; display: grid; place-content: center; font-size: 10px; font-weight: 800; color: white; }
+.rank-info { flex: 1; }
+.rank-name { font-size: 12px; font-weight: 600; }
+.rank-co { font-size: 11px; color: var(--muted); }
+.rank-pts { font-size: 13px; font-weight: 800; }
+.rank-trend { font-size: 11px; margin-left: 6px; }
+
+/* ─── TARIFS ──────────────────────────────────── */
+.pricing-section { background: var(--ink); padding: 112px 40px; }
+.pricing-section .tag { background: rgba(255,236,109,.12); color: var(--yellow); }
+.pricing-section .tag .td { background: var(--yellow); }
+.pricing-section .section-h { color: white; }
+.pricing-section .section-h em { color: var(--yellow); }
+.pricing-section .section-p { color: rgba(255,255,255,.5); }
+.pricing-grid {
+  display: grid; grid-template-columns: repeat(4, 1fr);
+  gap: 16px; margin-top: 56px;
+}
+.price-card {
+  background: rgba(255,255,255,.05);
+  border: 1px solid rgba(255,255,255,.1);
+  border-radius: var(--rl); padding: 28px 24px;
+  transition: .25s; cursor: pointer; position: relative; overflow: hidden;
+}
+.price-card::before {
+  content: '';
+  position: absolute; top: 0; left: 0; right: 0; height: 3px;
+  border-radius: var(--rl) var(--rl) 0 0;
+  background: var(--mint); opacity: 0; transition: .25s;
+}
+.price-card:hover, .price-card.pop {
+  background: rgba(255,255,255,.09);
+  transform: translateY(-4px);
+  box-shadow: 0 16px 40px rgba(0,0,0,.25);
+}
+.price-card:hover::before, .price-card.pop::before { opacity: 1; }
+.price-card.pop {
+  border-color: rgba(127,227,191,.3);
+}
+.price-badge {
+  font-size: 11px; font-weight: 700; letter-spacing: .08em;
+  color: var(--yellow); text-transform: uppercase; margin-bottom: 14px;
+}
+.price-name { font-family: var(--fd); font-size: 22px; font-weight: 800; color: white; margin-bottom: 8px; }
+.price-val {
+  font-family: var(--fd); font-size: 44px; font-weight: 800;
+  color: white; line-height: 1; margin-bottom: 4px;
+}
+.price-val span { font-size: 16px; color: rgba(255,255,255,.4); font-family: var(--fb); font-weight: 400; }
+.price-mo { font-size: 13px; color: rgba(255,255,255,.4); margin-bottom: 20px; }
+.price-sep { border: none; border-top: 1px solid rgba(255,255,255,.08); margin: 16px 0; }
+.price-feat { font-size: 13px; color: rgba(255,255,255,.65); display: flex; gap: 8px; margin-bottom: 8px; align-items: flex-start; }
+.price-feat::before { content: '✓'; color: var(--mint); font-weight: 700; flex-shrink: 0; }
+.price-btn {
+  margin-top: 20px; width: 100%;
+  background: rgba(255,255,255,.1); border: 1px solid rgba(255,255,255,.15);
+  color: white; border-radius: 999px; padding: 11px;
+  font-family: var(--fb); font-size: 13px; font-weight: 600;
+  cursor: pointer; transition: .2s;
+}
+.price-btn:hover { background: rgba(255,255,255,.18); }
+.price-card.pop .price-btn {
+  background: var(--mint); border-color: var(--mint); color: var(--ink);
+}
+
+/* ─── COMMENT CA MARCHE ───────────────────────── */
+.how-section { background: white; }
+.steps-row { display: grid; grid-template-columns: repeat(4, 1fr); gap: 24px; margin-top: 56px; position: relative; }
+.steps-row::before {
+  content: ''; position: absolute;
+  top: 28px; left: 10%; right: 10%;
+  height: 1px; background: repeating-linear-gradient(90deg, var(--mint) 0, var(--mint) 8px, transparent 8px, transparent 18px);
+  z-index: 0;
+}
+.step {
+  text-align: center; position: relative; z-index: 1;
+}
+.step-n {
+  width: 56px; height: 56px; border-radius: 50%;
+  background: white; border: 2px solid var(--mint);
+  display: grid; place-content: center;
+  font-family: var(--fd); font-size: 20px; font-weight: 800; color: var(--ink);
+  margin: 0 auto 20px;
+  box-shadow: 0 0 0 6px rgba(127,227,191,.1);
+}
+.step-name { font-size: 15px; font-weight: 700; margin-bottom: 8px; }
+.step-desc { font-size: 13px; color: var(--muted); }
+
+/* ─── CTA FINAL ───────────────────────────────── */
+.cta-final {
+  background: var(--ink); text-align: center; padding: 120px 40px;
+  position: relative; overflow: hidden;
+}
+.cta-final::before {
+  content: '';
+  position: absolute; inset: -80px;
+  background: radial-gradient(ellipse 60% 50% at 50% 100%, rgba(127,227,191,.18), transparent 65%);
+  pointer-events: none;
+}
+.cta-h {
+  font-family: var(--fd);
+  font-size: clamp(38px, 6vw, 80px);
+  font-weight: 800; line-height: 1.0; letter-spacing: -2px;
+  color: white; max-width: 800px; margin: 0 auto 20px;
+  position: relative; z-index: 1;
+}
+.cta-h em { font-style: normal; color: var(--mint); }
+.cta-sub { font-size: 17px; color: rgba(255,255,255,.4); max-width: 460px; margin: 0 auto 44px; position: relative; z-index: 1; }
+.cta-btns { display: flex; justify-content: center; gap: 12px; position: relative; z-index: 1; }
+.btn-cta-w {
+  font-size: 15px; font-weight: 600; color: var(--ink);
+  background: white; border: none; cursor: pointer;
+  padding: 16px 36px; border-radius: var(--r);
+  transition: .15s;
+}
+.btn-cta-w:hover { transform: translateY(-1px); box-shadow: 0 8px 24px rgba(0,0,0,.3); }
+.btn-cta-ghost {
+  font-size: 15px; color: rgba(255,255,255,.6);
+  background: none; border: 1px solid rgba(255,255,255,.15);
+  cursor: pointer; padding: 16px 36px; border-radius: var(--r);
+}
+
+/* ─── LOGOS BAND ──────────────────────────────── */
+.logos-band { background: white; padding: 52px 40px; border-bottom: 1px solid var(--line); }
+.logos-label { text-align: center; font-size: 12px; color: var(--muted); margin-bottom: 28px; text-transform: uppercase; letter-spacing: .12em; font-weight: 600; }
+.logos-row { display: flex; align-items: center; justify-content: center; gap: 56px; flex-wrap: wrap; }
+.logo-co {
+  font-family: var(--fd); font-size: 17px; font-weight: 700;
+  color: rgba(15,46,34,.22); transition: .2s; cursor: default;
+}
+.logo-co:hover { color: rgba(15,46,34,.55); transform: translateY(-1px); }
+
+/* ─── FOOTER ──────────────────────────────────── */
+footer {
+  background: #0a201a;
+  border-top: 1px solid rgba(255,255,255,.06);
+  padding: 48px 40px;
+}
+.footer-inner {
+  max-width: 1100px; margin: 0 auto;
+  display: flex; align-items: center; justify-content: space-between;
+}
+.footer-logo { font-family: var(--fd); font-size: 18px; font-weight: 800; color: rgba(255,255,255,.5); }
+.footer-links { display: flex; gap: 28px; }
+.footer-links a { font-size: 13px; color: rgba(255,255,255,.3); text-decoration: none; }
+.footer-copy { font-size: 12px; color: rgba(255,255,255,.2); }
+
+/* ─── ANIMATIONS ──────────────────────────────── */
+@keyframes fadeUp {
+  from { opacity: 0; transform: translateY(22px); }
+  to { opacity: 1; transform: translateY(0); }
+}
+@keyframes pulse {
+  0%, 100% { opacity: 1; }
+  50% { opacity: .35; }
+}
+@keyframes slideIn {
+  from { opacity: 0; transform: translateX(20px); }
+  to { opacity: 1; transform: translateX(0); }
+}
+@keyframes ticker {
+  0% { transform: translateX(0); }
+  100% { transform: translateX(-50%); }
+}
+
+.reveal { opacity: 0; transform: translateY(28px); transition: opacity .7s ease, transform .7s ease; }
+.reveal.visible { opacity: 1; transform: none; }
+.reveal-l { opacity: 0; transform: translateX(-32px); transition: opacity .7s ease, transform .7s ease; }
+.reveal-r { opacity: 0; transform: translateX(32px); transition: opacity .7s ease, transform .7s ease; }
+.reveal-l.visible, .reveal-r.visible { opacity: 1; transform: none; }
+.reveal-z { opacity: 0; transform: scale(.93); transition: opacity .7s ease, transform .7s ease; }
+.reveal-z.visible { opacity: 1; transform: none; }
+.stagger > * {
+  opacity: 0; transform: translateY(20px);
+  transition: opacity .6s ease, transform .6s ease;
+}
+.stagger.visible > *:nth-child(1) { transition-delay: 0ms; }
+.stagger.visible > *:nth-child(2) { transition-delay: 80ms; }
+.stagger.visible > *:nth-child(3) { transition-delay: 160ms; }
+.stagger.visible > *:nth-child(4) { transition-delay: 240ms; }
+.stagger.visible > * { opacity: 1; transform: none; }
+
+/* ─── TICKER SCROLLING ────────────────────────── */
+.ticker-outer { overflow: hidden; margin-top: 16px; }
+.ticker-track { display: flex; width: max-content; animation: ticker 22s linear infinite; }
+.ticker-track:hover { animation-play-state: paused; }
+
+/* ─── NOTIFICATION TOAST ──────────────────────── */
+.toast {
+  position: fixed; bottom: 24px; right: 24px; z-index: 999;
+  background: var(--ink); color: white;
+  border-radius: 16px; padding: 14px 18px;
+  box-shadow: 0 12px 40px rgba(15,46,34,.3);
+  font-size: 13px; display: flex; align-items: center; gap: 10px;
+  transform: translateY(80px); opacity: 0;
+  transition: transform .4s cubic-bezier(.22,.61,.36,1), opacity .4s ease;
+  pointer-events: none; max-width: 300px;
+}
+.toast.show { transform: translateY(0); opacity: 1; }
+.toast-ico { font-size: 22px; }
+.toast-text strong { display: block; font-weight: 700; }
+.toast-text span { color: rgba(255,255,255,.6); font-size: 12px; }
+
+/* ─── RESPONSIVE ──────────────────────────────── */
+@media (max-width: 960px) {
+  nav { padding: 0 20px; }
+  section { padding: 80px 20px; }
+  .stats-band { grid-template-columns: 1fr 1fr; }
+  .stat-band-item { padding: 40px 24px; }
+  .stat-band-item:nth-child(2) { border-right: none; }
+  .match-sim-wrap, .tournoi-wrap, .pay-wrap, .rank-wrap { grid-template-columns: 1fr; gap: 48px; }
+  .sim-body { grid-template-columns: 1fr; }
+  .sim-sidebar { display: none; }
+  .sim-kpis { grid-template-columns: repeat(2, 1fr); }
+  .sim-grid { grid-template-columns: 1fr; }
+  .pricing-grid { grid-template-columns: 1fr 1fr; }
+  .steps-row { grid-template-columns: 1fr 1fr; }
+  .steps-row::before { display: none; }
+  .footer-inner { flex-direction: column; gap: 20px; text-align: center; }
+  .hero-actions { flex-direction: column; width: 100%; }
+  .btn-hero, .btn-hero-outline { width: 100%; justify-content: center; }
+  .logos-band { padding: 40px 20px; }
+  .logos-row { gap: 28px; }
+}
+@media (max-width: 600px) {
+  .pricing-grid { grid-template-columns: 1fr; }
+  .steps-row { grid-template-columns: 1fr; }
+  .stats-band { grid-template-columns: 1fr; }
+  .stat-band-item { border-right: none; border-bottom: 1px solid rgba(255,255,255,.08); }
 }
 </style>
 </head>
 <body>
 
-<div id="cur"></div>
-<div id="cur2"></div>
-
-<!-- LOADER -->
-<div id="loader">
-  <div class="ld-logo">H2G</div>
-  <div class="ld-track"><div class="ld-fill" id="ldFill"></div></div>
-  <div class="ld-words">Chargement de l'expérience</div>
-</div>
-
 <!-- NAV -->
 <nav id="nav">
-  <div class="nav-in">
-    <a href="#" class="nav-logo">
-      <div class="nav-logo-orb">⚡</div>
-      Hub2gether
-    </a>
-    <div class="nav-links">
-      <a href="#problems" class="nav-link">Problème</a>
-      <a href="#solution" class="nav-link">Solution</a>
-      <a href="#features" class="nav-link">Features</a>
-      <a href="#preview" class="nav-link">Produit</a>
-      <a href="#impact" class="nav-link">Impact</a>
-    </div>
-    <a href="#cta" class="nav-cta-btn">Demander une démo ↗</a>
-    <button class="nav-burger" id="nb"><span></span><span></span></button>
-  </div>
-  <div class="nav-mob" id="nm">
-    <a href="#problems">Problème</a>
-    <a href="#solution">Solution</a>
-    <a href="#features">Features</a>
-    <a href="#cta">Demander une démo →</a>
+  <div class="nav-logo">Hub2<span class="dot"></span>gether</div>
+  <div style="display:flex;align-items:center;gap:8px">
+    <button class="nav-ghost" onclick="scrollTo({top:document.getElementById('tarifs').offsetTop-70,behavior:'smooth'})">Tarifs</button>
+    <button class="nav-ghost" onclick="scrollTo({top:document.getElementById('how').offsetTop-70,behavior:'smooth'})">Comment ça marche</button>
+    <button class="nav-pill" id="nav-demo-btn">Voir la démo →</button>
   </div>
 </nav>
 
-<!-- ═══════════ HERO ═══════════ -->
-<section class="hero" id="hero">
-  <div class="hero-ambient">
-    <div class="amb-orb amb-1"></div>
-    <div class="amb-orb amb-2"></div>
-    <div class="amb-orb amb-3"></div>
+<!-- HERO -->
+<section class="hero">
+  <div class="hero-noise"></div>
+  <div class="hero-glow"></div>
+  <div class="hero-grid-lines"></div>
+  <div class="hero-badge"><span class="pip">Nouveau</span>La plateforme sport B2B pensée pour vos équipes</div>
+  <h1 class="hero-title">Le sport en entreprise,<br><em>enfin centralisé.</em></h1>
+  <p class="hero-sub">Tournois, matchmaking, classements inter-entreprises, paiements — tout en un seul endroit pour vos collaborateurs.</p>
+  <div class="hero-actions">
+    <button class="btn-hero">Commencer gratuitement <span>→</span></button>
+    <button class="btn-hero-outline" id="hero-demo-btn">Voir la démo live</button>
   </div>
-  <div class="hero-grid"></div>
-
-  <div class="hero-left">
-    <div class="hero-eyebrow">
-      <span class="ey-dot"></span>
-      <span class="ey-text">Plateforme Sport B2B</span>
-      <span class="ey-pill">+200 entreprises</span>
+  <div class="hero-proof">
+    <div class="avatars">
+      <span style="background:#1E5EFF">JD</span><span style="background:#1DB87E">MS</span>
+      <span style="background:#FF6B35">AT</span><span style="background:#8B5CF6">LC</span>
+      <span style="background:#F5C842;color:#333">+</span>
     </div>
+    <p class="proof-text"><strong>+2 400 collaborateurs</strong> actifs · 6 entreprises du CAC 40</p>
+  </div>
 
-    <h1 class="hero-title">
-      <span class="ht-line"><span class="ht-inner">Transformez</span></span>
-      <span class="ht-line"><span class="ht-inner" style="font-style:italic">le sport</span></span>
-      <span class="ht-line"><span class="ht-inner">en <span style="color:var(--g)">levier</span></span></span>
-      <span class="ht-line"><span class="ht-inner">de cohésion</span></span>
-    </h1>
-
-    <p class="hero-sub">
-      Organisez des matchs, créez des groupes sportifs et<br>
-      <strong>boostez l'engagement</strong> de vos collaborateurs en 30 secondes.
-    </p>
-
-    <div class="hero-btns">
-      <a href="#cta" class="btn-glow">
-        Demander une démo
-        <svg width="16" height="16" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.5"><path d="M5 12h14M12 5l7 7-7 7"/></svg>
-      </a>
-      <a href="#solution" class="btn-outline">Voir comment ça marche</a>
-    </div>
-
-    <div class="hero-proof">
-      <div class="proof-faces">
-        <div class="pf" style="--c:linear-gradient(135deg,#6ee8a8,#3cca7e)"></div>
-        <div class="pf" style="--c:linear-gradient(135deg,#a3d8f4,#5a9fd4)"></div>
-        <div class="pf" style="--c:linear-gradient(135deg,#f4c87a,#e0a840)"></div>
-        <div class="pf" style="--c:linear-gradient(135deg,#f4a3c0,#e05890)"></div>
-        <div class="pf" style="--c:linear-gradient(135deg,#c4a3f4,#9a70e0)"></div>
+  <!-- HERO DASHBOARD SIMULATION -->
+  <div class="hero-sim reveal-z">
+    <div class="sim-chrome">
+      <div class="sim-titlebar">
+        <span class="sim-dot" style="background:#ff5f57"></span>
+        <span class="sim-dot" style="background:#febc2e"></span>
+        <span class="sim-dot" style="background:#28c840"></span>
+        <div class="sim-url">app.hub2gether.com</div>
       </div>
-      <p class="proof-txt"><strong>+4 800 collaborateurs</strong> actifs cette semaine</p>
-    </div>
-  </div>
-
-  <div class="hero-right">
-    <div class="phone-scene">
-      <div class="phone-aura"></div>
-      <div class="phone">
-        <div class="phone-notch"><div class="notch-cam"></div><div class="notch-pill"></div></div>
-        <div class="phone-face">
-          <!-- Screen 0: Matches -->
-          <div class="app-scr on" data-i="0">
-            <div class="atb">
-              <span class="atb-brand">⚡ Hub2gether</span>
-              <div class="atb-bell">🔔<div class="atb-badge">3</div></div>
+      <div class="sim-body">
+        <div class="sim-sidebar">
+          <div class="sim-sidebar-logo">H2G</div>
+          <div class="sim-nav-item active"><span class="ico">📊</span> Dashboard</div>
+          <div class="sim-nav-item"><span class="ico">⚡</span> Matchmaking</div>
+          <div class="sim-nav-item"><span class="ico">🏆</span> Tournois</div>
+          <div class="sim-nav-item"><span class="ico">📊</span> Classement</div>
+          <div class="sim-nav-item"><span class="ico">💳</span> Paiements</div>
+          <div class="sim-nav-item"><span class="ico">⚙️</span> Paramètres</div>
+        </div>
+        <div class="sim-main">
+          <div class="sim-topbar">
+            <div>
+              <div class="sim-greeting">Bonjour, Sarah 👋</div>
+              <div class="sim-date">Mercredi 1 avril 2026 · Paris</div>
             </div>
-            <div class="app-greet">Bonjour, Thomas 👋</div>
-            <div class="app-sub">2 matchs vous attendent</div>
-            <div class="mcard">
-              <div class="mc-sport">⚽ Football</div>
-              <div class="mc-time">Jeudi · 18h30</div>
-              <div class="mc-loc">📍 Stade Léon Lagrange</div>
-              <div class="mc-row">
-                <div class="mc-av" style="--c:linear-gradient(135deg,#6ee8a8,#3cca7e)"></div>
-                <div class="mc-av" style="--c:linear-gradient(135deg,#a3d8f4,#5a9fd4)"></div>
-                <div class="mc-av" style="--c:linear-gradient(135deg,#f4c87a,#e0a840)"></div>
-                <div class="mc-av mc-more">+5</div>
-                <span class="mc-spots">2 places</span>
+            <div class="sim-live-badge"><div class="sim-live-dot"></div>Live</div>
+          </div>
+          <div class="sim-kpis">
+            <div class="sim-kpi">
+              <div class="sim-kpi-label">Joueurs actifs</div>
+              <div class="sim-kpi-val" id="kpi-players">2 418</div>
+              <div class="sim-kpi-delta delta-up">↑ +14 aujourd'hui</div>
+              <div class="sim-kpi-bar"><div class="sim-kpi-bar-fill" style="width:78%;background:linear-gradient(90deg,#7FE3BF,#2ee4af)"></div></div>
+            </div>
+            <div class="sim-kpi">
+              <div class="sim-kpi-label">Matchs joués</div>
+              <div class="sim-kpi-val" id="kpi-matches">8 934</div>
+              <div class="sim-kpi-delta delta-up">↑ +23 cette semaine</div>
+              <div class="sim-kpi-bar"><div class="sim-kpi-bar-fill" style="width:62%;background:linear-gradient(90deg,#1DB87E,#6dffbd)"></div></div>
+            </div>
+            <div class="sim-kpi">
+              <div class="sim-kpi-label">Participation</div>
+              <div class="sim-kpi-val">+31<span style="font-size:16px;color:#6d7c72">%</span></div>
+              <div class="sim-kpi-delta delta-up">↑ vs. avant Hub2G</div>
+              <div class="sim-kpi-bar"><div class="sim-kpi-bar-fill" style="width:85%;background:linear-gradient(90deg,#FFEC6D,#ffd93d)"></div></div>
+            </div>
+            <div class="sim-kpi">
+              <div class="sim-kpi-label">Absentéisme</div>
+              <div class="sim-kpi-val">-24<span style="font-size:16px;color:#6d7c72">%</span></div>
+              <div class="sim-kpi-delta" style="color:#1DB87E">↓ Impact mesuré</div>
+              <div class="sim-kpi-bar"><div class="sim-kpi-bar-fill" style="width:70%;background:linear-gradient(90deg,#FF6B35,#ffb347)"></div></div>
+            </div>
+          </div>
+          <div class="sim-grid">
+            <div class="sim-card">
+              <div class="sim-card-title">Matchs à venir · Paris</div>
+              <div class="sim-match-row">
+                <div class="sim-av" style="background:#1E5EFF">JD</div>
+                <div class="sim-match-info">
+                  <div class="sim-match-name">Padel Doubles</div>
+                  <div class="sim-match-detail">Jérôme D. · Niveau 4 · 18h30 · UrbanPadel</div>
+                </div>
+                <span class="sim-badge bg-mint">€12</span>
               </div>
-              <button class="mc-btn">Rejoindre →</button>
+              <div class="sim-match-row">
+                <div class="sim-av" style="background:#FF6B35">MS</div>
+                <div class="sim-match-info">
+                  <div class="sim-match-name">Basketball 3v3</div>
+                  <div class="sim-match-detail">Marc S. · Intermédiaire · Demain 12h</div>
+                </div>
+                <span class="sim-badge bg-yellow">Gratuit</span>
+              </div>
+              <div class="sim-match-row">
+                <div class="sim-av" style="background:#8B5CF6">AT</div>
+                <div class="sim-match-info">
+                  <div class="sim-match-name">Tennis Simple</div>
+                  <div class="sim-match-detail">Alex T. · Avancé · Vendredi 8h</div>
+                </div>
+                <span class="sim-badge bg-red">2 places</span>
+              </div>
+              <div class="mini-bars" id="mini-bars">
+                <span style="height:22px"></span><span style="height:30px"></span>
+                <span style="height:24px"></span><span style="height:38px"></span>
+                <span style="height:44px" class="hi"></span><span style="height:52px" class="hi"></span>
+                <span style="height:48px" class="hi"></span>
+              </div>
             </div>
-            <div class="mcard blue">
-              <div class="mc-sport">🎾 Tennis</div>
-              <div class="mc-time">Vendredi · 12h00</div>
-              <div class="mc-loc">📍 Club Tennis Bercy</div>
-              <button class="mc-btn">Rejoindre →</button>
-            </div>
-          </div>
-          <!-- Screen 1: Leaderboard -->
-          <div class="app-scr" data-i="1">
-            <div class="atb"><span class="atb-brand">🏆 Classement</span></div>
-            <div class="app-lb-month">Ce mois-ci</div>
-            <div class="lb-podium">
-              <div class="lp lp2"><div class="lp-av" style="--c:linear-gradient(135deg,#a3d8f4,#5a9fd4)"></div><div class="lp-medal">🥈</div><div class="lp-name">Marc</div><div class="lp-pts">1 090</div></div>
-              <div class="lp lp1"><div class="lp-crown">👑</div><div class="lp-av" style="--c:linear-gradient(135deg,#6ee8a8,#3cca7e)"></div><div class="lp-medal">🥇</div><div class="lp-name">Sophie</div><div class="lp-pts">1 240</div></div>
-              <div class="lp lp3"><div class="lp-av" style="--c:linear-gradient(135deg,#f4a3a3,#e05060)"></div><div class="lp-medal">🥉</div><div class="lp-name">Julie</div><div class="lp-pts">980</div></div>
-            </div>
-            <div class="lb-rows">
-              <div class="lb-row"><span class="lbr-n">4</span><div class="lbr-av" style="--c:linear-gradient(135deg,#c4a3f4,#9a70e0)"></div><span class="lbr-name">Thomas L.</span><span class="lbr-pts">870 pts</span></div>
-              <div class="lb-row"><span class="lbr-n">5</span><div class="lbr-av" style="--c:linear-gradient(135deg,#f4c87a,#e0a840)"></div><span class="lbr-name">Emma R.</span><span class="lbr-pts">760 pts</span></div>
-            </div>
-          </div>
-          <!-- Screen 2: Groups -->
-          <div class="app-scr" data-i="2">
-            <div class="atb"><span class="atb-brand">👥 Groupes</span></div>
-            <div class="app-groups">
-              <div class="ag-item"><span class="ag-icon">⚽</span><div><div class="ag-name">Les Galactiques</div><div class="ag-meta">14 membres</div></div><span class="ag-badge">Live</span></div>
-              <div class="ag-item"><span class="ag-icon">🏀</span><div><div class="ag-name">Basket Corp</div><div class="ag-meta">9 membres</div></div><span class="ag-badge">Live</span></div>
-              <div class="ag-item"><span class="ag-icon">🏃</span><div><div class="ag-name">Running Team</div><div class="ag-meta">22 membres</div></div><span class="ag-badge new">Nouveau</span></div>
-              <div class="ag-item"><span class="ag-icon">🎾</span><div><div class="ag-name">Tennis Pros</div><div class="ag-meta">6 membres</div></div><span class="ag-badge">Live</span></div>
+            <div class="sim-card">
+              <div class="sim-card-title">🏆 Top joueurs — Saison 4</div>
+              <div class="lb-row">
+                <div class="lb-rank" style="color:#FFB800">01</div>
+                <div class="lb-av" style="background:#1E5EFF">TR</div>
+                <div class="lb-name">Thomas R. <span style="font-size:10px;color:var(--muted)">Google</span></div>
+                <div class="lb-pts">2 480</div>
+              </div>
+              <div class="lb-row" style="background:rgba(127,227,191,.08);border-radius:8px;padding:6px 4px;">
+                <div class="lb-rank" style="color:#8A8A82">02</div>
+                <div class="lb-av" style="background:#1DB87E">SM</div>
+                <div class="lb-name">Sarah M. <span style="font-size:10px;color:var(--muted)">Hub2G ← Vous</span></div>
+                <div class="lb-pts" style="color:var(--mint)">2 315</div>
+              </div>
+              <div class="lb-row">
+                <div class="lb-rank" style="color:#CD7F32">03</div>
+                <div class="lb-av" style="background:#FF6B35">LV</div>
+                <div class="lb-name">Léa V. <span style="font-size:10px;color:var(--muted)">LVMH</span></div>
+                <div class="lb-pts">1 980</div>
+              </div>
+              <div class="lb-row">
+                <div class="lb-rank">04</div>
+                <div class="lb-av" style="background:#8B5CF6">JD</div>
+                <div class="lb-name">Jean D. <span style="font-size:10px;color:var(--muted)">BNP</span></div>
+                <div class="lb-pts">1 760</div>
+              </div>
             </div>
           </div>
         </div>
-        <div class="phone-home"></div>
       </div>
-      <div class="phone-dots" id="phoneDots">
-        <span class="pdot on" data-di="0"></span>
-        <span class="pdot" data-di="1"></span>
-        <span class="pdot" data-di="2"></span>
-      </div>
-      <!-- chips -->
-      <div class="chip c1"><span class="chip-icon">⚡</span><div><div class="chip-v">+34%</div><div class="chip-l">Engagement</div></div></div>
-      <div class="chip c2"><span class="chip-icon">⏱</span><div><div class="chip-v">30s</div><div class="chip-l">Par match</div></div></div>
-      <div class="chip c3"><span class="chip-icon">🏆</span><div><div class="chip-v">142</div><div class="chip-l">Matchs/mois</div></div></div>
     </div>
-  </div>
-
-  <div class="scroll-cue">
-    <div class="sc-line"><div class="sc-run"></div></div>
-    Scroll
   </div>
 </section>
 
-<!-- MARQUEE -->
-<div class="marquee-sect">
-  <div class="marquee-tr" id="mqTr">
-    <span class="mq-item">⚽ Football</span><span class="mq-dot">·</span>
-    <span class="mq-item">🏀 Basketball</span><span class="mq-dot">·</span>
-    <span class="mq-item">🎾 Tennis</span><span class="mq-dot">·</span>
-    <span class="mq-item">🏃 Running</span><span class="mq-dot">·</span>
-    <span class="mq-item">🧘 Yoga</span><span class="mq-dot">·</span>
-    <span class="mq-item">🏊 Natation</span><span class="mq-dot">·</span>
-    <span class="mq-item">🚴 Vélo</span><span class="mq-dot">·</span>
-    <span class="mq-item">🏋️ CrossFit</span><span class="mq-dot">·</span>
-    <span class="mq-item">⚽ Football</span><span class="mq-dot">·</span>
-    <span class="mq-item">🏀 Basketball</span><span class="mq-dot">·</span>
-    <span class="mq-item">🎾 Tennis</span><span class="mq-dot">·</span>
-    <span class="mq-item">🏃 Running</span><span class="mq-dot">·</span>
-    <span class="mq-item">🧘 Yoga</span><span class="mq-dot">·</span>
-    <span class="mq-item">🏊 Natation</span><span class="mq-dot">·</span>
-    <span class="mq-item">🚴 Vélo</span><span class="mq-dot">·</span>
-    <span class="mq-item">🏋️ CrossFit</span><span class="mq-dot">·</span>
+<!-- LOGOS -->
+<div class="logos-band">
+  <p class="logos-label">Des équipes de ces entreprises utilisent déjà Hub2gether</p>
+  <div class="logos-row">
+    <span class="logo-co">Capgemini</span>
+    <span class="logo-co">BNP Paribas</span>
+    <span class="logo-co">Decathlon</span>
+    <span class="logo-co">Veolia</span>
+    <span class="logo-co">LVMH</span>
+    <span class="logo-co">Société Générale</span>
   </div>
 </div>
 
-<!-- ═══════════ PROBLEMS ═══════════ -->
-<section class="sect prob-sect" id="problems">
-  <div class="container">
-    <div data-r="up"><span class="tag">Le constat</span></div>
-    <h2 class="sh" data-r="up" data-d="80">Ce qui <em>freine</em> vos équipes</h2>
-    <div class="prob-grid" data-r="up" data-d="160">
-      <div class="pcard">
-        <div class="pcard-n">01</div>
-        <div class="pcard-icon">😶‍🌫️</div>
-        <h3>Manque de cohésion</h3>
-        <p>Les silos s'installent. Les interactions entre départements disparaissent. Le lien humain se perd dans les visios.</p>
-        <div class="pcard-stat"><strong>72%</strong><span>des RH citent ça en priorité</span></div>
-      </div>
-      <div class="pcard">
-        <div class="pcard-n">02</div>
-        <div class="pcard-icon">📅</div>
-        <h3>Organisation impossible</h3>
-        <p>Emails, WhatsApp, tableurs partagés… organiser un match devient un calvaire logistique qui décourage tout le monde.</p>
-        <div class="pcard-stat"><strong>3h</strong><span>perdues par événement en moyenne</span></div>
-      </div>
-      <div class="pcard">
-        <div class="pcard-n">03</div>
-        <div class="pcard-icon">📉</div>
-        <h3>Désengagement latent</h3>
-        <p>Sans initiatives concrètes, les talents décrochent. Et un talent perdu coûte beaucoup plus cher qu'on ne le pense.</p>
-        <div class="pcard-stat"><strong>−23%</strong><span>productivité par désengagé</span></div>
-      </div>
-    </div>
+<!-- STATS BAND -->
+<div class="stats-band">
+  <div class="stat-band-item reveal">
+    <div class="stat-num"><span class="counter" data-target="31" data-prefix="+">+0</span><span class="unit">%</span></div>
+    <div class="stat-label">de participation aux activités sportives internes après lancement</div>
+    <div class="stat-source">Source · Clients Hub2gether 2025</div>
   </div>
-</section>
+  <div class="stat-band-item reveal">
+    <div class="stat-num"><span class="counter" data-target="24" data-prefix="-">-0</span><span class="unit">%</span></div>
+    <div class="stat-label">d'absentéisme dans les équipes qui jouent régulièrement</div>
+    <div class="stat-source">Source · RH clients actifs</div>
+  </div>
+  <div class="stat-band-item reveal">
+    <div class="stat-num"><span class="counter" data-target="2400">0</span><span class="unit">+</span></div>
+    <div class="stat-label">collaborateurs actifs dans 6 entreprises du CAC 40</div>
+    <div class="stat-source">Données plateforme · Avril 2026</div>
+  </div>
+  <div class="stat-band-item reveal">
+    <div class="stat-num"><span class="counter" data-target="1" data-suffix="h">0h</span></div>
+    <div class="stat-label">pour être opérationnel, sans intégration technique complexe</div>
+    <div class="stat-source">Onboarding moyen constaté</div>
+  </div>
+</div>
 
-<!-- ═══════════ SOLUTION ═══════════ -->
-<section class="sect sol-sect" id="solution">
-  <div class="container">
-    <div class="sol-grid">
-      <div data-r="left">
-        <div class="sol-tag"><span class="tag">La solution</span></div>
-        <h2 class="sol-h">Une plateforme.<br><em>Tout le sport</em><br>en entreprise.</h2>
-        <p class="sol-p">Hub2gether centralise la pratique sportive — de l'organisation au suivi, en passant par la communauté.</p>
-        <ul class="sol-list">
-          <li><span class="slc">✓</span>Créez un événement en 30 secondes chrono</li>
-          <li><span class="slc">✓</span>Groupes sportifs internes par affinité</li>
-          <li><span class="slc">✓</span>KPIs RH en temps réel sur l'engagement</li>
-          <li><span class="slc">✓</span>Gestion automatique des paiements</li>
-        </ul>
-        <a href="#cta" class="sol-cta">Voir la démo en live →</a>
+<!-- MATCHMAKING SIM -->
+<section class="match-sim-section" id="matchmaking">
+  <div class="inner">
+    <div class="match-sim-wrap">
+      <div class="reveal-l">
+        <div class="tag"><div class="td"></div>Matchmaking intelligent</div>
+        <h2 class="section-h">Trouvez des partenaires de jeu <em>en 30 secondes.</em></h2>
+        <p class="section-p">Filtrez par sport, niveau, disponibilité ou entreprise. L'algorithme Hub2gether propose les profils les plus compatibles en temps réel.</p>
+        <div style="margin-top:28px;display:flex;flex-direction:column;gap:12px">
+          <div style="display:flex;align-items:center;gap:10px;font-size:14px;color:var(--muted)"><span style="color:#1DB87E;font-size:18px">✓</span> Matching par niveau et disponibilité</div>
+          <div style="display:flex;align-items:center;gap:10px;font-size:14px;color:var(--muted)"><span style="color:#1DB87E;font-size:18px">✓</span> Paiement de la quote-part intégré</div>
+          <div style="display:flex;align-items:center;gap:10px;font-size:14px;color:var(--muted)"><span style="color:#1DB87E;font-size:18px">✓</span> Rappel automatique avant le match</div>
+        </div>
       </div>
-      <div data-r="right" style="position:relative">
-        <div class="sol-dash">
-          <div class="sd-hd">
-            <span class="sd-hd-logo">Hub2gether</span>
-            <span class="sd-pill on">Vue globale</span>
-            <span class="sd-pill">Matchs</span>
-            <span class="sd-new">+ Nouveau match</span>
-          </div>
-          <div class="sd-body">
-            <div class="sd-kpis">
-              <div class="sdk"><div class="sdk-v"><span class="ctr" data-v="87">0</span>%</div><div class="sdk-l">Engagement</div><div class="sdk-d">▲ +12%</div></div>
-              <div class="sdk"><div class="sdk-v"><span class="ctr" data-v="142">0</span></div><div class="sdk-l">Matchs/mois</div><div class="sdk-d">▲ +34</div></div>
-              <div class="sdk"><div class="sdk-v"><span class="ctr" data-v="34">0</span></div><div class="sdk-l">Groupes actifs</div><div class="sdk-d">▲ +8</div></div>
-              <div class="sdk"><div class="sdk-v"><span class="ctr" data-v="1248">0</span></div><div class="sdk-l">Interactions</div><div class="sdk-d">▲ +230</div></div>
+      <!-- Phone mock -->
+      <div class="reveal-r" style="display:flex;justify-content:center">
+        <div class="match-phone">
+          <div class="match-screen">
+            <div class="match-screen-top">
+              <span>Hub2gether</span>
+              <strong>Matchmaking</strong>
+              <span style="background:rgba(127,227,191,.2);padding:3px 8px;border-radius:999px;font-size:11px;color:var(--mint)">Paris</span>
             </div>
-            <div class="sd-chart">
-              <div class="sdc-bars">
-                <div class="sdcb"><div class="sdcb-bar" style="height:38%"></div><span>Jan</span></div>
-                <div class="sdcb"><div class="sdcb-bar" style="height:52%"></div><span>Fév</span></div>
-                <div class="sdcb"><div class="sdcb-bar" style="height:47%"></div><span>Mar</span></div>
-                <div class="sdcb"><div class="sdcb-bar" style="height:71%"></div><span>Avr</span></div>
-                <div class="sdcb"><div class="sdcb-bar" style="height:63%"></div><span>Mai</span></div>
-                <div class="sdcb"><div class="sdcb-bar hi" style="height:91%"></div><span>Jun</span></div>
+            <div class="match-hero-area">
+              <div class="match-hero-title">Trouve ton prochain match 🔥</div>
+              <div class="match-sport-chips">
+                <span class="sport-chip on" data-sport="padel">🏸 Padel</span>
+                <span class="sport-chip" data-sport="tennis">🎾 Tennis</span>
+                <span class="sport-chip" data-sport="basket">🏀 Basket</span>
+                <span class="sport-chip" data-sport="foot">⚽ Foot</span>
               </div>
-              <div class="sdc-lbl">Activité équipes — Semestre 1</div>
             </div>
-          </div>
-        </div>
-        <div class="sol-notifs">
-          <div class="snotif sn1">🎉 <strong>Sophie</strong> a organisé un match · il y a 2 min</div>
-          <div class="snotif sn2">📊 Score QVT <strong>+18 pts</strong> ce mois-ci</div>
-        </div>
-      </div>
-    </div>
-  </div>
-</section>
-
-<!-- ═══════════ FEATURES ═══════════ -->
-<section class="sect feat-sect" id="features">
-  <div class="container">
-    <div data-r="up"><span class="tag">Fonctionnalités</span></div>
-    <h2 class="sh" data-r="up" data-d="80">Conçu pour <em>l'action</em>,<br>pas la complexité</h2>
-    <div class="bento">
-      <!-- Card 1 — big -->
-      <div class="bc bc1" data-r="left" data-d="0">
-        <div class="bc-tag">01</div>
-        <div class="bc-icon-wrap">⚡</div>
-        <h3>Match en<br>30 secondes</h3>
-        <p>Sport, heure, lieu. Trois champs. Invitations et rappels automatiques inclus.</p>
-        <div class="bc-timer-vis">
-          <div class="btv">
-            <svg viewBox="0 0 100 100">
-              <circle cx="50" cy="50" r="45" fill="none" stroke="rgba(110,232,168,.1)" stroke-width="6"/>
-              <circle class="btv-circle" cx="50" cy="50" r="45" fill="none" stroke="url(#tg)" stroke-width="6" stroke-linecap="round"/>
-              <defs>
-                <linearGradient id="tg" x1="0%" y1="0%" x2="100%" y2="0%">
-                  <stop offset="0%" stop-color="#3cca7e"/>
-                  <stop offset="100%" stop-color="#6ee8a8"/>
-                </linearGradient>
-              </defs>
-            </svg>
-            <div class="btv-val">30<span>s</span></div>
-          </div>
-        </div>
-      </div>
-      <!-- Card 2 -->
-      <div class="bc bc2" data-r="up" data-d="80">
-        <div class="bc-tag">02</div>
-        <div class="bc-icon-wrap">👥</div>
-        <h3>Groupes sportifs</h3>
-        <p>Communautés autonomes par affinité.</p>
-        <div class="bc-groups-v">
-          <div class="bgv-pill">⚽ Les Galactiques <em>14</em></div>
-          <div class="bgv-pill">🏀 Basket Corp <em>9</em></div>
-          <div class="bgv-pill bgv-new">+ Créer un groupe</div>
-        </div>
-      </div>
-      <!-- Card 3 -->
-      <div class="bc bc3" data-r="up" data-d="160">
-        <div class="bc-tag">03</div>
-        <div class="bc-icon-wrap">💸</div>
-        <h3>Split dépenses</h3>
-        <p>Frais partagés automatiquement entre participants.</p>
-        <div class="bc-split-v">
-          <div class="bsv-av" style="--c:linear-gradient(135deg,#6ee8a8,#3cca7e)">−8€</div>
-          <div class="bsv-av" style="--c:linear-gradient(135deg,#a3d8f4,#5a9fd4)">−8€</div>
-          <div class="bsv-av" style="--c:linear-gradient(135deg,#f4c87a,#e0a840)">−8€</div>
-          <div class="bsv-eq">= 24€ ✓</div>
-        </div>
-      </div>
-      <!-- Card 4 -->
-      <div class="bc bc4" data-r="left" data-d="240">
-        <div class="bc-tag">04</div>
-        <div class="bc-icon-wrap">🏆</div>
-        <h3>Classements & Gamification</h3>
-        <p>Leaderboard vivant, challenges, badges, podiums mensuels.</p>
-        <div class="bc-lb-v">
-          <div class="blv-row"><span class="blv-medal">🥇</span><span class="blv-name">Sophie M.</span><div class="blv-bar"><div class="blv-fill" style="--w:92%"></div></div><span class="blv-pts">1240</span></div>
-          <div class="blv-row"><span class="blv-medal">🥈</span><span class="blv-name">Marc D.</span><div class="blv-bar"><div class="blv-fill" style="--w:78%"></div></div><span class="blv-pts">1090</span></div>
-          <div class="blv-row"><span class="blv-medal">🥉</span><span class="blv-name">Julie T.</span><div class="blv-bar"><div class="blv-fill" style="--w:68%"></div></div><span class="blv-pts">980</span></div>
-        </div>
-      </div>
-      <!-- Card 5 -->
-      <div class="bc bc5" data-r="right" data-d="320">
-        <div class="bc-tag">05</div>
-        <div class="bc-icon-wrap">📊</div>
-        <h3>Dashboard RH</h3>
-        <p>KPIs bien-être, engagement, rétention — tout en un seul regard.</p>
-        <div class="bc-kpi-v">
-          <div class="bkv"><span class="bkv-v">87%</span><span class="bkv-l">Engagement</span></div>
-          <div class="bkv"><span class="bkv-v">+18</span><span class="bkv-l">Score QVT</span></div>
-        </div>
-      </div>
-    </div>
-  </div>
-</section>
-
-<!-- ═══════════ STICKY PREVIEW ═══════════ -->
-<section class="prev-outer" id="preview">
-  <div class="prev-sticky" id="prevSticky">
-    <div class="prev-side">
-      <span class="tag" style="margin-bottom:20px">Aperçu produit</span>
-      <div class="prev-side-title">Explorez<br>l'interface</div>
-      <p class="prev-side-hint">↓ Scrollez pour naviguer</p>
-      <div class="prev-nav-items" id="prevNav">
-        <button class="pni on" data-pi="0"><span class="pni-num">01</span><span class="pni-lbl">Dashboard</span></button>
-        <button class="pni" data-pi="1"><span class="pni-num">02</span><span class="pni-lbl">Mobile App</span></button>
-        <button class="pni" data-pi="2"><span class="pni-num">03</span><span class="pni-lbl">Groupes</span></button>
-        <button class="pni" data-pi="3"><span class="pni-num">04</span><span class="pni-lbl">Leaderboard</span></button>
-        <button class="pni" data-pi="4"><span class="pni-num">05</span><span class="pni-lbl">Votre capture</span></button>
-      </div>
-      <div class="prev-prog"><div class="prev-prog-f" id="prevProgF"></div></div>
-    </div>
-
-    <div class="prev-slides" id="prevSlides">
-      <div class="prev-track" id="prevTrack">
-
-        <!-- Slide 1 — Dashboard -->
-        <div class="pslide active">
-          <div class="pslide-frame" data-si="0">
-            <div class="preview-screen dashboard-screen">
-              <div class="ds-header"><div class="ds-logo">Hub2gether</div><div class="ds-nav"><span class="dsn on">Dashboard</span><span class="dsn">Matchs</span><span class="dsn">Groupes</span></div></div>
-              <div class="ds-body">
-                <div class="ds-kpis">
-                  <div class="ds-kpi"><div class="dsk-v"><span class="counter" data-t="87">0</span>%</div><div class="dsk-l">Engagement</div><div class="dsk-d">▲ +12%</div></div>
-                  <div class="ds-kpi"><div class="dsk-v"><span class="counter" data-t="142">0</span></div><div class="dsk-l">Matchs</div><div class="dsk-d">▲ +34</div></div>
-                  <div class="ds-kpi"><div class="dsk-v"><span class="counter" data-t="1248">0</span></div><div class="dsk-l">Interactions</div><div class="dsk-d">▲ +230</div></div>
-                  <div class="ds-kpi"><div class="dsk-v"><span class="counter" data-t="34">0</span></div><div class="dsk-l">Groupes</div><div class="dsk-d">▲ +8</div></div>
+            <div class="match-cards" id="match-cards">
+              <div class="match-c sel" data-idx="0">
+                <div class="match-c-av" style="background:#1E5EFF">JD</div>
+                <div class="match-c-info">
+                  <div class="match-c-name">Padel Doubles</div>
+                  <div class="match-c-detail">Jérôme D. · Niveau 4 · Aujourd'hui 18h30</div>
                 </div>
-                <div class="ds-chart">
-                  <div class="dsc-bars">
-                    <div class="dscb"><div class="dscb-bar" style="height:40%"></div><span>Jan</span></div>
-                    <div class="dscb"><div class="dscb-bar" style="height:55%"></div><span>Fév</span></div>
-                    <div class="dscb"><div class="dscb-bar" style="height:50%"></div><span>Mar</span></div>
-                    <div class="dscb"><div class="dscb-bar" style="height:72%"></div><span>Avr</span></div>
-                    <div class="dscb"><div class="dscb-bar" style="height:65%"></div><span>Mai</span></div>
-                    <div class="dscb"><div class="dscb-bar hi" style="height:90%"></div><span>Jun</span></div>
-                  </div>
-                  <div class="dsc-lbl">Activité globale 2025</div>
+                <div class="match-c-right">
+                  <div class="match-c-price">€12.50</div>
+                  <div class="match-c-spots">1 place libre</div>
+                </div>
+              </div>
+              <div class="match-c" data-idx="1">
+                <div class="match-c-av" style="background:#8B5CF6">KL</div>
+                <div class="match-c-info">
+                  <div class="match-c-name">Padel Mixte</div>
+                  <div class="match-c-detail">Kim L. · Débutant · Jeudi 19h</div>
+                </div>
+                <div class="match-c-right">
+                  <div class="match-c-price">€10.00</div>
+                  <div class="match-c-spots">2 places libres</div>
+                </div>
+              </div>
+              <div class="match-c" data-idx="2">
+                <div class="match-c-av" style="background:#FF6B35">MS</div>
+                <div class="match-c-info">
+                  <div class="match-c-name">Padel Avancé</div>
+                  <div class="match-c-detail">Marc S. · Niveau 5 · Vendredi 8h</div>
+                </div>
+                <div class="match-c-right">
+                  <div class="match-c-price">€15.00</div>
+                  <div class="match-c-spots">1 place libre</div>
                 </div>
               </div>
             </div>
-            <button class="ps-upload-btn" data-si="0">↑ Remplacer</button>
-            <div class="ps-custom"></div>
-          </div>
-          <div class="pslide-info">
-            <div class="psi-num">01</div>
-            <div class="psi-label">Dashboard</div>
-            <div class="psi-title">Vue globale en temps réel</div>
-            <p class="psi-desc">Engagement, matchs, KPIs RH — tout en un seul regard pour vos équipes RH.</p>
-          </div>
-        </div>
-
-        <!-- Slide 2 — Mobile -->
-        <div class="pslide">
-          <div class="pslide-frame narrow" data-si="1">
-            <div class="preview-screen mobile-screen">
-              <div class="ms-logo">⚡ Hub2gether</div>
-              <div class="ms-greet">Bonjour Sophie ! 👋</div>
-              <div class="ms-sect">Prochains matchs</div>
-              <div class="ms-match"><div class="ms-sport">⚽</div><div class="ms-info"><div class="ms-name">Football · Jeudi 18h30</div><div class="ms-loc">Stade Léon</div></div><div class="ms-ok">OK</div></div>
-              <div class="ms-match"><div class="ms-sport">🏀</div><div class="ms-info"><div class="ms-name">Basket · Sam. 10h</div><div class="ms-loc">Gymnase A</div></div><div class="ms-ok">OK</div></div>
-              <div class="ms-groups" style="margin-top:14px">
-                <div class="ms-sect">Mes groupes</div>
-                <div class="ms-pills"><span>⚽ Foot</span><span>🎾 Tennis</span><span>🏃 Run</span></div>
-              </div>
+            <button class="match-join-btn" id="join-btn">Rejoindre le match →</button>
+            <div class="join-anim" id="join-anim">
+              <div class="tick">✅</div>
+              <p>Tu rejoins le match !</p>
+              <small>Paiement sécurisé · Rappel automatique</small>
             </div>
-            <button class="ps-upload-btn" data-si="1">↑ Remplacer</button>
-            <div class="ps-custom"></div>
-          </div>
-          <div class="pslide-info">
-            <div class="psi-num">02</div>
-            <div class="psi-label">Mobile App</div>
-            <div class="psi-title">iOS & Android natif</div>
-            <p class="psi-desc">Adoption instantanée. Aucune formation requise. Vos équipes l'utilisent en 60 secondes.</p>
           </div>
         </div>
-
-        <!-- Slide 3 — Groups -->
-        <div class="pslide">
-          <div class="pslide-frame" data-si="2">
-            <div class="preview-screen groups-screen">
-              <div class="gs-hd">Mes Groupes<span class="gs-ct">4 actifs</span></div>
-              <div class="gs-list">
-                <div class="gs-card"><div class="gs-icon">⚽</div><div><div class="gs-name">Les Galactiques</div><div class="gs-meta">14 membres · 3 matchs</div></div><div class="gs-avs"><div class="gs-av" style="--c:linear-gradient(135deg,#6ee8a8,#3cca7e)"></div><div class="gs-av" style="--c:linear-gradient(135deg,#a3d8f4,#5a9fd4)"></div><div class="gs-av plus">+11</div></div></div>
-                <div class="gs-card"><div class="gs-icon">🏀</div><div><div class="gs-name">Basket Corp</div><div class="gs-meta">9 membres · 1 match</div></div><div class="gs-avs"><div class="gs-av" style="--c:linear-gradient(135deg,#c4a3f4,#9a70e0)"></div><div class="gs-av plus">+7</div></div></div>
-                <div class="gs-card"><div class="gs-icon">🏃</div><div><div class="gs-name">Running Team</div><div class="gs-meta">22 membres</div></div><div class="gs-avs"><div class="gs-av" style="--c:linear-gradient(135deg,#6ee8a8,#3cca7e)"></div><div class="gs-av plus">+20</div></div></div>
-              </div>
-            </div>
-            <button class="ps-upload-btn" data-si="2">↑ Remplacer</button>
-            <div class="ps-custom"></div>
-          </div>
-          <div class="pslide-info">
-            <div class="psi-num">03</div>
-            <div class="psi-label">Groupes</div>
-            <div class="psi-title">Communautés autonomes</div>
-            <p class="psi-desc">Chaque groupe organise ses propres événements, gère ses membres et ses dépenses.</p>
-          </div>
-        </div>
-
-        <!-- Slide 4 — Leaderboard -->
-        <div class="pslide">
-          <div class="pslide-frame" data-si="3">
-            <div class="preview-screen lb-screen">
-              <div class="lb-hd">🏆 Classement du mois</div>
-              <div class="lb-pod">
-                <div class="lpd lpd2"><div class="lpd-av" style="--c:linear-gradient(135deg,#a3d8f4,#5a9fd4)"></div><div class="lpd-medal">🥈</div><div class="lpd-name">Marc D.</div><div class="lpd-pts">1 090 pts</div></div>
-                <div class="lpd lpd1"><div class="lpd-crown">👑</div><div class="lpd-av" style="--c:linear-gradient(135deg,#6ee8a8,#3cca7e)"></div><div class="lpd-medal">🥇</div><div class="lpd-name">Sophie M.</div><div class="lpd-pts">1 240 pts</div></div>
-                <div class="lpd lpd3"><div class="lpd-av" style="--c:linear-gradient(135deg,#f4a3a3,#e05060)"></div><div class="lpd-medal">🥉</div><div class="lpd-name">Julie T.</div><div class="lpd-pts">980 pts</div></div>
-              </div>
-              <div class="lb-rest">
-                <div class="lb-row"><span class="lbr-rk">4</span><div class="lbr-av" style="--c:linear-gradient(135deg,#c4a3f4,#9a70e0)"></div><span>Thomas L.</span><span class="lbr-pts">870 pts</span></div>
-                <div class="lb-row"><span class="lbr-rk">5</span><div class="lbr-av" style="--c:linear-gradient(135deg,#f4c87a,#e0a840)"></div><span>Emma R.</span><span class="lbr-pts">760 pts</span></div>
-              </div>
-            </div>
-            <button class="ps-upload-btn" data-si="3">↑ Remplacer</button>
-            <div class="ps-custom"></div>
-          </div>
-          <div class="pslide-info">
-            <div class="psi-num">04</div>
-            <div class="psi-label">Leaderboard</div>
-            <div class="psi-title">Gamification du sport</div>
-            <p class="psi-desc">Challenges, badges, podiums mensuels — l'engagement devient naturel et compétitif.</p>
-          </div>
-        </div>
-
-        <!-- Slide 5 — Upload -->
-        <div class="pslide">
-          <div class="pslide-frame pf-uzone" id="pfUzone" data-si="4">
-            <div class="puz-in" id="puzIn">
-              <svg width="52" height="52" viewBox="0 0 24 24" fill="none" stroke="rgba(110,232,168,.4)" stroke-width="1.2"><rect x="3" y="3" width="18" height="18" rx="3"/><circle cx="8.5" cy="8.5" r="1.5"/><polyline points="21 15 16 10 5 21"/></svg>
-              <div class="puz-title">Votre screenshot</div>
-              <div class="puz-hint">Glissez-déposez ou cliquez</div>
-              <label class="puz-btn">Choisir une image<input type="file" accept="image/*" id="puzFile" style="display:none"></label>
-            </div>
-            <img class="puz-img" id="puzImg" alt="">
-            <label class="puz-chg" id="puzChg">↑ Changer<input type="file" accept="image/*" id="puzChgFile" style="display:none"></label>
-          </div>
-          <div class="pslide-info">
-            <div class="psi-num">05</div>
-            <div class="psi-label">Votre capture</div>
-            <div class="psi-title">Vos propres screenshots</div>
-            <p class="psi-desc">Ajoutez ici n'importe quel screenshot de votre interface réelle — résultats, dashboard client.</p>
-          </div>
-        </div>
-
       </div>
     </div>
   </div>
 </section>
 
-<!-- ═══════════ STATS ═══════════ -->
-<section class="stats-sect" id="impact">
-  <div class="container">
-    <div data-r="up"><span class="tag">Impact & ROI</span></div>
-    <h2 class="sh" data-r="up" data-d="80">Des résultats qui <em>parlent</em></h2>
-    <div class="stats-grid" data-r="up" data-d="160">
-      <div class="scard"><div class="scard-big"><span class="cscroll" data-v="30">0</span><span class="sfx">%</span></div><div class="scard-name">d'engagement en plus</div><div class="scard-detail">Mesuré après 4 semaines d'utilisation</div></div>
-      <div class="scard"><div class="scard-big"><span class="cscroll" data-v="142">0</span></div><div class="scard-name">matchs / mois</div><div class="scard-detail">Par une entreprise de 200 collaborateurs</div></div>
-      <div class="scard"><div class="scard-big"><span class="cscroll" data-v="1248">0</span></div><div class="scard-name">interactions créées</div><div class="scard-detail">Entre collègues qui ne se croisaient pas</div></div>
-      <div class="scard"><div class="scard-big"><span class="cscroll" data-v="94">0</span><span class="sfx">%</span></div><div class="scard-name">satisfaction</div><div class="scard-detail">Score NPS auprès des clients B2B actifs</div></div>
+<!-- TOURNOIS SIM -->
+<section class="tournoi-section" id="tournois">
+  <div class="inner">
+    <div class="tournoi-wrap">
+      <!-- Bracket UI -->
+      <div class="reveal-l">
+        <div class="bracket-ui">
+          <div class="bracket-header">
+            <div>
+              <div class="bracket-title">🏆 Tournoi Padel — Finale</div>
+              <div style="font-size:11px;color:var(--muted);margin-top:3px">Capgemini × BNP Paribas · Paris</div>
+            </div>
+            <div class="bracket-live"><div class="bracket-dot"></div>EN DIRECT</div>
+          </div>
+
+          <div class="bracket-grid">
+            <!-- Quarts -->
+            <div class="bracket-col">
+              <div class="bracket-match">
+                <div class="bracket-team win">
+                  <div class="bracket-team-av" style="background:#1E5EFF">CA</div>
+                  Capgemini A
+                  <div class="bracket-team-score">6</div>
+                </div>
+                <div class="bracket-team lost">
+                  <div class="bracket-team-av" style="background:#8B5CF6">BN</div>
+                  BNP Nord
+                  <div class="bracket-team-score">2</div>
+                </div>
+              </div>
+              <div class="bracket-match">
+                <div class="bracket-team win">
+                  <div class="bracket-team-av" style="background:#1DB87E">VE</div>
+                  Veolia Est
+                  <div class="bracket-team-score">7</div>
+                </div>
+                <div class="bracket-team lost">
+                  <div class="bracket-team-av" style="background:#FF6B35">DX</div>
+                  Decathlon X
+                  <div class="bracket-team-score">5</div>
+                </div>
+              </div>
+            </div>
+
+            <!-- Connecteur -->
+            <div class="bracket-connector">
+              <svg viewBox="0 0 40 140" fill="none" xmlns="http://www.w3.org/2000/svg">
+                <path d="M0 35 H20 V70 H20 V105 H0" stroke="rgba(15,46,34,.15)" stroke-width="1.5" fill="none"/>
+              </svg>
+            </div>
+
+            <!-- Demi -->
+            <div class="bracket-col bracket-final">
+              <div class="bracket-match" style="margin:auto 0">
+                <div class="bracket-team win">
+                  <div class="bracket-team-av" style="background:#1E5EFF">CA</div>
+                  Capgemini A
+                  <div class="bracket-team-score" id="score-a">4</div>
+                </div>
+                <div class="bracket-team">
+                  <div class="bracket-team-av" style="background:#1DB87E">VE</div>
+                  Veolia Est
+                  <div class="bracket-team-score" id="score-b">3</div>
+                </div>
+              </div>
+            </div>
+
+            <div class="bracket-connector">
+              <svg viewBox="0 0 40 140" fill="none" xmlns="http://www.w3.org/2000/svg">
+                <path d="M40 70 H20" stroke="rgba(127,227,191,.5)" stroke-width="1.5" fill="none" stroke-dasharray="4 3"/>
+              </svg>
+            </div>
+
+            <!-- Vainqueur -->
+            <div class="bracket-col" style="justify-content:center">
+              <div style="text-align:center">
+                <div style="font-size:28px;margin-bottom:8px">🏆</div>
+                <div style="font-family:var(--fd);font-size:13px;font-weight:800;color:var(--ink)">En cours…</div>
+                <div style="font-size:11px;color:var(--muted);margin-top:4px" id="match-timer">Set 2 · 04:32</div>
+              </div>
+            </div>
+          </div>
+
+          <!-- Score ticker -->
+          <div class="ticker-outer">
+            <div class="ticker-track">
+              <div class="ticker-item" style="margin-right:10px"><span class="sport-ico">🏸</span><strong>Padel</strong> · Capgemini 4–3 Veolia · Set 2</div>
+              <div class="ticker-item" style="margin-right:10px"><span class="sport-ico">⚽</span><strong>Foot 5v5</strong> · BNP 2–1 LVMH · Terminé</div>
+              <div class="ticker-item" style="margin-right:10px"><span class="sport-ico">🏀</span><strong>Basket 3v3</strong> · Decathlon 21–18 SG · Terminé</div>
+              <div class="ticker-item" style="margin-right:10px"><span class="sport-ico">🎾</span><strong>Tennis</strong> · Sarah M. 6–4 Thomas R.</div>
+              <div class="ticker-item" style="margin-right:10px"><span class="sport-ico">🏸</span><strong>Padel</strong> · Capgemini 4–3 Veolia · Set 2</div>
+              <div class="ticker-item" style="margin-right:10px"><span class="sport-ico">⚽</span><strong>Foot 5v5</strong> · BNP 2–1 LVMH · Terminé</div>
+              <div class="ticker-item" style="margin-right:10px"><span class="sport-ico">🏀</span><strong>Basket 3v3</strong> · Decathlon 21–18 SG · Terminé</div>
+              <div class="ticker-item" style="margin-right:10px"><span class="sport-ico">🎾</span><strong>Tennis</strong> · Sarah M. 6–4 Thomas R.</div>
+            </div>
+          </div>
+        </div>
+      </div>
+
+      <div class="reveal-r">
+        <div class="tag"><div class="td"></div>Tournois inter-entreprises</div>
+        <h2 class="section-h">Des compétitions qui <em>fédèrent vos équipes.</em></h2>
+        <p class="section-p">Brackets automatiques, résultats en temps réel, classements inter-entreprises. Organisez votre premier tournoi en quelques clics.</p>
+        <div style="margin-top:28px;display:flex;flex-direction:column;gap:12px">
+          <div style="display:flex;align-items:center;gap:10px;font-size:14px;color:var(--muted)"><span style="color:#1DB87E;font-size:18px">✓</span> Brackets générés automatiquement</div>
+          <div style="display:flex;align-items:center;gap:10px;font-size:14px;color:var(--muted)"><span style="color:#1DB87E;font-size:18px">✓</span> Scores saisis en temps réel</div>
+          <div style="display:flex;align-items:center;gap:10px;font-size:14px;color:var(--muted)"><span style="color:#1DB87E;font-size:18px">✓</span> Classements inter-entreprises</div>
+          <div style="display:flex;align-items:center;gap:10px;font-size:14px;color:var(--muted)"><span style="color:#1DB87E;font-size:18px">✓</span> Récapitulatif automatique envoyé</div>
+        </div>
+      </div>
     </div>
   </div>
 </section>
 
-<!-- ═══════════ TIMELINE ═══════════ -->
-<section class="sect tl-sect">
-  <div class="container">
-    <div data-r="up"><span class="tag">Comment ça marche</span></div>
-    <h2 class="sh" data-r="up" data-d="80">De l'idée à la <em>communauté</em></h2>
-    <div class="tl-wrap" data-r="up" data-d="160">
-      <div class="tl-step"><div class="tls-d">01</div><div class="tls-body"><span class="tls-icon">💡</span><h4>Thomas a une idée</h4><p>Il crée un match de football en 30 secondes depuis son téléphone.</p></div></div>
-      <div class="tl-step"><div class="tls-d">02</div><div class="tls-body"><span class="tls-icon">📨</span><h4>8 collègues rejoignent</h4><p>Notifiés instantanément, ils s'inscrivent en 2 clics depuis tous les départements.</p></div></div>
-      <div class="tl-step"><div class="tls-d">03</div><div class="tls-body"><span class="tls-icon">⚽</span><h4>Le match a lieu</h4><p>Rappels envoyés, frais partagés, résultats enregistrés automatiquement.</p></div></div>
-      <div class="tl-step"><div class="tls-d">04</div><div class="tls-body"><span class="tls-icon">👥</span><h4>Une communauté naît</h4><p>"Foot du jeudi" — 22 membres rejoignent en 3 semaines.</p></div></div>
-      <div class="tl-step"><div class="tls-d last">✓</div><div class="tls-body final"><span class="tls-icon">🚀</span><h4>L'engagement explose</h4><p>La DRH voit les KPIs grimper. Hub2gether mesure chaque impact en temps réel.</p></div></div>
+<!-- PAIEMENTS SIM -->
+<section class="pay-section" id="paiements">
+  <div class="inner">
+    <div class="pay-wrap">
+      <div class="reveal-l">
+        <div class="tag" style="background:rgba(29,184,126,.1);color:#0a7a3e"><div class="td" style="background:#1DB87E"></div>Paiements simplifiés</div>
+        <h2 class="section-h">Fini les virements manuels. Chaque joueur paie <em>automatiquement.</em></h2>
+        <p class="section-p">Plus de relances, plus d'avances. Chaque joueur paie sa quote-part directement depuis l'app. Zéro friction, zéro dette.</p>
+        <div style="margin-top:28px;display:flex;flex-direction:column;gap:12px">
+          <div style="display:flex;align-items:center;gap:10px;font-size:14px;color:var(--muted)"><span style="color:#1DB87E;font-size:18px">✓</span> Répartition automatique par joueur</div>
+          <div style="display:flex;align-items:center;gap:10px;font-size:14px;color:var(--muted)"><span style="color:#1DB87E;font-size:18px">✓</span> Rappels de paiement automatiques</div>
+          <div style="display:flex;align-items:center;gap:10px;font-size:14px;color:var(--muted)"><span style="color:#1DB87E;font-size:18px">✓</span> Remboursements en 1 clic</div>
+        </div>
+      </div>
+
+      <!-- Pay UI -->
+      <div class="reveal-r">
+        <div class="pay-ui">
+          <div class="pay-header">
+            <div>
+              <div class="pay-header-title">Match Padel · 1er avril</div>
+              <div class="pay-header-sub">UrbanPadel Paris 12e · 4 joueurs</div>
+            </div>
+            <div class="pay-total-badge">60.00€</div>
+          </div>
+          <div class="pay-players" id="pay-players">
+            <div class="pay-row">
+              <div class="pay-av" style="background:#1DB87E">DK</div>
+              <div class="pay-name">David King <span style="font-size:11px;color:var(--muted)">(organisateur)</span></div>
+              <div class="pay-amt">15.00€</div>
+              <span class="pay-status s-paid">PAYÉ ✓</span>
+            </div>
+            <div class="pay-row" id="pay-marc">
+              <div class="pay-av" style="background:#1E5EFF">MS</div>
+              <div class="pay-name">Marc S.</div>
+              <div class="pay-amt">15.00€</div>
+              <span class="pay-status s-wait" id="marc-status">EN ATTENTE</span>
+            </div>
+            <div class="pay-row" id="pay-julia">
+              <div class="pay-av" style="background:#8B5CF6">JL</div>
+              <div class="pay-name">Julia L.</div>
+              <div class="pay-amt">15.00€</div>
+              <span class="pay-status s-wait" id="julia-status">EN ATTENTE</span>
+            </div>
+            <div class="pay-row" style="background:rgba(127,227,191,.08);border-color:rgba(127,227,191,.3)">
+              <div class="pay-av" style="background:#1DB87E">Moi</div>
+              <div class="pay-name">Vous</div>
+              <div class="pay-amt">15.00€</div>
+              <span class="pay-status s-you">REMBOURSER</span>
+            </div>
+          </div>
+          <div class="pay-progress">
+            <div class="pay-prog-label">
+              <span>Collecté</span>
+              <span id="pay-pct">25% · 15€ / 60€</span>
+            </div>
+            <div class="pay-bar"><div class="pay-bar-fill" id="pay-fill" style="width:25%"></div></div>
+          </div>
+          <button class="pay-cta" id="pay-remind-btn">
+            📩 Envoyer un rappel · <span class="amount" id="pay-remain">45€ restants</span>
+          </button>
+        </div>
+      </div>
     </div>
   </div>
 </section>
 
-<!-- ═══════════ TESTIMONIALS ═══════════ -->
-<section class="sect testi-sect">
-  <div class="container">
-    <div data-r="up"><span class="tag">Témoignages</span></div>
-    <h2 class="sh" data-r="up" data-d="80">Ce qu'ils en <em>disent</em></h2>
-    <div class="testi-grid">
-      <div class="tcard" data-r="left" data-d="0">
-        <div class="tc-stars">★★★★★</div>
-        <p class="tc-q">"En 3 mois, 40+ matchs, 6 groupes créés. L'ambiance dans l'entreprise a radicalement changé."</p>
-        <div class="tc-auth"><div class="tc-av" style="--c:linear-gradient(135deg,#6ee8a8,#3cca7e)"></div><div><span class="tc-name">Sarah C.</span><span class="tc-role">DRH · TechCorp</span></div></div>
+<!-- CLASSEMENT SIM -->
+<section class="rank-section" id="classement">
+  <div class="inner">
+    <div class="rank-wrap">
+      <!-- Rank UI -->
+      <div class="reveal-l">
+        <div class="rank-ui">
+          <div class="rank-tabs-bar">
+            <button class="rank-tab on" data-tab="joueurs">Joueurs</button>
+            <button class="rank-tab" data-tab="entreprises">Entreprises</button>
+            <button class="rank-tab" data-tab="sports">Sports</button>
+          </div>
+          <div class="rank-body">
+            <!-- My rank -->
+            <div class="rank-my">
+              <div class="rank-my-num">#2</div>
+              <div class="rank-my-av">SM</div>
+              <div class="rank-my-info">
+                <div class="rank-my-name">Sarah Miller</div>
+                <div class="rank-my-co">Hub2gether · 42 matchs</div>
+              </div>
+              <div class="rank-my-pts">2 315 pts</div>
+            </div>
+            <!-- List -->
+            <div class="rank-list" id="rank-list">
+              <div class="rank-item">
+                <div class="rank-item-num rank-gold">01</div>
+                <div class="rank-av" style="background:#1E5EFF">TR</div>
+                <div class="rank-info">
+                  <div class="rank-name">Thomas R.</div>
+                  <div class="rank-co">Google · 156 matchs</div>
+                </div>
+                <div class="rank-pts">2 480<span class="rank-trend" style="color:#1DB87E">▲3</span></div>
+              </div>
+              <div class="rank-item">
+                <div class="rank-item-num rank-bronze">03</div>
+                <div class="rank-av" style="background:#FF6B35">LV</div>
+                <div class="rank-info">
+                  <div class="rank-name">Léa V.</div>
+                  <div class="rank-co">LVMH · 89 matchs</div>
+                </div>
+                <div class="rank-pts">1 980<span class="rank-trend" style="color:#FF6B35">▼1</span></div>
+              </div>
+              <div class="rank-item">
+                <div class="rank-item-num">04</div>
+                <div class="rank-av" style="background:#8B5CF6">JD</div>
+                <div class="rank-info">
+                  <div class="rank-name">Jean D.</div>
+                  <div class="rank-co">BNP Paribas · 72 matchs</div>
+                </div>
+                <div class="rank-pts">1 760<span class="rank-trend" style="color:#1DB87E">▲2</span></div>
+              </div>
+              <div class="rank-item">
+                <div class="rank-item-num">05</div>
+                <div class="rank-av" style="background:#F5C842">KL</div>
+                <div class="rank-info">
+                  <div class="rank-name">Kim L.</div>
+                  <div class="rank-co">Capgemini · 68 matchs</div>
+                </div>
+                <div class="rank-pts">1 640<span class="rank-trend" style="color:#1DB87E">▲5</span></div>
+              </div>
+            </div>
+          </div>
+        </div>
       </div>
-      <div class="tcard feat" data-r="up" data-d="100">
-        <div class="tc-stars">★★★★★</div>
-        <p class="tc-q">"Hub2gether a résolu en 1 semaine ce qu'on n'arrivait pas à faire en 2 ans : créer du vrai lien entre terrain et bureau."</p>
-        <div class="tc-auth"><div class="tc-av" style="--c:linear-gradient(135deg,#a3d8f4,#5a9fd4)"></div><div><span class="tc-name">Pierre M.</span><span class="tc-role">CEO · StartupXL</span></div></div>
-      </div>
-      <div class="tcard" data-r="right" data-d="200">
-        <div class="tc-stars">★★★★★</div>
-        <p class="tc-q">"Le dashboard RH est une révélation. Pour la première fois, on montre l'impact bien-être en chiffres concrets."</p>
-        <div class="tc-auth"><div class="tc-av" style="--c:linear-gradient(135deg,#f4c87a,#e0a840)"></div><div><span class="tc-name">Laura B.</span><span class="tc-role">People Manager · FinGroup</span></div></div>
+
+      <div class="reveal-r">
+        <div class="tag"><div class="td"></div>Profil & Classement</div>
+        <h2 class="section-h">Votre profil sportif, vos stats, <em>votre progression.</em></h2>
+        <p class="section-p">Classements individuels et inter-entreprises par sport. Une motivation saine qui donne envie de revenir.</p>
+        <div style="margin-top:28px;display:flex;flex-direction:column;gap:12px">
+          <div style="display:flex;align-items:center;gap:10px;font-size:14px;color:var(--muted)"><span style="color:#1DB87E;font-size:18px">✓</span> Classements joueurs et entreprises</div>
+          <div style="display:flex;align-items:center;gap:10px;font-size:14px;color:var(--muted)"><span style="color:#1DB87E;font-size:18px">✓</span> Historique et courbes de progression</div>
+          <div style="display:flex;align-items:center;gap:10px;font-size:14px;color:var(--muted)"><span style="color:#1DB87E;font-size:18px">✓</span> Badges et récompenses de saison</div>
+        </div>
       </div>
     </div>
   </div>
 </section>
 
-<!-- ═══════════ CTA ═══════════ -->
-<section class="cta-sect" id="cta">
-  <canvas id="ctaCanvas"></canvas>
-  <div class="cta-in">
-    <div class="cta-badge" data-r="up">🚀 Onboarding en 48h · Sans engagement</div>
-    <h2 class="cta-h" data-r="up" data-d="80">Prêt à<br>activer le <em>sport</em><br>en entreprise ?</h2>
-    <p class="cta-p" data-r="up" data-d="160">Rejoignez +200 entreprises qui transforment leur culture avec Hub2gether.</p>
-    <div class="cta-btns" data-r="up" data-d="240">
-      <a href="#" class="cta-primary">Demander une démo <svg width="16" height="16" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.5"><path d="M7 17L17 7M7 7h10v10"/></svg></a>
-      <a href="#" class="cta-ghost">Voir la démo vidéo</a>
-    </div>
-    <div class="cta-trust" data-r="up" data-d="320">
-      <span>✓ RGPD compliant</span><span>✓ Hébergé en France</span><span>✓ Support dédié</span>
+<!-- TARIFS -->
+<section class="pricing-section" id="tarifs">
+  <div class="inner">
+    <div class="tag"><div class="td"></div>Tarifs</div>
+    <h2 class="section-h" style="color:white">Un prix qui s'adapte à la taille de votre <em>entreprise.</em></h2>
+    <p class="section-p" style="color:rgba(255,255,255,.5)">Démarrez gratuitement et montez en puissance avec vos équipes.</p>
+
+    <div class="pricing-grid stagger reveal">
+      <div class="price-card">
+        <div class="price-badge">PME</div>
+        <div class="price-name">Starter</div>
+        <div class="price-val">99€ <span>/ mois</span></div>
+        <div class="price-mo">Jusqu'à 80 joueurs</div>
+        <hr class="price-sep">
+        <div class="price-feat">Matchmaking & événements</div>
+        <div class="price-feat">Paiements intégrés</div>
+        <div class="price-feat">Classement interne</div>
+        <button class="price-btn">Commencer →</button>
+      </div>
+      <div class="price-card pop">
+        <div class="price-badge">⭐ Populaire · Scale-up</div>
+        <div class="price-name">Growth</div>
+        <div class="price-val">249€ <span>/ mois</span></div>
+        <div class="price-mo">Jusqu'à 300 joueurs</div>
+        <hr class="price-sep">
+        <div class="price-feat">Tout Starter</div>
+        <div class="price-feat">Classements & ligues inter-entreprises</div>
+        <div class="price-feat">Dashboard RH avancé</div>
+        <div class="price-feat">Tournois multi-équipes</div>
+        <button class="price-btn">Choisir Growth →</button>
+      </div>
+      <div class="price-card">
+        <div class="price-badge">ETI</div>
+        <div class="price-name">Business</div>
+        <div class="price-val">499€ <span>/ mois</span></div>
+        <div class="price-mo">Jusqu'à 1 000 joueurs</div>
+        <hr class="price-sep">
+        <div class="price-feat">Tout Growth</div>
+        <div class="price-feat">Multi-sites & filiales</div>
+        <div class="price-feat">Support dédié</div>
+        <div class="price-feat">Rapport mensuel RH</div>
+        <button class="price-btn">Choisir Business →</button>
+      </div>
+      <div class="price-card">
+        <div class="price-badge">Grand compte</div>
+        <div class="price-name">Enterprise</div>
+        <div class="price-val" style="font-size:28px;margin-top:8px">Sur devis</div>
+        <div class="price-mo">Joueurs illimités</div>
+        <hr class="price-sep">
+        <div class="price-feat">Tout Business</div>
+        <div class="price-feat">API & SSO</div>
+        <div class="price-feat">Success manager dédié</div>
+        <div class="price-feat">SLA garanti</div>
+        <button class="price-btn">Nous contacter →</button>
+      </div>
     </div>
   </div>
 </section>
+
+<!-- COMMENT CA MARCHE -->
+<section class="how-section" id="how">
+  <div class="inner" style="text-align:center">
+    <div class="tag" style="margin:0 auto 18px"><div class="td"></div>Comment ça marche</div>
+    <h2 class="section-h" style="margin:0 auto">Opérationnel en <em>moins d'une heure.</em></h2>
+    <p class="section-p" style="margin:18px auto 0">Pas d'intégration complexe. Vos collaborateurs créent leur compte et commencent à jouer.</p>
+    <div class="steps-row stagger reveal">
+      <div class="step">
+        <div class="step-n">1</div>
+        <div class="step-name">L'entreprise s'inscrit</div>
+        <div class="step-desc">Créez votre espace entreprise en 5 minutes.</div>
+      </div>
+      <div class="step">
+        <div class="step-n">2</div>
+        <div class="step-name">Les collaborateurs rejoignent</div>
+        <div class="step-desc">Un lien d'invitation suffit pour embarquer vos équipes.</div>
+      </div>
+      <div class="step">
+        <div class="step-n">3</div>
+        <div class="step-name">Jouez & compétissez</div>
+        <div class="step-desc">Matchs, tournois et défis inter-entreprises.</div>
+      </div>
+      <div class="step">
+        <div class="step-n">4</div>
+        <div class="step-name">Suivez les résultats</div>
+        <div class="step-desc">Dashboard RH avec KPIs d'engagement en temps réel.</div>
+      </div>
+    </div>
+  </div>
+</section>
+
+<!-- CTA FINAL -->
+<div class="cta-final">
+  <p style="font-size:12px;color:rgba(255,255,255,.28);text-transform:uppercase;letter-spacing:.15em;margin-bottom:22px;position:relative;z-index:1">Prêt à lancer le sport dans votre entreprise ?</p>
+  <h2 class="cta-h">Rejoignez les entreprises qui <em>gagnent</em> sur tous les terrains.</h2>
+  <p class="cta-sub">Démo gratuite, onboarding accompagné, premier tournoi organisé avec vous.</p>
+  <div class="cta-btns">
+    <button class="btn-cta-w">Demander une démo →</button>
+    <button class="btn-cta-ghost" onclick="scrollTo({top:document.getElementById('tarifs').offsetTop-70,behavior:'smooth'})">Voir les tarifs</button>
+  </div>
+</div>
 
 <!-- FOOTER -->
 <footer>
-  <div class="foot-top">
-    <div>
-      <div class="foot-brand-name">⚡ Hub2gether</div>
-      <div class="foot-brand-desc">Le sport au cœur de l'entreprise. Cohésion, engagement, bien-être.</div>
+  <div class="footer-inner">
+    <div class="footer-logo">Hub2gether</div>
+    <div class="footer-links">
+      <a href="#">Produit</a>
+      <a href="#tarifs">Tarifs</a>
+      <a href="#">Blog</a>
+      <a href="#">Contact</a>
     </div>
-    <div class="foot-links">
-      <div class="foot-col"><div class="foot-col-title">Produit</div><a href="#">Fonctionnalités</a><a href="#">Tarifs</a><a href="#">Sécurité</a><a href="#">API</a></div>
-      <div class="foot-col"><div class="foot-col-title">Entreprise</div><a href="#">À propos</a><a href="#">Blog</a><a href="#">Carrières</a><a href="#">Contact</a></div>
-      <div class="foot-col"><div class="foot-col-title">Ressources</div><a href="#">Guide RH</a><a href="#">Cas clients</a><a href="#">Webinars</a></div>
-    </div>
-  </div>
-  <div class="foot-bottom">
-    <span>© 2025 Hub2gether. Tous droits réservés.</span>
-    <div><a href="#">Confidentialité</a><a href="#">CGU</a><a href="#">Cookies</a></div>
+    <div class="footer-copy">© 2026 Hub2gether. Tous droits réservés.</div>
   </div>
 </footer>
 
+<!-- TOAST NOTIFICATION -->
+<div class="toast" id="toast">
+  <div class="toast-ico">✅</div>
+  <div class="toast-text">
+    <strong id="toast-title">Marc S. a payé !</strong>
+    <span id="toast-sub">15.00€ reçus · Automatique</span>
+  </div>
+</div>
+
 <script>
-/* ═══ LOADER ═══ */
-const loader=document.getElementById('loader'),ldFill=document.getElementById('ldFill');
-let p=0;const li=setInterval(()=>{p+=Math.random()*16+5;if(p>=100){p=100;clearInterval(li)}ldFill.style.width=p+'%'},90);
-window.addEventListener('load',()=>setTimeout(()=>loader.classList.add('done'),500));
+// ─── NAV scroll ────────────────────────────────
+window.addEventListener('scroll', () => {
+  document.getElementById('nav').classList.toggle('scrolled', window.scrollY > 20);
+}, { passive: true });
 
-/* ═══ CURSOR ═══ */
-const cur=document.getElementById('cur'),cur2=document.getElementById('cur2');
-let mx=window.innerWidth/2,my=window.innerHeight/2,cx=mx,cy=my;
-document.addEventListener('mousemove',e=>{mx=e.clientX;my=e.clientY;cur.style.left=mx+'px';cur.style.top=my+'px'});
-(function tick(){cx+=(mx-cx)*.1;cy+=(my-cy)*.1;cur2.style.left=cx+'px';cur2.style.top=cy+'px';requestAnimationFrame(tick)})();
-document.querySelectorAll('a,button,.bc,.pcard,.tcard,.scard').forEach(el=>{
-  el.addEventListener('mouseenter',()=>document.body.classList.add('hovering'));
-  el.addEventListener('mouseleave',()=>document.body.classList.remove('hovering'));
-});
+// ─── INTERSECTION OBSERVER ─────────────────────
+const io = new IntersectionObserver((entries) => {
+  entries.forEach(e => { if (e.isIntersecting) e.target.classList.add('visible'); });
+}, { threshold: 0.1 });
+document.querySelectorAll('.reveal,.reveal-l,.reveal-r,.reveal-z,.stagger').forEach(el => io.observe(el));
 
-/* ═══ NAV ═══ */
-const nav=document.getElementById('nav');
-window.addEventListener('scroll',()=>nav.classList.toggle('solid',scrollY>40),{passive:true});
-const nb=document.getElementById('nb'),nm=document.getElementById('nm');
-nb.addEventListener('click',()=>nm.classList.toggle('open'));
-nm.querySelectorAll('a').forEach(a=>a.addEventListener('click',()=>nm.classList.remove('open')));
+// ─── COUNTERS ──────────────────────────────────
+const counterIO = new IntersectionObserver((entries) => {
+  entries.forEach(entry => {
+    const el = entry.target;
+    if (!entry.isIntersecting || el.dataset.done === '1') return;
+    const target = +el.dataset.target;
+    const prefix = el.dataset.prefix || '';
+    const suffix = el.dataset.suffix || '';
+    const dur = 1400;
+    const start = performance.now();
+    const tick = (now) => {
+      const p = Math.min((now - start) / dur, 1);
+      const e = 1 - Math.pow(1 - p, 3);
+      el.textContent = `${prefix}${Math.round(target * e).toLocaleString('fr-FR')}${suffix}`;
+      if (p < 1) requestAnimationFrame(tick);
+    };
+    requestAnimationFrame(tick);
+    el.dataset.done = '1';
+  });
+}, { threshold: 0.4 });
+document.querySelectorAll('.counter').forEach(el => { el.dataset.done = '0'; counterIO.observe(el); });
 
-/* ═══ SMOOTH SCROLL ═══ */
-document.querySelectorAll('a[href^="#"]').forEach(a=>a.addEventListener('click',e=>{
-  const t=document.querySelector(a.getAttribute('href'));if(!t)return;e.preventDefault();
-  window.scrollTo({top:t.getBoundingClientRect().top+scrollY-80,behavior:'smooth'});
-}));
+// ─── KPI LIVE TICKER (dashboard) ──────────────
+setInterval(() => {
+  const el = document.getElementById('kpi-players');
+  if (el) {
+    const v = parseInt(el.textContent.replace(/\s/g, ''));
+    el.textContent = (v + Math.floor(Math.random() * 2)).toLocaleString('fr-FR');
+  }
+}, 4000);
 
-/* ═══ REVEAL ═══ */
-const robs=new IntersectionObserver(entries=>entries.forEach(e=>{
-  if(!e.isIntersecting)return;
-  const delay=parseInt(e.target.dataset.d||0);
-  setTimeout(()=>e.target.classList.add('vis'),delay);
-  robs.unobserve(e.target);
-}),{threshold:0.1,rootMargin:'0px 0px -40px 0px'});
-document.querySelectorAll('[data-r]').forEach(el=>robs.observe(el));
-
-/* ═══ BENTO RADIAL HOVER ═══ */
-document.querySelectorAll('.bc').forEach(card=>{
-  card.addEventListener('mousemove',e=>{
-    const r=card.getBoundingClientRect();
-    card.style.setProperty('--mx',((e.clientX-r.left)/r.width*100)+'%');
-    card.style.setProperty('--my',((e.clientY-r.top)/r.height*100)+'%');
+// ─── MATCH CARDS INTERACTION ───────────────────
+document.querySelectorAll('.match-c').forEach(card => {
+  card.addEventListener('click', () => {
+    document.querySelectorAll('.match-c').forEach(c => c.classList.remove('sel'));
+    card.classList.add('sel');
   });
 });
 
-/* ═══ PHONE CAROUSEL ═══ */
-const scrs=document.querySelectorAll('.app-scr'),dots=document.querySelectorAll('.pdot');
-let ci=0,pt;
-function goPhone(n){
-  scrs[ci].classList.remove('on');scrs[ci].classList.add('off');
-  setTimeout(()=>scrs[ci].classList.remove('off'),600);
-  dots[ci].classList.remove('on');
-  ci=n;scrs[ci].classList.add('on');dots[ci].classList.add('on');
-}
-dots.forEach(d=>d.addEventListener('click',()=>{clearInterval(pt);goPhone(+d.dataset.di);pt=setInterval(()=>goPhone((ci+1)%scrs.length),3400)}));
-pt=setInterval(()=>goPhone((ci+1)%scrs.length),3400);
+document.querySelectorAll('.sport-chip').forEach(chip => {
+  chip.addEventListener('click', () => {
+    document.querySelectorAll('.sport-chip').forEach(c => c.classList.remove('on'));
+    chip.classList.add('on');
+    const sports = {
+      padel: [
+        { av: 'JD', color: '#1E5EFF', name: 'Padel Doubles', detail: 'Jérôme D. · Niveau 4 · Aujourd\'hui 18h30', price: '€12.50', spots: '1 place libre' },
+        { av: 'KL', color: '#8B5CF6', name: 'Padel Mixte', detail: 'Kim L. · Débutant · Jeudi 19h', price: '€10.00', spots: '2 places libres' },
+        { av: 'MS', color: '#FF6B35', name: 'Padel Avancé', detail: 'Marc S. · Niveau 5 · Vendredi 8h', price: '€15.00', spots: '1 place libre' }
+      ],
+      tennis: [
+        { av: 'AT', color: '#1DB87E', name: 'Tennis Simple', detail: 'Alex T. · Avancé · Vendredi 8h', price: '€8.00', spots: '1 place libre' },
+        { av: 'LV', color: '#FF6B35', name: 'Double Mixte', detail: 'Léa V. · Intermédiaire · Samedi 10h', price: '€6.00', spots: '2 places libres' }
+      ],
+      basket: [
+        { av: 'SM', color: '#1E5EFF', name: 'Basket 3v3', detail: 'Sam M. · Amateur · Demain 12h', price: 'Gratuit', spots: '2 places libres' },
+        { av: 'JD', color: '#8B5CF6', name: 'Basket 5v5', detail: 'Jordan D. · Intermédiaire · Jeudi', price: '€5.00', spots: '3 places libres' }
+      ],
+      foot: [
+        { av: 'RB', color: '#1DB87E', name: 'Foot 5v5', detail: 'Rayan B. · Amateur · Mercredi 20h', price: '€7.00', spots: '1 place libre' },
+        { av: 'KM', color: '#FF6B35', name: 'Futsal', detail: 'Karim M. · Intermédiaire · Vendredi', price: '€6.00', spots: '2 places libres' }
+      ]
+    };
+    const data = sports[chip.dataset.sport] || sports.padel;
+    const container = document.getElementById('match-cards');
+    container.innerHTML = data.map((d, i) => `
+      <div class="match-c${i===0?' sel':''}" style="animation:slideIn .3s ease both;animation-delay:${i*60}ms">
+        <div class="match-c-av" style="background:${d.color}">${d.av}</div>
+        <div class="match-c-info">
+          <div class="match-c-name">${d.name}</div>
+          <div class="match-c-detail">${d.detail}</div>
+        </div>
+        <div class="match-c-right">
+          <div class="match-c-price">${d.price}</div>
+          <div class="match-c-spots">${d.spots}</div>
+        </div>
+      </div>
+    `).join('');
+    container.querySelectorAll('.match-c').forEach(c => {
+      c.addEventListener('click', () => {
+        container.querySelectorAll('.match-c').forEach(x => x.classList.remove('sel'));
+        c.classList.add('sel');
+      });
+    });
+  });
+});
 
-/* ═══ COUNTER ═══ */
-function runCtr(el,target,dur=1800){
-  const s=performance.now();
-  (function tick(now){
-    const prog=Math.min((now-s)/dur,1),ease=1-Math.pow(1-prog,3);
-    el.textContent=Math.floor(ease*target).toLocaleString('fr-FR');
-    prog<1?requestAnimationFrame(tick):el.textContent=target.toLocaleString('fr-FR');
-  })(s);
-}
-const cobs=new IntersectionObserver(entries=>entries.forEach(e=>{
-  if(!e.isIntersecting)return;
-  runCtr(e.target,+e.target.dataset.t||+e.target.dataset.v||0);
-  cobs.unobserve(e.target);
-}),{threshold:.5});
-document.querySelectorAll('.counter,.ctr,.cscroll').forEach(el=>cobs.observe(el));
+// ─── JOIN BTN ANIMATION ────────────────────────
+document.getElementById('join-btn').addEventListener('click', () => {
+  const anim = document.getElementById('join-anim');
+  anim.classList.add('show');
+  showToast('🎾 Match rejoint !', 'Paiement sécurisé · Rappel envoyé');
+  setTimeout(() => anim.classList.remove('show'), 2800);
+});
 
-/* ═══ STICKY PREVIEW SCROLL ═══ */
-(function(){
-  const outer=document.querySelector('.prev-outer');
-  const track=document.getElementById('prevTrack');
-  const prog=document.getElementById('prevProgF');
-  const navBtns=document.querySelectorAll('.pni');
-  const slides=document.querySelectorAll('.pslide');
-  const N=slides.length;
-  if(!outer||!N)return;
-  let last=-1;
-  function upd(){
-    if(window.innerWidth<=1100)return;
-    const rect=outer.getBoundingClientRect();
-    const scrollable=outer.offsetHeight-window.innerHeight;
-    const p=Math.max(0,Math.min(1,-rect.top/scrollable));
-    // horizontal translate
-    const sw=track.querySelector('.pslide')?.offsetWidth||0;
-    const gap=40;
-    track.style.transform=`translateX(-${p*(N-1)*(sw+gap)}px)`;
-    prog.style.width=(p*100)+'%';
-    const idx=Math.min(Math.round(p*(N-1)),N-1);
-    if(idx!==last){
-      last=idx;
-      slides.forEach((s,i)=>s.classList.toggle('active',i===idx));
-      navBtns.forEach((b,i)=>b.classList.toggle('on',i===idx));
+// ─── SCORE LIVE TICKER ─────────────────────────
+let scoreA = 4, scoreB = 3;
+let timerSecs = 272;
+setInterval(() => {
+  timerSecs++;
+  const m = Math.floor(timerSecs / 60);
+  const s = String(timerSecs % 60).padStart(2, '0');
+  const timerEl = document.getElementById('match-timer');
+  if (timerEl) timerEl.textContent = `Set 2 · ${String(m).padStart(2,'0')}:${s}`;
+}, 1000);
+setInterval(() => {
+  if (Math.random() > 0.6) {
+    if (Math.random() > 0.45) scoreA++;
+    else scoreB++;
+    const elA = document.getElementById('score-a');
+    const elB = document.getElementById('score-b');
+    if (elA) elA.textContent = scoreA;
+    if (elB) elB.textContent = scoreB;
+  }
+}, 3500);
+
+// ─── PAYMENTS SIMULATION ───────────────────────
+let paid = 1;
+const payStates = ['marc', 'julia'];
+let payIdx = 0;
+
+document.getElementById('pay-remind-btn').addEventListener('click', () => {
+  if (payIdx >= payStates.length) return;
+  const who = payStates[payIdx];
+  const statusEl = document.getElementById(`${who}-status`);
+  if (statusEl) {
+    statusEl.textContent = 'PAYÉ ✓';
+    statusEl.className = 'pay-status s-paid';
+    paid++;
+    const pct = Math.round((paid / 4) * 100);
+    const fill = document.getElementById('pay-fill');
+    const pctEl = document.getElementById('pay-pct');
+    const remainEl = document.getElementById('pay-remain');
+    if (fill) fill.style.width = pct + '%';
+    if (pctEl) pctEl.textContent = `${pct}% · ${paid * 15}€ / 60€`;
+    const remain = (4 - paid) * 15;
+    if (remainEl) remainEl.textContent = remain > 0 ? `${remain}€ restants` : 'Tout réglé 🎉';
+    const names = { marc: 'Marc S.', julia: 'Julia L.' };
+    showToast(`💰 ${names[who]} a payé !`, '15.00€ reçus · Automatique');
+    payIdx++;
+    if (payIdx >= payStates.length) {
+      const btn = document.getElementById('pay-remind-btn');
+      if (btn) { btn.textContent = '🎉 Tous les paiements reçus !'; btn.style.background = '#1DB87E'; }
     }
   }
-  slides[0]?.classList.add('active');navBtns[0]?.classList.add('on');
-  window.addEventListener('scroll',upd,{passive:true});upd();
-  navBtns.forEach((btn,i)=>btn.addEventListener('click',()=>{
-    if(window.innerWidth<=1100)return;
-    const top=outer.getBoundingClientRect().top+scrollY;
-    const scrollable=outer.offsetHeight-window.innerHeight;
-    window.scrollTo({top:top+(i/(N-1))*scrollable,behavior:'smooth'});
-  }));
-})();
-
-/* ═══ UPLOAD — slide frames ═══ */
-document.querySelectorAll('.ps-upload-btn').forEach(btn=>{
-  btn.addEventListener('click',e=>{
-    e.stopPropagation();
-    const frame=btn.closest('.pslide-frame');
-    const inp=document.createElement('input');inp.type='file';inp.accept='image/*';
-    inp.onchange=ev=>{
-      const f=ev.target.files[0];if(!f)return;
-      const rd=new FileReader();
-      rd.onload=ev2=>{
-        const wrap=frame.querySelector('.ps-custom');
-        wrap.innerHTML=`<img src="${ev2.target.result}" alt="" style="width:100%;height:100%;object-fit:cover;border-radius:20px;position:absolute;inset:0">`;
-        wrap.classList.add('show');
-        frame.querySelector('.preview-screen').style.visibility='hidden';
-        btn.textContent='↑ Changer';
-      };rd.readAsDataURL(f);
-    };inp.click();
-  });
 });
 
-/* ═══ UPLOAD — zone slide 5 ═══ */
-(function(){
-  const zone=document.getElementById('pfUzone');
-  const inner=document.getElementById('puzIn');
-  const img=document.getElementById('puzImg');
-  const chg=document.getElementById('puzChg');
-  const fi=document.getElementById('puzFile');
-  const fc=document.getElementById('puzChgFile');
-  if(!zone)return;
-  function apply(file){
-    if(!file||!file.type.startsWith('image/'))return;
-    const rd=new FileReader();
-    rd.onload=e=>{
-      img.src=e.target.result;img.style.display='block';
-      inner.style.display='none';chg.style.display='flex';
-      zone.style.border='none';
-    };rd.readAsDataURL(file);
+// Auto demo payment after 6s
+setTimeout(() => {
+  if (payIdx === 0 && paid === 1) {
+    const marcStatus = document.getElementById('marc-status');
+    if (marcStatus) {
+      marcStatus.textContent = 'PAYÉ ✓';
+      marcStatus.className = 'pay-status s-paid';
+      paid++;
+      const pct = Math.round((paid / 4) * 100);
+      const fill = document.getElementById('pay-fill');
+      const pctEl = document.getElementById('pay-pct');
+      const remainEl = document.getElementById('pay-remain');
+      if (fill) fill.style.width = pct + '%';
+      if (pctEl) pctEl.textContent = `${pct}% · ${paid * 15}€ / 60€`;
+      if (remainEl) remainEl.textContent = `${(4-paid)*15}€ restants`;
+      payIdx++;
+      showToast('💰 Marc S. a payé !', '15.00€ reçus · Automatique');
+    }
   }
-  fi.addEventListener('change',e=>apply(e.target.files[0]));
-  fc.addEventListener('change',e=>apply(e.target.files[0]));
-  zone.addEventListener('dragover',e=>{e.preventDefault();zone.classList.add('dg')});
-  zone.addEventListener('dragleave',()=>zone.classList.remove('dg'));
-  zone.addEventListener('drop',e=>{e.preventDefault();zone.classList.remove('dg');apply(e.dataTransfer.files[0])});
-  zone.addEventListener('click',e=>{if(img.style.display!=='none'||chg.contains(e.target))return;fi.click()});
-})();
+}, 6000);
 
-/* ═══ LEADERBOARD BARS ═══ */
-const bobs=new IntersectionObserver(entries=>entries.forEach(e=>{
-  if(!e.isIntersecting)return;
-  e.target.querySelectorAll('.blv-fill').forEach(b=>{b.style.width=getComputedStyle(b).getPropertyValue('--w')});
-  bobs.unobserve(e.target);
-}),{threshold:.3});
-document.querySelectorAll('.bc-lb-v').forEach(el=>bobs.observe(el));
+// ─── RANK TABS ─────────────────────────────────
+const rankData = {
+  joueurs: [
+    { num:'01', numClass:'rank-gold', av:'TR', color:'#1E5EFF', name:'Thomas R.', co:'Google · 156 matchs', pts:'2 480', trend:'▲3', tColor:'#1DB87E' },
+    { num:'03', numClass:'rank-bronze', av:'LV', color:'#FF6B35', name:'Léa V.', co:'LVMH · 89 matchs', pts:'1 980', trend:'▼1', tColor:'#FF6B35' },
+    { num:'04', numClass:'', av:'JD', color:'#8B5CF6', name:'Jean D.', co:'BNP Paribas · 72 matchs', pts:'1 760', trend:'▲2', tColor:'#1DB87E' },
+    { num:'05', numClass:'', av:'KL', color:'#F5C842', name:'Kim L.', co:'Capgemini · 68 matchs', pts:'1 640', trend:'▲5', tColor:'#1DB87E' },
+  ],
+  entreprises: [
+    { num:'01', numClass:'rank-gold', av:'CG', color:'#1E5EFF', name:'Capgemini', co:'1 250 joueurs · 12 sports', pts:'48 200', trend:'▲2', tColor:'#1DB87E' },
+    { num:'02', numClass:'rank-silver', av:'BN', color:'#8B5CF6', name:'BNP Paribas', co:'980 joueurs · 9 sports', pts:'41 500', trend:'▲1', tColor:'#1DB87E' },
+    { num:'03', numClass:'rank-bronze', av:'SG', color:'#1DB87E', name:'Soc. Générale', co:'890 joueurs · 8 sports', pts:'36 100', trend:'stable', tColor:'#8A8A82' },
+    { num:'04', numClass:'', av:'LV', color:'#FF6B35', name:'LVMH', co:'640 joueurs · 7 sports', pts:'29 400', trend:'▲4', tColor:'#1DB87E' },
+  ],
+  sports: [
+    { num:'01', numClass:'rank-gold', av:'🏸', color:'#1DB87E', name:'Padel', co:'3 400 matchs cette saison', pts:'4.8 ★', trend:'+18%', tColor:'#1DB87E' },
+    { num:'02', numClass:'rank-silver', av:'⚽', color:'#1E5EFF', name:'Football 5v5', co:'2 100 matchs cette saison', pts:'4.6 ★', trend:'+12%', tColor:'#1DB87E' },
+    { num:'03', numClass:'rank-bronze', av:'🎾', color:'#FF6B35', name:'Tennis', co:'1 800 matchs cette saison', pts:'4.7 ★', trend:'+8%', tColor:'#1DB87E' },
+    { num:'04', numClass:'', av:'🏀', color:'#8B5CF6', name:'Basket 3v3', co:'1 200 matchs cette saison', pts:'4.5 ★', trend:'+22%', tColor:'#1DB87E' },
+  ]
+};
 
-/* ═══ CTA PARTICLE CANVAS ═══ */
-(function(){
-  const c=document.getElementById('ctaCanvas');if(!c)return;
-  const ctx=c.getContext('2d');let W,H;
-  const resize=()=>{W=c.width=c.offsetWidth;H=c.height=c.offsetHeight};
-  resize();window.addEventListener('resize',resize);
-  const particles=Array.from({length:60},()=>({
-    x:Math.random()*W,y:Math.random()*H,
-    vx:(Math.random()-.5)*.5,vy:(Math.random()-.5)*.5,
-    r:Math.random()*1.5+.3,
-    o:Math.random()*.3+.05
-  }));
-  (function loop(){
-    ctx.clearRect(0,0,W,H);
-    particles.forEach(p=>{
-      p.x+=p.vx;p.y+=p.vy;
-      if(p.x<0)p.x=W;if(p.x>W)p.x=0;
-      if(p.y<0)p.y=H;if(p.y>H)p.y=0;
-      ctx.beginPath();ctx.arc(p.x,p.y,p.r,0,Math.PI*2);
-      ctx.fillStyle=`rgba(110,232,168,${p.o})`;ctx.fill();
-    });
-    requestAnimationFrame(loop);
-  })();
-})();
-
-/* ═══ RIPPLE ═══ */
-document.querySelectorAll('.btn-glow,.cta-primary,.nav-cta-btn,.sol-cta').forEach(btn=>{
-  btn.addEventListener('click',e=>{
-    const r=btn.getBoundingClientRect(),s=document.createElement('span');
-    Object.assign(s.style,{
-      position:'absolute',borderRadius:'50%',background:'rgba(255,255,255,.2)',
-      width:'6px',height:'6px',left:(e.clientX-r.left-3)+'px',top:(e.clientY-r.top-3)+'px',
-      transform:'scale(0)',animation:'rpl .6s ease-out forwards',pointerEvents:'none'
-    });
-    btn.style.position='relative';btn.style.overflow='hidden';
-    btn.appendChild(s);setTimeout(()=>s.remove(),600);
+document.querySelectorAll('.rank-tab').forEach(tab => {
+  tab.addEventListener('click', () => {
+    document.querySelectorAll('.rank-tab').forEach(t => t.classList.remove('on'));
+    tab.classList.add('on');
+    const key = tab.dataset.tab;
+    const list = document.getElementById('rank-list');
+    list.innerHTML = rankData[key].map(d => `
+      <div class="rank-item" style="animation:slideIn .3s ease both">
+        <div class="rank-item-num ${d.numClass}">${d.num}</div>
+        <div class="rank-av" style="background:${d.color}">${d.av}</div>
+        <div class="rank-info">
+          <div class="rank-name">${d.name}</div>
+          <div class="rank-co">${d.co}</div>
+        </div>
+        <div class="rank-pts">${d.pts}<span class="rank-trend" style="color:${d.tColor}">${d.trend}</span></div>
+      </div>
+    `).join('');
   });
 });
-const sty=document.createElement('style');
-sty.textContent='@keyframes rpl{to{transform:scale(50);opacity:0}}';
-document.head.appendChild(sty);
+
+// ─── TOAST ─────────────────────────────────────
+function showToast(title, sub) {
+  const t = document.getElementById('toast');
+  document.getElementById('toast-title').textContent = title;
+  document.getElementById('toast-sub').textContent = sub;
+  t.classList.add('show');
+  setTimeout(() => t.classList.remove('show'), 3200);
+}
+
+// Demo button — auto show payment toast on first scroll past
+let demoToastShown = false;
+window.addEventListener('scroll', () => {
+  if (!demoToastShown && window.scrollY > 600) {
+    demoToastShown = true;
+    setTimeout(() => showToast('🏆 Tournoi terminé !', 'Capgemini remporte la finale'), 800);
+  }
+}, { passive: true });
+
+// ─── DEMO BTN ──────────────────────────────────
+['hero-demo-btn','nav-demo-btn'].forEach(id => {
+  const el = document.getElementById(id);
+  if (el) el.addEventListener('click', () => {
+    document.querySelector('.hero-sim').scrollIntoView({ behavior: 'smooth', block: 'center' });
+    showToast('🎮 Dashboard interactif', 'Explorez toutes les simulations ci-dessous !');
+  });
+});
 </script>
 </body>
 </html>
