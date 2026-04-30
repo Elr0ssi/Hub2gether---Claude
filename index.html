@@ -44,7 +44,10 @@ body { background: #0a1f17; }
   height: 100%;
   object-fit: cover;
   filter: brightness(.55) saturate(1.1);
+  will-change: transform;
+  transform: translateZ(0);
 }
+
 .hero-overlay {
   position: absolute;
   inset: 0;
@@ -124,12 +127,12 @@ body { background: #0a1f17; }
 
   var duration = 0;
   var ready = false;
-  var pending = false;
+  var rafId = null;
 
   function clamp(v, min, max) { return Math.min(max, Math.max(min, v)); }
 
   function syncVideoWithScroll() {
-    pending = false;
+    rafId = null;
     if (!ready || duration <= 0) return;
 
     var rect = section.getBoundingClientRect();
@@ -140,9 +143,14 @@ body { background: #0a1f17; }
     var progress = scrolled / total;
     var targetTime = progress * duration;
 
-    if (Math.abs(video.currentTime - targetTime) > 0.033) {
+    if (Math.abs(video.currentTime - targetTime) > 0.004) {
       video.currentTime = targetTime;
     }
+  }
+
+  function scheduleSync() {
+    if (rafId !== null) return;
+    rafId = requestAnimationFrame(syncVideoWithScroll);
   }
 
   video.addEventListener('loadedmetadata', function () {
@@ -155,13 +163,7 @@ body { background: #0a1f17; }
     video.pause();
   });
 
-  window.addEventListener('scroll', function () {
-    if (!pending) {
-      pending = true;
-      requestAnimationFrame(syncVideoWithScroll);
-    }
-  }, { passive: true });
-
+  window.addEventListener('scroll', scheduleSync, { passive: true });
   window.addEventListener('resize', syncVideoWithScroll, { passive: true });
 })();
 </script>
