@@ -44,7 +44,10 @@ body { background: #0a1f17; }
   height: 100%;
   object-fit: cover;
   filter: brightness(.55) saturate(1.1);
+  will-change: transform;
+  transform: translateZ(0);
 }
+
 .hero-overlay {
   position: absolute;
   inset: 0;
@@ -124,45 +127,67 @@ body { background: #0a1f17; }
 
   var duration = 0;
   var ready = false;
-  var pending = false;
+  var targetTime = 0;
+  var renderedTime = 0;
+  var rafId = null;
+  var prefersReducedMotion = window.matchMedia('(prefers-reduced-motion: reduce)').matches;
 
   function clamp(v, min, max) { return Math.min(max, Math.max(min, v)); }
 
-  function syncVideoWithScroll() {
-    pending = false;
-    if (!ready || duration <= 0) return;
-
+  function getTargetTimeFromScroll() {
     var rect = section.getBoundingClientRect();
     var total = section.offsetHeight - window.innerHeight;
-    if (total <= 0) return;
+    if (total <= 0) return 0;
 
     var scrolled = clamp(-rect.top, 0, total);
     var progress = scrolled / total;
-    var targetTime = progress * duration;
+    return progress * duration;
+  }
 
-    if (Math.abs(video.currentTime - targetTime) > 0.033) {
-      video.currentTime = targetTime;
+  function render() {
+    if (!ready || duration <= 0) return;
+
+    targetTime = getTargetTimeFromScroll();
+
+    var diff = targetTime - renderedTime;
+    var easing = prefersReducedMotion ? 1 : 0.22;
+    renderedTime += diff * easing;
+
+    if (Math.abs(diff) < 0.012) {
+      renderedTime = targetTime;
     }
+
+    renderedTime = clamp(renderedTime, 0, duration);
+
+    if (Math.abs(video.currentTime - renderedTime) > 0.008) {
+      video.currentTime = renderedTime;
+    }
+
+    if (Math.abs(targetTime - renderedTime) > 0.008) {
+      rafId = requestAnimationFrame(render);
+    } else {
+      rafId = null;
+    }
+  }
+
+  function scheduleRender() {
+    if (rafId !== null) return;
+    rafId = requestAnimationFrame(render);
   }
 
   video.addEventListener('loadedmetadata', function () {
     duration = video.duration || 0;
     ready = duration > 0;
-    syncVideoWithScroll();
+    renderedTime = getTargetTimeFromScroll();
+    scheduleRender();
   });
 
   video.addEventListener('loadeddata', function () {
     video.pause();
   });
 
-  window.addEventListener('scroll', function () {
-    if (!pending) {
-      pending = true;
-      requestAnimationFrame(syncVideoWithScroll);
-    }
-  }, { passive: true });
-
-  window.addEventListener('resize', syncVideoWithScroll, { passive: true });
+  window.addEventListener('scroll', scheduleRender, { passive: true });
+  window.addEventListener('resize', scheduleRender, { passive: true });
 })();
 </script>
 
